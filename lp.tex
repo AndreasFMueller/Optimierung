@@ -1,0 +1,45 @@
+\chapter{Lineare Optimierung\label{chapter-lineare-optimierung}}
+
+\section{Problemstellung}
+In einem linearen Optimierungsproblem ist die Kostenfunktion linear
+und die Ungleichungen, die das zul"assige Gebiet definieren, sind
+ebenfalls linear. 
+Die Kostenfunktion ist also von der Form
+\[
+Z=c^tx,\quad c,x\in\mathbb R^n.
+\]
+Da eine lineare Funktion unbeschr"ankt ist, kann ein lineares
+Optimierungsproblem nur dann eine L"osung haben, wenn das zul"assige
+Gebiet beschr"ankt ist, mindestens in Richtung gr"osster Zunahme der
+Kostenfunktion. Es ist daher kaum eine Einschr"ankung, anzunehmen, dass 
+die Variablen $x\in\mathbb R^n$ alle positiv sind. Notfalls kann man 
+das durch addieren einer Konstante oder Vorzeichenwechsel erzwingen.
+
+Die Ungleichungen sind von der Form
+\[
+Ax\le b,
+\]
+wobei $A$ eine $m\times n$-Matrix und $b\in\mathbb R^m$ ist.
+Dazu kommen noch die Bedingungen $x\ge 0$.
+
+Eine lineare Gleichung beschreibt eine Ebene, eine
+lineare Ungleichung demzufolge einen Halbraum. Das zul"assige Gebiet
+eines linearen Optimierungsproblem ist also immer die Schnittmenge
+mehrere Halbr"aume.
+
+\section{Graphische L"osung}
+
+\section{Von Ungleichungen zu Gleichungen}
+Die graphische L"osung hat gezeigt, dass der L"osungsvektor eines
+linearen Optimierungsproblems immer einige der Ungleichungen exakt
+erf"ullt. Die L"osung kann also in zwei Schritten gefunden werden:
+\begin{compactenum}
+\item Herausfinden, welche Ungleichungen exakt erf"ullt sein m"ussen.
+\item Mit diesen Gleichungen ein lineares Gleichungssystem l"osen.
+\end{compactenum}
+Die L"osung des Gleichungssystems l"asst sich mit dem Guass-Algorithmus
+sehr effizient finden.
+
+\section{Simplex-Algorithmus}
+
+\section{Das duale Problem}

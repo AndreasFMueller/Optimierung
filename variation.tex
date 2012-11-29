@@ -1,0 +1,279 @@
+\chapter{Variationsrechnung\label{chapter-variationsrechnung}}
+
+\section{Was ist Variationsrechnung?}
+Alle bisher betrachteten Optimierungsproblem gingen davon aus, dass
+ein Vektor $x$, also endlich viele reelle Variablen, gefunden werden muss,
+der eine Funktion $f(x)$ maximieren soll, aber in einem vorgegebenen
+Gebiet von zul"assigen Vektoren liegen muss. 
+Nat"urlich kann die Zahl der Variablen in so einem Problem sehr gross werden,
+sie bleibt aber immer endlich.
+
+In diesen Rahmen passt zum Beispiel das Problem, ein Polygon
+maximalen Fl"acheninhaltes zu finden. Solange die Zahl der Ecken
+des Polygons beschr"ankt bleibt, l"asst sich ein Polygon immer mit
+endlich vielen Variablen beschreiben. Sucht man aber nicht nur in
+der Menge der Polygone, sondern eine Kurve vorgegebener L"ange,
+die maximalen Fl"acheninhalt einschliessen soll, dann kann man
+die L"osung nicht mehr mit endlich vielen Variablen beschreiben.
+Gesucht ist jetzt eine Funktion, nicht nur ein Vektor.
+
+\subsection{Eine historisches Herausforderung: Brachistochrone}
+\subsection{Problemstellung}
+Ein Variationsproblem ist also eine spezielle Art eines nichtlinearen
+Optimierungsproblems, in dem nicht nur ein endlichdimensionaler
+Vektor gefunden werden muss, sondern eine Funktion $[a,b]\to \mathbb R^n$.
+Der linearen Zielfunktion $c^tx$ entspr"ache am ehesten ein Integral
+\[
+I(x)=\int_a^b c(t) x(t)\,dt.
+\]
+Wir haben aber im Kapitel \ref{chapter-lineare-optimierung} gesehen haben,
+ist die L"osung eines linearen Optimierungsproblems vor allem eine 
+Funktion des zul"assigen Bereichs.
+Erst eine nichtlineare Zielfunktion f"uhrt zu einer interessanten
+Theorie. Eine Zielfunktion der Form
+\[
+I(x)=\int_a^b F(t, x(t))\,dt.
+\]
+ist also angemessener.
+Schon das Brachistochronen-Problem zeigt
+jedoch, dass nicht nur die Funktionswerte, sondern auch die Werte
+der Ableitung eine Rolle spielen k"onnen, und gelangen damit
+zu Zielfunktion, die wir verwenden wollen:
+\begin{equation}
+I(x)=\int_a^b F(t, x(t), \dot x(t))\,dt,
+\label{variations-funktional}
+\end{equation}
+wobei $F(t,x,v)$ eine stetige Funktion ist.
+
+Grunds"atzlich spricht nichts dagegen, noch kompliziertere
+Funktionen zuzulassen, die zum Beispiel auch noch h"ohere
+Ableitungen ber"ucksichtigen.
+Die Variationsproblem der Form (\ref{variations-funktional}) 
+haben jedoch eine allgemeine L"osung, auf die wir im Folgenden
+hinarbeiten wollen.
+
+\subsection{Verallgemeinerungen}
+
+\subsection{Beispiele}
+\subsubsection{K"urzeste Verbindung}
+Man finde die k"urzeste Verbindung zweier Punkte $x_0$ und $x_1$.
+Offenbar muss hierzu die Kurvenl"ange
+\begin{equation}
+l(x)=\int_0^1 \sqrt{1+\dot x(t)^2}\,dt
+\label{kuerzeste-verbindung-variationsprinzip}
+\end{equation}
+minimiert werden unter den Nebenbedingungen $x(0)=x_0$ und
+$x(1)=x_1$.
+
+\subsubsection{Isoperimetrisches Problem}
+\subsubsection{Mechanik als Minimalproblem}
+Vielen Naturgesetzen liegen Optimalit"atsprinzipien zu Grunde.
+Das Brechungsgesetz kann man so formulieren: auf dem Weg $A$ 
+nach $B$ nimmt Licht immer den schnellsten Weg.
+Lagrange hat als erster erkannt, dass die Mechanik als Optimierungsproblem
+verstanden werden kann. Doch welche Zielfunktion wird hier optimiert?
+
+Wir m"ochten zum Beispiel die Bewegung eines Massepunktes in einem
+Potential $V(x)$ verstehen, zum Beispiel die Bewegung eines Planeten
+im Schwerefeld der Sonne.
+Wir suchen also die Bahn $x(t)$ des Massepunktes finden. 
+Wir erwarten, dass Position und Bewegungszustand des Massepunktes,
+also $x(t)$ und $\dot x(t)$ wesentlich sein werden.
+Wir vermuten also, dass es eine Funktion $L(t,x,v)$ gibt,
+so dass das Integral
+\begin{equation}
+\int_{t_0}^{t_1} L(t, x(t), \dot x(t))\,dt
+\label{lagrange-integral}
+\end{equation}
+durch die tats"achliche Bahnkurve von $x(t_0)$ nach $x(t_1)$
+minimiert wird.
+
+Intuitiv wissen wir, dass eine stabile Lage eines mechanischen Systems
+sich durch minimale Energie auszeichnet: befindet sich ein System nicht
+im Zustand minimaler Energie, kann man es durch eine kleine 
+St"orung m"oglicherweise dazu bringen, seinen Zustand zu "andern
+und dabei Energie abzugeben. Allerdings kann die Energie eines
+einzelnen Massepunktes diese Funktion nicht "ubernehmen, da sie
+konstant ist. Das Prinzip, dass ein System den Zustand kleinster
+Energie annimmt, ist genauer betrachtet eine Bedingung an die potentielle
+Energie. Je kleiner die potentielle Energie, und je schneller dieser
+Zustand erreicht wird, desto besser. Als Extremalprinzip bietet
+sich daher an dass die Differenz von potentieller und kinetischer
+Energie minimiert werden soll. Wir setzen also
+\begin{equation}
+L(t,x,v)=V(x)-\frac12mv^2.
+\label{lagrange-funktion}
+\end{equation}
+Diese Funktion $L(t,x,v)$ heisst Lagrange-Funktion des mechanischen
+Systems, wir
+verwenden sie im Funktional (\ref{lagrange-integral}).
+
+\subsubsection{Interpolation}
+\subsubsection{Minimalfl"achen}
+
+\section{Euler-Gleichungen}
+Es gibt kaum Verfahren, ein allgemeines Variationsproblem zu l"osen.
+Aber es gibt ein allgemeines Vorgehen, wie man ein Variationsproblem
+in eine Differentialgleichung umwandeln kann. F"ur Differentialgleichungen
+steht ja eine grosses Arsenal von L"osungstechniken.
+\subsection{Variation}
+Das Maximum einer Funktion findet man, indem man diejenigen
+Punkte sucht, in deren unmittelbarer Umgebung die Funktion kleinere
+Werte annimmt. Erkennen kann ma solche Punkte daran, dass die Ableitung
+der Funktion dort verschwindet.
+
+"Ubertragen auf das Variationsproblem muss man also Funktionen 
+suchen, die der L"osungsfunktion $x(t)$ benachbart sind.
+Eine benachbarte Funktion kann zum Beispiel von der Form
+$x(t)+s\delta(t)$ sein, wobei wir uns die Funktion $\delta(t)$
+als kleine Abweichung vorstellen, die wir mit dem Parameter
+$s$ noch kleiner machen k"onnen. 
+
+Nehmen wir an, es sei das Integral
+\begin{equation}
+I=\int_{t_0}^{t_1} F(t, x(t)) \,dt
+\end{equation}
+zu minimieren. Ist $x(t)$ die gesucht Funktion, dann
+wird das Integral $I$ f"ur jede der Funktionen $x(t)+s\delta(t)$
+einen kleineren Wert haben. Es wird
+\begin{equation}
+\delta I =
+\int_{t_0}^{t_1}F(t, x(t) + s\delta(t))\,dt
+-
+\int_{t_0}^{t_1}F(t, x(t))\,dt\le 0
+\end{equation}
+sein f"ur jede Wahl von $\delta(t)$ und von $s$. Insbesondere wird die
+Ableitung nach $s$ an der Stelle $s=0$ eine Nullstelle haben
+{\it f"ur jedes $\delta$}:
+\begin{equation}
+\frac{d}{ds}\int_{t_0}^{t_1}F(t,x(t)+s\delta(t))\,dt\;\bigg|_{s=0}=0
+\end{equation}
+Da die Integrationsgrenzen nicht von $s$ abh"angen, kann man die
+Ableitung unter das Integral ziehen:
+\begin{align*}
+\int_{t_0}^{t_1}\frac{d}{ds}F(t, x(t)+s\delta(t))\,dt\;\bigg|_{s=0}
+=
+\int_{t_0}^{t_1}\frac{\partial F(t, x(t))}{\partial x}\delta(t)\,dt=0
+\end{align*}
+Auf den ersten Blick sieht das noch nicht nach einer Vereinfachung aus,
+doch jetzt k"onnen wir die freie Wahlm"oglichkeit von $\delta$ ins
+Spiel bringen.
+
+\subsection{Eulergleichung zu einem Variationsproblem}
+F"ur ein Variationsproblem der Form (\ref{variations-funktional})
+l"asst sich die Variation relativ einfach durchf"uhren.
+\begin{align}
+0&=
+\frac{d}{ds}
+\int_{t_0}^{t_1} F(t, x(t) + s\delta(t), \dot x(t)+s\dot\delta(t))\,dt\bigg|_{s=0}
+\notag
+\\
+&=
+\int_{t_0}^{t_1} \frac{\partial F(t,x(t),\dot x(t))}{\partial x}\delta(t)
++\frac{\partial F(t,x(t),\dot x(t))}{\partial v}\dot \delta(t)\,dt
+\notag
+\\
+&=
+\int_{t_0}^{t_1} \frac{\partial F(t,x(t),\dot x(t))}{\partial x}\delta(t)\,dt
++\biggl[
+\frac{\partial F(t,x(t),\dot x(t))}{\partial v}
+\delta(t)
+\biggr]_{t_0}^{t_1}
+-\int_{t_0}^{t_1}\frac{d}{dt}\frac{\partial F(t,x(t),\dot x(t))}{\partial v}
+\delta(t)\,dt
+\notag
+\\
+&=
+\int_{t_0}^{t_1}
+\biggl(
+\frac{\partial F(t,x(t),\dot x(t))}{\partial x}
+-
+\frac{d}{dt}\frac{\partial F(t,x(t),\dot x(t))}{\partial v}
+\biggr)\delta(t)
+\,dt
++\biggl[
+\frac{\partial F(t,x(t),\dot x(t))}{\partial v}
+\delta(t)
+\biggr]_{t_0}^{t_1}
+\label{euler-1}
+\end{align}
+Jetzt kann die Funktion $\delta(t)$ wieder frei gew"ahlt werden. 
+
+Zum Beispiel kann man Funktionen w"ahlen, die an den Enden des Intervalles
+verschwinden, also $\delta(t_0)=\delta(t_1)=0$.
+F"ur solche Funktionen verschwindet der zweite Term in
+(\ref{euler-1}). Da man $\delta(t)$ immer so w"ahlen kann, dass es
+nur jeweils eine Komponenten in einer kleinen Umgebung einer eines
+Punktes von $0$ verschieden ist, muss
+der Integrand in (\ref{euler-1}) verschwinden.
+Also muss die L"osungsfunktion die Differentialgleichung
+\begin{equation}
+\frac{d}{dt}\frac{\partial F}{\partial v}(t,x(t),\dot x(t))
+-
+\frac{\partial F}{\partial x}(t,x(t),\dot x(t))
+\end{equation}
+erf"ullen. Diese Differentialgleichung heisst die {\it Euler-Gleichung}
+des Variationsproblems.
+
+% falsch
+%\subsection{Randbedingungen}
+%Man kann in (\ref{euler-1}) aber auch Funktionen $\delta(t)$ w"ahlen, 
+%die nur gerade einer Umgebung eines Endpunktes des Intervalls von
+%$0$ verschieden sind. Daraus folgt dann, dass 
+%\begin{equation}
+%\frac{\partial F}{\partial v}(t_i,x(t_i),\dot x(t_i))=0
+%\label{variation-randwerte}
+%\end{equation}
+%f"ur $i=0,1$ gelten muss. Dies ist eine Gleichung f"ur die Anfangswerte.
+
+\subsection{Beispiele}
+\subsubsection{K"urzeste Verbindung}
+F"ur die k"urzeste Verbindung haben wir das Variationsprinzip
+(\ref{kuerzeste-verbindung-variationsprinzip}) gefunden.
+Die Funktion $F(t,x,v)=\sqrt{1+v^2}$ enth"alt die Variable
+$x$ gar nicht, so dass die Eulergleichung nur einen Term
+enthalten:
+\begin{align}
+\frac{d}{dt}\frac{\partial L}{\partial v}
+&=\frac{d}{dt}\frac{2v}{2\sqrt{1+v^2}}\dot v =0
+\notag
+\\
+&=\frac1{\sqrt{1+v^2}} - \frac{v^2}{(\sqrt{1+v^2})^3}\dot v
+=\frac1{(1+v^2)^{\frac32}}\dot v=0
+\label{kuerzester-abstand-gleichung}
+\end{align}
+Der Nenner in (\ref{kuerzester-abstand-gleichung}) ist immer
+positiv, die Gleichung kann also nur erf"ullt werden, wenn
+$\dot v =\ddot x=0$. Das ist gleichbedeutend damit, dass 
+$x(t)$ eine lineare Funktion ist.
+Die k"urzeste Verbindung zwischen zwei Punkten ist also eine
+Gerade.
+
+\subsubsection{Lagrange-Mechanik}
+Die Eulergleichungen zur Variation der Lagrange-Funktion
+(\ref{lagrange-funktion}) sind:
+\begin{align}
+\frac{d}{dt}\frac{\partial L}{\partial v}&=\frac{d}{dt}mv
+\notag
+\\
+\frac{\partial L}{\partial x}&=\frac{V(x)}{\partial x}
+\notag
+\\
+\Rightarrow\qquad
+m\dot v&=-\frac{\partial V}{\partial x}
+\label{lagrange-bewegungsgleichung}
+\end{align}
+Da der Gradient von $V$ auf der rechten Seite von
+(\ref{lagrange-bewegungsgleichung}) die Kraft ist, erhalten wir als
+Bewegungsgleichung
+\begin{equation}
+m\ddot x=F(x),
+\end{equation}
+also das erste Newtonsche Gesetz.
+
+
+\section{Anwendungen}
+\subsection{Mechanik}
+\subsection{Interpolation}
+\subsection{Brachistochrone}
+
