@@ -1,9 +1,110 @@
 \chapter{"Ubersicht}
+Steven Wozniak war daf"ur ber"uhmt, den ersten Apple-Computer mit
+einer m"oglichst kleinen Zahl von ICs konstruiert zu haben.
+Ausserdem soll der Firmware Code besonders schlank gewesen sein, so
+dass im vorhandenen Speicher mehr Funktionen untergebracht werden 
+konnten. Hier wurden offenbar zwei Optimierungsprobleme gel"ost.
+Beide d"urften zwar nicht ausschlaggebend f"ur den Erfolg von
+Apple gewesen sein, aber einen Beitrag dazu geleistet haben.
 
-\section{Einf"uhrungsbeispiele}
+Vor einer "ahnlichen Herausforderung steht man h"aufig: mit m"oglichst
+geringem Aufwand soll ein m"oglichst gutes Resultat erreicht werden.
+Typischerweise sind auf der Aufwand-Seite immer mehrere Gr"ossen varierbar.
+Bei Embedded Hardware kann man in gewissen Grenzen
+fehlende Hardware-Funktionalit"at durch Software kompensieren.
+Billigere Rohmaterialen brauchen gr"osseren Bearbeitungsaufwand.
+Aber auch auf der Resultat-Seite sind oft verschiedene Gr"ossen zu
+betrachten.
+Will man mit dem Produkt vor allem Geld verdienen, oder vor allem
+das Image f"ordern?
+Was ist dem Kunden mehr wert: ein kleines und leichtes
+Ger"at, oder ein robustes, nicht kaputt zu kriegendes? 
+In vielen F"allen l"asst sich das Ziel auf eine einfache
+Zahl reduzieren: Gewinnmaximierung.
 
-\section{Klassifizierung von Optimierungsproblemen}
+Optimierungsmethoden sollen helfen, mathematisch formulierbare
+Optimierungsprobleme zu l"osen. Dazu ist zun"achst zu kl"aren,
+wie ein mathematisches Optimierungsproblem aussieht.
+Das oben erw"ahnte Problem von Steven Wozniak ist wohl eher nicht
+von dieser Art. Beispiele von mathematischen Optimierungsproblemen
+sollen im Abschnitt \label{section-einfuehrungsbeispiele} einen
+ersten Eindruck davon geben, was in diesem Skript behandelt werden soll.
+Abschnitt \label{section-begriffe} stellt die im Weiteren verwendeten
+Begriffe zusammen. Abschnitt \label{section-klassifizierung} versucht
+eine grobe Klassifizierung der Optimierungsprobleme, und in Abschnitt
+\label{section-loesungsuebersicht} werden die im Folgenden zu
+besprechenden L"osungsmethoden kurz skizziert.
+
+\section{Einf"uhrungsbeispiele\label{section-einfuehrungsbeispiele}}
+
+\section{Begriffe\label{section-begriffe}}
+Allen Beispielen von Optimierungsproblemen war gemeinsam, dass eine
+Anzahl von Variablen $x=(x_1,\dots,x_n)$ variert werden k"onnen.
+Dabei sind Einschr"ankungen zu beachten.
+Die Einschr"ankungen k"onnen in der Form von Gleichungen
+\begin{equation}
+g(x)=0
+\label{begriff-nebenbedingungen}
+\end{equation}
+oder Ungleichungen
+\begin{equation}
+h(x)\ge 0
+\label{begriff-einschraenkungen}
+\end{equation}
+vorliegen, auch Nebenbedingungen genannt.
+\index{Nebenbedingung}
+$g(x)$ und $h(x)$ k"onnen auch vektorwertig sein.
+Eine Gleichung $g(x)$ definiert eine Teilmenge, typischerweise eine
+Fl"ache oder Kurve (allgemeine eine Untermannigfaltigkeit) im 
+Parameterraum.
+Eine Ungleichung andererseits definiert eine berandete Teilmenge,
+zum Beispiel ist
+\[
+\{(x,y,z)\,|\,h(x,y,z)=x^2+y^2+z^2\le 1\}
+\]
+eine Vollkugel, deren Rand die Kugeloberfl"ache mit der Gleichung
+\[
+g(x,y,z)=x^2+y^2+z^2=1
+\]
+ist.
+Die Menge der Punkte $x\in\mathbb R^n$, die alle Nebenbedingungen
+erf"ullen, heisst {\it zul"assiges Gebiet}.
+\index{zul\"assiges Gebiet}
+Die zu optimierende Gr"osse ist eine Funktion $f$ der Variablen $x$,
+sie heisst die {\it Zielfunktion}.
+\index{Zielfunktion}
+
+Ein Optimerungsproblem besteht also aus der Vorgabe einer Zielfunktion
+$f(x)$ und eines zul"assigen Bereichs $G\subset \mathbb R^n$, welcher
+durch Gleichungen $g(x)=0$ oder Ungleichungen $h(x)\le 0$ 
+definiert sein kann.
+\index{Optimierungsproblem!L\"osung}
+Eine L"osung des Optimierungsproblems ist ein Punkt $x^*\in G$ im zul"assigen
+Gebiet, so dass $f(x^*)$ maximal oder minimal ist unter allen Werten
+der Funktion $f(x)$ mit $x\in G$. Eine solche L"osung heisst
+{\it globales} Optimum.
+\index{Optimum!global}
+
+Nicht immer kann man ein globales Optimum finden, manchmal gelingt es
+nur, ein {\it lokales} Optimum zu finden, also ein Punkt $x^*$ so,
+dass $f(x^*)$ maximal oder minimal ist unter allen Werten $f(x)$,
+wenn $x$ aus einer Umgebung von $x^*$ in $G$ stammt.
+\index{Optimum!lokal}
+
+
+
+\section{Klassifizierung von Optimierungsproblemen\label{section-klassifizierung}}
 \subsection{Extremwerte}
+Die einfachste Art von Optimierungsproblem ist das Finden der Extremwerte
+einer Funktion $f\colon\mathbb R^n\to\mathbb R$.
+Im eindimensionalen Fall einer differentzierbaren Funktion lernt man dazu
+in der Analysis, dass die Extrema entweder auf dem Rand des Definitionsbereichs
+zu finden sind, oder aber innere Punkte sind, in denen die Funktion
+verschwindende Ableitung $f'(x)=0$ hat.
+
+Die Zielfunktion ist in diesem Optimierungsproblem $f$, das zul"assige
+Gebiet ist der Definitionsbereicht von $f$.
+
 \subsection{Lineare Optimierung}
 \subsection{Nichtlineare Optimierung}
 \subsection{Ganzzahlige Programmierung}
