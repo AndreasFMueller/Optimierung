@@ -28,6 +28,59 @@ eines linearen Optimierungsproblem ist also immer die Schnittmenge
 mehrere Halbr"aume.
 
 \section{Graphische L"osung}
+F"ur nur zwei Variablen l"asst sich ein lineares Optimierungsproblem
+sehr gut visualisieren. Die Ungleichungen
+\[
+Ax\le b\qquad\text{und}\qquad x\ge 0
+\]
+definieren ein polygonales Gebiet in der Ebene, das zul"assige Gebiet.
+Wir illustrieren das an dem Beispielproblem
+\begin{equation}
+\begin{linsys}{2}
+-x&+&3y&\le&12\\
+x&+&3x&\le&18\\
+4x&+&y&\le&28
+\end{linsys}
+\label{lp-beispiel-ungleichungen}
+\end{equation}
+Sie definieren das Gebiet $G$ in Abbildung \ref{lp-beispiel}.
+\begin{figure}
+\begin{center}
+\includegraphics[width=\hsize]{images/lp-1}
+\end{center}
+\caption{Zul"assiges Gebiet f"ur die Ungleichungen
+(\ref{lp-beispiel-ungleichungen})\label{lp-beispiel}}
+\end{figure}
+
+Die Zielfunktion ist ebenfalls linear, f"ur das Beispielgebiet
+(\ref{lp-beispiel-ungleichungen}) verwenden wir die Zielfunktion
+\begin{equation}
+Z=2x+3y
+\label{lp-beispiel-zielfunktion}
+\end{equation}
+\begin{figure}
+\begin{center}
+\includegraphics[width=\hsize]{images/lp-2}
+\end{center}
+\caption{Zul"assiges Gebiet mit Graph der Zielfunktion f"ur verschiedene
+Zielwerte. Zielwert $Z=24$ ist optimal, er wird angenommen im
+Punkt $(6,4)$.
+\label{lp-beispiel-zielfunktion}}
+\end{figure}%
+In Abbildung \ref{lp-beispiel-zielfunktion} sind die Geraden $Z=\operatorname{const}$
+f"ur einige Werte der Zielfunktion eingezeichnet.
+Man kann ablesen, dass das Optimum im Schnittpunkt der Geraden
+beschrieben der beiden Gleichungen
+\begin{equation}
+\begin{linsys}{2}
+x&+&3x&\le&18\\
+4x&+&y&\le&28
+\end{linsys}
+\notag
+\end{equation}
+angenommen wird.
+Die L"osung des Gleichungssystems liefert die optimalen Koordinaten
+$(6,3)$.
 
 \section{Von Ungleichungen zu Gleichungen}
 Die graphische L"osung hat gezeigt, dass der L"osungsvektor eines
@@ -37,9 +90,349 @@ erf"ullt. Die L"osung kann also in zwei Schritten gefunden werden:
 \item Herausfinden, welche Ungleichungen exakt erf"ullt sein m"ussen.
 \item Mit diesen Gleichungen ein lineares Gleichungssystem l"osen.
 \end{compactenum}
-Die L"osung des Gleichungssystems l"asst sich mit dem Guass-Algorithmus
+Die L"osung des Gleichungssystems l"asst sich mit dem Gauss-Algorithmus
 sehr effizient finden.
 
+Die Ungleichungen (\ref{lp-beispiel-ungleichungen}) k"onnen durch
+Einf"uhrung zus"atzlicher Variablen $s_1,\dots,s_3$ in die Gleichungen
+\begin{equation}
+\begin{linsys}{5}
+-x&+&3y&+&s_1& &   & &   &=&12\\
+ x&+&3y& &   &+&s_2& &   &=&18\\
+4x&+& y& &   & &   &+&s_3&=&28
+\end{linsys}
+\label{lp-ungleichungen-schlupf}
+\end{equation}
+umgewandelt werden.
+Die Variable $s_i$ gibt wieder, wie weit entfernt von der Gleichheit
+die Ungleichung Nummer $i$ ist.
+Ist die Variable $s_i=0$, dann ist die Gleichung scharf erf"ullt.
+Schritt~1 l"auft also darauf hinaus, dass festgestellt werden muss,
+welche der Variablen $s_i$ verschwinden.
+
+Die L"osung des Optimierungsproblems ist auf dem Rand des
+zul"assigen Gebietes zu finden.
+Die Ecken des Gebietes sind Schnittpunkt zweier Gleichungen.
+Sie werden also dadurch bestimmt, dass zwei Variablen 
+Null gesetzt werden, die verbleibenden drei Variablen
+lassen sich dann mit Hilfe des Gauss-Algorithmus bestimmen.
+Die oben graphisch gefundene L"osung entspricht der
+Wahl $s_2=0$ und $s_3=0$.
+
+Die Zielfunktion $Z$ ist eine lineare Funktion von $x$ und $y$.
+Da drei Variablen eindeutig bestimmt sind, sobald zwei der
+Variablen festgelegt sind, muss sich auch $Z$ durch diese beiden
+Variablen ausdr"ucken l"asst. Dazu kann man auch den Gauss-Algorithmus
+verwenden, wenn man $Z$ als zus"atzliche Variable betrachtet.
+Das zugeh"orige Gaustableau ist dann
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&-2&-3& 0& 0& 0& 0\\
+\hline
+0&-1& 3& 1& 0& 0&12\\
+0& 1& 3& 0& 1& 0&18\\
+0& 4& 1& 0& 0& 1&28\\
+\hline
+\end{tabular}
+\]
+Die erste Zeile ist die Zielfunktion, die unteren drei Zeilen codieren die
+Ungleichungen.
+
+F"uhrt man jetzt den Gaussalgorithmus durch, erh"alt man
+\begin{align*}
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3& 0& 0& 0&  0\\
+\hline
+ 0& 1&-3&-1& 0& 0&-12\\
+ 0& 0& 6& 1& 1& 0& 30\\
+ 0& 0&13& 4& 0& 1& 76\\
+\hline
+\end{tabular}
+&&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3&      0    &      0    & 0&  0\\
+\hline
+ 0& 1&-3&     -1    &      0    & 0&-12\\
+ 0& 0& 1&\frac16    &\frac16    & 0&  5\\
+ 0& 0& 0&\frac{11}6 &-\frac{13}6& 1& 11\\
+\hline
+\end{tabular}
+\\
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3&          0&             0&            0&  0\\
+\hline
+ 0& 1&-3&          0&-\frac{13}{11}& \frac{6}{11}& -6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+&&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2& 0&          0& \frac{12}{11}&-\frac{3}{11}& 12\\
+\hline
+ 0& 1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+\\
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1& 0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+ 0& 1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+\end{align*}
+Aus dem letzten Tableau kann man die vollst"andige L"osung
+des Optimierungsproblems ablesen. Das Optimum wird angenommen
+f"ur $x=6$ und $y=4$, die erste der drei Ungleichungen ist
+nicht scharf erf"ullt, und der optimale Wert der Zielfunktion
+\[
+Z=24-\frac{10}{11}s_2-\frac{3}{11}s_3
+\]
+ist $24$.
+
+Ebenso kann man ablesen, dass sich der Wert der Zielfunktion
+nicht mehr verbessern l"asst.
+Dazu m"usste man n"amlich notwendigerweise $s_2$ oder $s_3$
+vergr"ossern, und beides w"urde den Wert der Zielfunktion verringern.
+
+Im allgemeinen Fall eines linearen Optimierungsproblems mit $n$
+Unbekannten und $m$ Ungleichungen ist also ein Gleichungssystem
+zu l"osen mit $n+m+1$ Variablen ($n$ Variablen, $m$ Schlupfvariablen und
+$Z$) und $m+1$ Gleichungen zu l"osen.
+Dabei sind $(n+m+1)-(m+1)=n$ Variablen frei w"ahlbar.
+Sobald man weiss, welche $n$ Variablen frei gew"ahlt werden k"onnen,
+kann das Problem mit dem Gauss-Algorithmus gel"ost werden.
+Ob man tats"achlich eine L"osung gefunden hat, kann man daran
+erkennen, ob alle Koeffizienten in der $Z$-Zeile des Gauss-Tableau
+positiv sind.
+
 \section{Simplex-Algorithmus}
+\subsection{L"osungsprinzip}
+Der Simplex-Algorithmus l"ost das Problem, die $n$ Variablen
+zu bestimmen, die auf $0$ gesetzt werden k"onnen, um die L"osung
+des Optimierungsproblems zu finden.
+Kennt man bereits einen noch nicht optimalen Eckpunkt des zul"assigen
+Gebietes, dann gibt es mindestens einen benachbarten Eckpunkt,
+der die Funktion $Z$ vergr"ossert.
+Man kann also von Ecke zu Ecke den Kanten des zul"assigen
+Gebietes folgen, bis sich die Zielfunktion nicht mehr vergr"ossern
+l"asst. Dies ist das Prinzip des Simplex-Algorithmus.
+
+Die benachbarte Ecke erf"ullt bis auf eine Gleichung alle
+gleichungen der aktuellen Ecke.
+Ausserdem erf"ullt sie eine Gleichung, die aktuelle Ecke nicht
+erf"ullt.
+Aus einer Menge der Variablen, die f"ur den urspr"unglichen
+Eckpunkt auf $0$ gesetzt werden m"ussen, muss eine Variable
+entfernt werden, und daf"ur eine neue Variable hinzugef"ugt
+werden, die bisher $>0$ war.
+Der Simplex-Algorithmus muss also in jedem Schritt entscheiden,
+welche der frei w"ahlbaren Variablen durch welche andere 
+Variable ersetzt werden soll.
+
+\subsection{Beispiel}
+Wir f"uhren dies am Beispiel (\ref{lp-beispiel}) und 
+(\ref{lp-beispiel-zielfunktion}) durch.
+Die Ecke $(0,0)$ ist im zul"assigen Gebiet, sie entspricht
+der Menge $\{x,y\}$ der frei w"ahlbaren Variablen. Das zugh"orige
+Gauss-Tableau ist
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&-2&-3& 0& 0& 0& 0\\
+\hline
+0&-1& 3& 1& 0& 0&12\\
+0& 1& 3& 0& 1& 0&18\\
+0& 4& 1& 0& 0& 1&28\\
+\hline
+ & *& *&  &  &  &  \\
+\hline
+\end{tabular}
+\]
+
+Zur Verbesserung des Resultats muss jetzt eine der Variablen $x,y$
+durch eine der Variablen $s_1,s_2, s_3$ ersetzt werden. Beide
+Koeffizienten von $x$ und $y$ in der Zielfunktion sind negativ, 
+beide Variablen kommen also daf"ur in Frage, ersetzt zu werden.
+Der Koeffizient von $y$ ist jedoch kleiner, so dass die Wahl von $y$
+eine gr"ossere Verbesserung der Zielfunktion verspricht, als die
+Wahl von $x$ als auszutauschen Variable.
+
+Ersetzt man $y$ durch die Variable $s_i$, dann zeigt Ungleichung
+$i$ an, wie gross $s_i$ gemacht werden kann:
+\begin{align*}
+s_1&=0&\Rightarrow&\quad y\le \frac{12}3=4
+\\
+s_2&=0&\Rightarrow&\quad y\le \frac{18}3=6
+\\
+s_3&=0&\Rightarrow&\quad y\le 28
+\\
+\end{align*}
+Da alle Ungleichungen erf"ullt bleiben m"ussen, darf $x$ den Wert $7$
+nicht "ubersteigen, und $y$ darf den Wert $4$ nicht "uberschreiten.
+Die Wahl f"allt also auf $s_1$.
+Es muss also $y$ gegen $s_1$ ausgetauscht werden.
+
+Neu soll jetzt also $s_1$ eine frei w"ahlbare Variable werden, man
+erreicht dies mit Hilfe eines Gauss-Schrittes, der das Element $-1$
+in der zweiten Zeile und der zweiten Spalte zu $1$ macht und die "ubrigen
+Elemente dieser Spalte zu $0$:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&        -3& 0&       1& 0& 0& 12\\
+\hline
+0&  -\frac13& 1& \frac13& 0& 0&  4\\
+0&         2& 0&      -1& 1& 0&  6\\
+0&\frac{13}3& 0&-\frac13& 0& 1& 24\\
+\hline
+ & *&  & *&  &  &  \\
+\hline
+\end{tabular}
+\]
+Weil nicht alle Koeffizienten in der ersten Zeile positiv sind,
+ist dies noch nicht die optimale L"osung.
+
+Im n"achsten Schritt muss die Variable $x$ ersetzt werden, zur 
+Auswahl stehen $y$, $s_2$ und $s_3$.
+\begin{align*}
+  y&=0&\Rightarrow&\quad -x\le 12
+\\
+s_2&=0&\Rightarrow&\quad x\le \frac{6}{2} = 3
+\\
+s_3&=0&\Rightarrow&\quad x\le \frac{72}{13}
+\end{align*}
+Damit die Ecke weiterhin im zul"assigen Bereich bleibt, ist $s_2=0$
+die verbleibende Ecke, also muss $y$ gegen $s_2$ ausgetauscht werden.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&   -\frac12&    \frac32&      0& 21\\
+\hline
+0&         0& 1&    \frac16&    \frac16&      0&  5\\
+0&         1& 0&   -\frac12&    \frac12&      0&  3\\
+0&         0& 0& \frac{11}6&-\frac{13}6&      1& 11\\
+\hline
+ &  &  & *& *&  &  \\
+\hline
+\end{tabular}
+\]
+Jetzt zeigt sich, dass $s_1$ ausgetauscht werden muss. 
+\begin{align*}
+  y&=0&\Rightarrow&\quad s_1\le 30
+\\
+  x&=0&\Rightarrow&\quad -s_1\le 6
+\\
+s_3&=0&\Rightarrow&\quad s_1\le 6
+\end{align*}
+Limitierend ist also die dritte Ungleichung. Also muss $s_1$ gegen
+$s_3$ ausgetauscht werden.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+0&         0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+0&         1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+0&         0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+ &          &  &           &             *&            *&  \\
+\hline
+\end{tabular}
+\Leftrightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+0&         1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+0&         0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+0&         0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+ &          &  &           &             *&            *&  \\
+\hline
+\end{tabular}
+\]
+Dieses Verfahren hat also die gleiche L"osung gefunden wie das
+graphische Verfahren auch.
+
+\subsection{Austauschschritte}
+Das lineare Optimierungsproblem entspricht dem Tableau
+\begin{equation}
+\begin{tabular}{|
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}|}
+\hline
+Z&x_1&\dots&x_n&s_1&\dots&s_m&\\
+\hline
+1&-c_1&\dots&-c_2&0&\dots&0&0\\
+\hline
+0&a_{11}&\dots&a_{1n}&1&\dots&0&b_1\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&a_{m1}&\dots&a_{mn}&0&\dots&1&b_m\\
+\hline
+% &*&\dots&*& && & \\
+%\hline
+\end{tabular}
+\end{equation}
+Wir nehmen zun"achst an, dass der Punkt $x_i=0$, $i=1,\dots,n$ 
+im zul"assigen Gebiet liegt.
+Die Variablen $x_1,\dots,x_n$ sind also die frei w"ahlbar, die
+Schlupfvariablen $s_1,\dots,s_m$ sind durch die Wahl der
+$x_i$ bestimmt.
+Wir symbolisieren dies durch Markierung der Variablen $x_i$ mit
+Sternen in der untersten Zeile:
+\begin{equation}
+\begin{tabular}{|
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}|}
+\hline
+Z&x_1&\dots&x_n&s_1&\dots&s_m&\\
+\hline
+1&-c_1&\dots&-c_2&0&\dots&0&0\\
+\hline
+0&a_{11}&\dots&a_{1n}&1&\dots&0&b_1\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&a_{m1}&\dots&a_{mn}&0&\dots&1&b_m\\
+\hline
+ &*&\dots&*& && & \\
+\hline
+\end{tabular}
+\end{equation}
+
+Der Simplex-Algorithmus muss in jedem Schritt entscheiden,
+welche der ausgew"ahlten Variablen durch welche andere Variable
+ersetzt werden soll.
+Danach muss ein Gauss-Schritt mit dieser Variablen durchgef"uhrt werden.
+
+Jede Variable, f"ur die in der Zeile der Zielfunktion ein negativer
+Koeffizient vorliegt, ist ein Austauschkandidat. 
+
+\subsection{Startpunkt}
 
 \section{Das duale Problem}
+
