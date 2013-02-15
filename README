@@ -1,1 +1,40 @@
-Skript zum mathematischen Seminar ueber Optimierung
+Das mathematische Seminar im Früjahrssemester 2013 an der HSR
+befasst sich mit Optimierungsfragen.
+
+Ziele des Seminars
+
+- Teilnehmer verstehen, wie mathematische Optimierungsprobleme gestellt
+  werden, und koennen sie grob klassifizieren
+
+- Lineare Optimierung: Teilnehmer verstehen das Konzept des dualen
+  Optimierungsproblems und k"onnen ein lineares Optimierungsproblem
+  mit dem Simplex-Algorithmus loesen.
+
+- Analytische Behandlung nichtlineare Optimierungsprobleme:  Teilnehmer
+  kennen die wichtigsten notwendigen und hinreichenden Bedingungen fuer
+  Extrema nichtlinearer Funktionen mehrere Variablen ohne und mit
+  Nebenbedingungen und/oder Einschraenkungen, insbesondere das Verfahren
+  der Lagrange-Multiplikatoren und die Karush-Kuhn-Tucker-Bedinungen.
+
+- Numerische Verfahren zur Bestimmung eines Optimums ohne Nebenbedingungen:
+  * Simplex-Methode
+  * Abstieg
+
+- Algorithmen fuer Optimierung mit Nebenbedingungen:
+  * Penalty Functions
+
+- Algorithmen fuer ganzzahlige Optimierungsprobleme:
+  * Branch and Bound
+
+- Teilnehmer kennen eine Auswahl von modernen (nicht analytischen) Verfahren
+  zur Lösung von Optimierungsproblemen, zum Beispiel
+  * genetische Algorithmen
+  * Simulated Annealing
+  * Teilchenschwarm-Optimierung
+  * Ameisen-Kolonie-Optimierung
+
+- Teilnehmer verstehen, was ein Variationsproblem ist und k"onnen mit
+  Hilfe der Euler-Gleichung ein Variationsproblem in eine Differential-
+  Gleichung umwandeln.
+
+

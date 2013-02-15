@@ -22,10 +22,11 @@
 \usepackage{paralist}
 \usepackage{makeidx}
 \usepackage{array}
+\usepackage{hyperref}
 \makeindex
 \begin{document}
 \pagestyle{fancy}
-\lhead{Optimierung}
+%\lhead{Optimierung}
 \frontmatter
 \newcommand\HRule{\noindent\rule{\linewidth}{1.5pt}}
 \begin{titlepage}
@@ -47,7 +48,11 @@ Andreas M"uller
 Hochschule f"ur Technik, Rapperswil, 2012
 \end{center}
 \end{titlepage}
-
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    linkcolor=blue
+}
 \newcounter{beispiel}
 \newenvironment{beispiele}{
 \bgroup\smallskip\parindent0pt\bf Beispiele\egroup
@@ -57,6 +62,7 @@ Hochschule f"ur Technik, Rapperswil, 2012
   \setlength{\labelsep}{5mm}
   \setlength{\rightmargin}{0pt}
 }}{\end{list}}
+
 \newenvironment{teilaufgaben}{
 \begin{enumerate}
 \renewcommand{\labelenumi}{\alph{enumi})}
@@ -73,6 +79,11 @@ Hochschule f"ur Technik, Rapperswil, 2012
 \renewenvironment{loesung}{\swallow\begingroup}{\endgroup}%
 }
 
+\newenvironment{beispiel}{%
+\begin{proof}[Beispiel]%
+\renewcommand{\qedsymbol}{$\bigcirc$}
+}{\end{proof}}
+
 \tableofcontents
 \newtheorem{satz}{Satz}[chapter]
 \newtheorem{hilfssatz}{Hilfssatz}[chapter]
@@ -83,8 +94,6 @@ Hochschule f"ur Technik, Rapperswil, 2012
 \input uebersicht.tex
 \input lp.tex
 \input nlp.tex
-\input bb.tex
 \input variation.tex
-\appendix
 \input optimierung.ind
 \end{document}

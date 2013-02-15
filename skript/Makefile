@@ -1,7 +1,7 @@
 #
 # Makefile zum Skript ueber Optimierung
 #
-TEXFILES = lp.tex uebersicht.tex nlp.tex bb.tex variation.tex
+TEXFILES = lp.tex uebersicht.tex nlp.tex variation.tex
 
 optimierung.pdf:	optimierung.tex $(TEXFILES) optimierung.ind 
 	pdflatex optimierung.tex

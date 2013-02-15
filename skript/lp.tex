@@ -1,0 +1,1497 @@
+\chapter{Lineare Optimierung\label{chapter-lineare-optimierung}}
+\lhead{Lineare Optimierung}
+
+\section{Problemstellung\label{lp:section:problem}}
+\rhead{Problemstellung}
+\index{Optimierungsproblem!lineares}
+In einem linearen Optimierungsproblem ist die Kostenfunktion linear
+und die Ungleichungen, die das zul"assige Gebiet definieren, sind
+ebenfalls linear. 
+Die Kostenfunktion ist also von der Form
+\[
+Z=c^tx,\quad c,x\in\mathbb R^n.
+\]
+Da eine lineare Funktion unbeschr"ankt ist, kann ein lineares
+Optimierungsproblem nur dann eine L"osung haben, wenn das zul"assige
+Gebiet beschr"ankt ist, mindestens in Richtung gr"osster Zunahme der
+Kostenfunktion. Es ist daher kaum eine Einschr"ankung, anzunehmen, dass 
+die Variablen $x\in\mathbb R^n$ alle positiv sind. Notfalls kann man 
+das durch addieren einer Konstante oder Vorzeichenwechsel erzwingen.
+
+Die Ungleichungen sind von der Form
+\[
+Ax\le b,
+\]
+wobei $A$ eine $m\times n$-Matrix und $b\in\mathbb R^m$ ist.
+Auch die h"aufig auftretenden Bedingungen $x\ge 0$ k"onnen in
+diese Form gebracht werden: $x_i\ge 0\Leftrightarrow -x_i \le 0$.
+
+Eine lineare Gleichung beschreibt eine Ebene, eine
+lineare Ungleichung demzufolge einen Halbraum. Das zul"assige Gebiet
+eines linearen Optimierungsproblem ist also immer die Schnittmenge
+mehrere Halbr"aume.
+Ein solches Gebiet hat die Eigenschaft, das jeder Punkt der
+Verbindungsstrecke zweier Punkte des Gebietes ebenfalls im Gebiet liegt,
+man nennt ein solches Gebiet konvex.
+In $\mathbb R^2$  ist ein solches Gebiet ein konvexes Polygon,
+in h"oheren Dimensionen ein konvexes Polyeder.
+
+\begin{definition}
+\index{Programm!lineares}
+Ein {\em lineares Programm} ist die Vorgabe einer linearen Zielfunktion
+$c^tx$ und einer Menge von Ungleichungen $Ax\le b$.
+Wir schreiben
+\[
+\max\{c^tx\,|\,Ax\le b\}.
+\]
+f"ur das lineare Programm. Eine L"osung $x^*$ des linearen Programms
+ist ein Vektor so, dass $Ax^*\le b$ und $c^tx^*\ge c^tx$ f"ur jeden
+anderen Vektor $x$ mit $Ax\le b$.
+\end{definition}
+
+\section{Graphische L"osung\label{lp:section:graphisch}}
+\rhead{Graphische L"osung}
+\index{Programm!lineares, graphische L\"osung}
+F"ur nur zwei Variablen l"asst sich ein lineares Optimierungsproblem
+sehr gut visualisieren. Die Ungleichungen
+\[
+Ax\le b
+\]
+definieren ein polygonales Gebiet in der Ebene, das zul"assige Gebiet.
+Wir illustrieren das an den Beispielungleichungen
+\begin{equation}
+\begin{linsys}{2}
+-x&+&3y&\le&12\\
+ x&+&3x&\le&18\\
+4x&+& y&\le&28\\
+-x& &  &\le&0\\
+  & &-y&\le&0
+\end{linsys}
+\label{lp-beispiel-ungleichungen}
+\end{equation}
+Sie definieren das Gebiet $G$ in Abbildung \ref{lp-beispiel}.
+Die letzten zwei Gleichungen dr"ucken aus, dass $x\ge 0$ und $y\ge 0$.
+\begin{figure}
+\begin{center}
+\includegraphics[width=\hsize]{images/lp-1}
+\end{center}
+\caption{Zul"assiges Gebiet f"ur die Ungleichungen
+(\ref{lp-beispiel-ungleichungen})\label{lp-beispiel}}
+\end{figure}
+
+Die Zielfunktion ist ebenfalls linear, f"ur das Beispielgebiet
+(\ref{lp-beispiel-ungleichungen}) verwenden wir die Zielfunktion
+\begin{equation}
+Z=2x+3y
+\label{lp-beispiel-zielfunktion}
+\end{equation}
+\begin{figure}
+\begin{center}
+\includegraphics[width=\hsize]{images/lp-2}
+\end{center}
+\caption{Zul"assiges Gebiet mit Graph der Zielfunktion f"ur verschiedene
+Zielwerte. Zielwert $Z=24$ ist optimal, er wird angenommen im
+Punkt $(6,4)$.
+\label{lp-beispiel-zielfunktion}}
+\end{figure}%
+In Abbildung \ref{lp-beispiel-zielfunktion} sind die Geraden $Z=\operatorname{const}$
+f"ur einige Werte der Zielfunktion eingezeichnet.
+Man kann ablesen, dass das Optimum im Schnittpunkt der Geraden
+beschrieben durch die beiden Gleichungen
+\begin{equation}
+\begin{linsys}{2}
+x&+&3x&=&18\\
+4x&+&y&=&28
+\end{linsys}
+\notag
+\end{equation}
+angenommen wird. Sie beschreiben den Rand der Halbebenen, die die
+zweite und dritte Ungleichung von (\ref{lp-beispiel-ungleichungen}) 
+beschreiben.
+Die L"osung des Gleichungssystems liefert die optimalen Koordinaten
+$(6,3)$.
+
+\section{Das duale Problem\label{lp:section:dual}}
+\rhead{Das duale Problem}
+\index{Programm!duales lineares}
+Aus der graphischen L"osung l"asst sich noch mehr ableiten.
+Die L"osung hat man gefunden, wenn sich die Gerade der Zielfunktion
+nicht mehr weiter zu gr"osseren Werten von $Z$ verschieben l"asst, ohne
+dass sie das zul"assige Gebiet $G$ gar nicht mehr schneidet.
+Es darf also in Richtung der Normalen $\vec n_Z$ der Zielfunktion keine Punkte
+des Gebietes $G$ mehr geben. Oder anders ausgedr"uckt: f"ur jede
+Halbebene, deren Rand durch die L"osungsecke geht, muss die Normale der
+Zielfunktion ausserhalb der Halbebene liegen.
+Die Normale der Zielfunktion muss sich also linear aus den Normalen
+der Halbebenen kombinieren lassen, aber {\em mit positiven} Koeffizienten.
+In der Abbildung~\ref{lp:normalen} sind in der N"ahe des Optimums beim
+Schnittpunkt der durch die Ungleichungen 2 und 3 definierten Geraden
+die zugeh"origen Normalen mit $\vec n_2$ und $\vec n_3$ bezeichnet.
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-3.pdf}
+\end{center}
+\caption{Normalen von Zielfunktion und Rand in der Umgebung eines Optimums.
+Die Normale $\vec n_Z$ der Zielfunktion muss im grau eingezeichneten
+Sektor liegen, also eine positive Linearekombination von $\vec n_2$ und
+$\vec n_3$ sein.
+\label{lp:normalen}}
+\end{figure}
+
+Die Halbebenen, deren Rand eine Ecke nicht trifft, wird nicht verwendet,
+in einer Linearkombination von normalen gehen diese also mit dem
+Koeffizienten $0$ ein.
+
+Die Normale der Zielfunktion ist der Vektor aus den Koeffizienten, also $c$,
+die Normale der Halbr"aume sind die einzelnen Zeilen von $A$.
+Gesucht sind also Zahlen $\mu_1,\dots,\mu_m\ge 0$ so, dass
+\begin{center}
+\begin{tabular}{>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}}
+&\mu_1\cdot&a_{11}&\dots&a_{1n}\\
++&\vdots&\vdots&\ddots&\vdots\\
++&\mu_m\cdot&a_{m1}&\dots&a_{mn}\\
+\hline
+=&&c_1&\dots&c_n
+\end{tabular}
+\end{center}
+als Gleichungssystem geschrieben
+\begin{equation}
+\begin{linsys}{3}
+a_{11}\mu_1&+&\dots&+&a_{m1}\mu_m&=&c_1\\
+\vdots&&\ddots&&\vdots&&\vdots\\
+a_{1n}\mu_1&+&\dots&+&a_{mn}\mu_m&=&c_n\\
+\end{linsys}
+\end{equation}
+Schreiben wir $\mu$ f"ur den Spaltenvektor der $\mu_1,\dots,\mu_m$,
+k"onnen wir die Bedingung in Matrixform bringen:
+\[
+A^t\mu=c
+\qquad
+\text{oder}
+\qquad
+\mu^tA=c^t.
+\]
+Es verschwinden genau diejenigen $\mu_i$ f"ur die die zugeh"origen
+Ungleichungen $a_{i1}x_1+\dots+a_{in}x_n\le b_i$ nicht exakt
+erf"ullt sind.
+W"ahlt man also einen anderen Punkt $x$ als das Optimum muss
+gelten
+\[
+\mu_i (b_i - a_{i1}x_1-\dots-a_{in}x_n)\ge 0
+\qquad
+\Rightarrow
+\qquad
+\mu_i b_i \ge \mu_i(a_{i1}x_1+\dots+a_{in}x_n),
+\]
+oder in Matrixform
+\[
+\mu^t b \ge \mu^tAx=c^tx,
+\]
+mit Gleichheit genau dann, wenn wir f"ur $x$ des Optimum nehmen.
+Der kleinstm"ogliche Wert von $\mu^tb$ ist also das Maximum von $c^tx$.
+\begin{definition}
+Ist $\max\{c^tx\,|\, Ax\le b\}$ ein lineares Programm, dann heisst
+\[
+\min\{\mu^t b\,|\, \mu^tA= c^t,\mu\ge 0\}
+\]
+das dazu duale lineare Programm.
+\end{definition}
+Das duale Problem hat $m$ Ungleichungen und $n$ Gleichungen.
+Der "Ubergang zum dualen Problem macht also aus einem Problem mit $m$ 
+Ungleichungen und $n$ Unbekannten ein Problem mit $n$ Gleichungen,
+$m$ (einfachen) Ungleichungen, und $m$ Unbekannten.
+Aus einem Problem mit vielen Variablen und wenigen Ungleichungen wird
+ein Problem mit wenigen Variablen und Ungleichungen und vielen Gleichungen.
+Da wir f"ur Gleichungen im Gauss-Algorithmus einen effizienten Helfer haben,
+kann das eine bedeutende Vereinfachung sein.
+
+Das duale Problem liefert den gleichen Extremwert.
+Sofern man also nur am Maximum interessiert ist, und nicht an den $x$-Werten,
+f"ur die es zustande kommt, dann liefert das duale Problem bereits die
+L"osung.
+
+Das duale Problem liefert aber nicht nur den Extremwert, sondern
+auch die Information, welche Gleichungen exakt erf"ullt sind.
+Es sind ja genau diejenigen $\mu_i$ von $0$ verschieden, deren
+zugeh"orige Ungleichungen exakt erf"ullt sind. Wenn man also
+das duale Problem gel"ost hat, findet man die L"osung des urspr"unglichen
+Problems durch l"osen der Gleichungen, die zu den von $0$ verschiedenen
+$\mu_i$ geh"oren.
+
+Etwas genauer gilt folgender Satz:
+\begin{satz}
+Ist $\max\{c^tx\,|\, Ax\le b\}$ ein lineares Programm und 
+$\min\{\mu^tb\,|\, \mu^t A=c, \mu \ge 0\}$ das zugeh"orige duale Problem,
+dann sind "aquivalent
+\begin{compactenum}
+\item $x$ und $\mu$ sind L"osungen
+\item $c^tx=\mu^tb$
+\item $\mu^t(b-Ax)=0.$
+\end{compactenum}
+\end{satz}
+
+\begin{beispiel}
+Wir formulieren das zum linearen Programm
+(\ref{lp-beispiel-ungleichungen})
+und
+(\ref{lp-beispiel-zielfunktion})
+duale Programm. Zu minimieren ist die Funktion
+\begin{equation}
+12\mu_1+18\mu_2+28\mu_3
+\label{dual-lp-zielfunktion}
+\end{equation}
+unter den Bedingungen
+\begin{equation}
+\begin{linsys}{5}
+- \mu_1&+& \mu_2&+&4\mu_3&-&\mu_4& &      &=2\\
+ 3\mu_1&+&3\mu_2&+& \mu_3& &     &-& \mu_5&=3
+\end{linsys}
+\label{lp-dual-gleichungen}
+\end{equation}
+und
+\begin{equation}
+\mu_i\ge 0,\quad 1\le i\le 5.
+\label{lp-dual-ungleichungen}
+\end{equation}
+Verwenden wir, dass wir aus der graphischen L"osung bereits wissen,
+dass nur die zweite und dritte urspr"ungliche Ungleichung von Bedeutung
+ist, dann folgt $\mu_1=\mu_4=\mu_5=0$ und es bleibt das Gleichungssystem
+\[
+\begin{linsys}{2}
+ \mu_2&+&4\mu_3&=&2\\
+3\mu_2&+& \mu_3&=&3
+\end{linsys}
+\]
+mit L"osung $\mu_2=\frac{10}{11}$ und $\mu_3=\frac{3}{11}$.
+Das Minimum ist also
+\[
+\mu^tb=\begin{pmatrix}0&0&\frac{10}{11}&\frac{3}{11}&0\end{pmatrix}
+\begin{pmatrix}12\\18\\28\\0\\0\end{pmatrix}
+=
+\frac{18\cdot 10}{11}+\frac{28\cdot 3}{11}=\frac{180+84}{11}=\frac{264}{11}=24,
+\]
+wie schon in der graphischen L"osung gefunden.
+\end{beispiel}
+
+\section{Von Ungleichungen zu Gleichungen\label{lp:section:ungleichungen}}
+\rhead{Von Ungleichungen zu Gleichungen}
+Die graphische L"osung hat gezeigt, dass der L"osungsvektor eines
+linearen Optimierungsproblems immer einige der Ungleichungen exakt
+erf"ullt. Die L"osung kann also in zwei Schritten gefunden werden:
+\begin{compactenum}
+\item Herausfinden, welche Ungleichungen exakt erf"ullt sein m"ussen.
+\item Mit diesen Gleichungen ein lineares Gleichungssystem l"osen.
+\end{compactenum}
+Die L"osung des Gleichungssystems im zweiten Schritt l"asst sich mit
+dem Gauss-Algorithmus sehr effizient finden. Das Hauptproblem ist also
+der erste Schritt.
+
+DIe Hauptschwierigkeit ist dabei, dass wir mit Ungleichungen zu tun
+haben.
+F"ur die Bestimmung von L"osungsmengen von Ungleichungen gibt
+es kaum gut bekannte Verfahren.
+Ein Zwischenschritt kann sein, das System von Ungleichungen in
+ein System von Gleichungen umzuwandeln.
+Die Idee: verwende die Abweichung von der Gleichheit als zus"atzliche
+Unbekannte.
+
+Die ersten drei der Ungleichungen (\ref{lp-beispiel-ungleichungen})
+k"onnen durch
+Einf"uhrung zus"atzlicher Variablen $s_1,\dots,s_3$ in die Gleichungen
+\begin{equation}
+\begin{linsys}{5}
+-x&+&3y&+&s_1& &   & &   &=&12\\
+ x&+&3y& &   &+&s_2& &   &=&18\\
+4x&+& y& &   & &   &+&s_3&=&28
+\end{linsys}
+\label{lp-ungleichungen-schlupf}
+\end{equation}
+umgewandelt werden.
+Die Variablen $s_i$ heissen {\em Schlupfvariablen}
+\index{Schlupfvariablen}
+Die Variable $s_i$ gibt wieder, wie weit entfernt von der Gleichheit
+die Ungleichung Nummer $i$ ist.
+Nat"urlich muss $s_i\ge 0$ sein.
+Ist die Variable $s_i=0$, dann ist die Ungleichung exakt erf"ullt.
+Schritt~1 l"auft also darauf hinaus, dass festgestellt werden muss,
+welche der Variablen $s_i$ verschwinden.
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-8.pdf}
+\end{center}
+\caption{Ecken des zul"assigen Gebietes werden charakterisiert durch
+die Variablen die verschwinden.
+\label{lp:corners}}
+\end{figure}
+F"ur die Bestimmung des Optimums m"ussen die Ecken des Gebietes 
+untersucht werden. Die Variablen $s_i$ geben an, ob ein Punkt auf
+der Randgeraden der durch die zugeh"orige Ungleichung definierten
+Halbebene liegt.
+Ist $s_i=0$, dann liegt der Punkt auf der zugeh"origen Randgeraden.
+Analog geben die Variablen $x$ und $y$ an, ob der Punkt auf der
+$x$- oder $y$-Achsen liegt. Die Ecken des zul"assigen Gebietes
+werden also durch die Variablen charakterisiert, die verschwinden,
+wie in Abbildung~\ref{lp:corners} dargestellt.
+
+Damit haben wir das lineare Programm auf ein neues Problem reduziert.
+Schreiben wir $y$ f"ur die Vektoren bestehend aus den $x_i$ und den $s_i$,
+und
+\begin{align*}
+A'&=\begin{pmatrix}
+a_{11}&\dots &a_{1n}&1&\dots&0\\
+\vdots&\ddots&\vdots&\dots&\ddots&\vdots\\
+a_{m1}&\dots &a_{mn}&0&\dots&1
+\end{pmatrix}
+=\begin{pmatrix}A&E\end{pmatrix}
+\\
+c'&=\begin{pmatrix}x_1\\\vdots\\x_n\\0\\\vdots\\0\end{pmatrix},
+\end{align*}
+dann ist das urspr"ungliche lineare Programm
+\[
+\max\{ c^tx\,|\, Ax\le b\}
+\]
+"aquivalent zu einem neuen linearen Programm
+\[
+\max\{ c'^ty\,|\, A'y=b, y\ge 0\},
+\]
+welches nur noch einfache Ungleichungen hat.
+Das neue lineare Programm hat $n+m$ Unbekannte, $m$ Gleichungen
+und $n+m$ Ungleichungen.
+
+Man beachte, dass das duale lineare Programm
+ebenfalls ein lineares Programm "ahnlicher Struktur ist mit zus"atzlichen
+Gleichungen, aber daf"ur nur mit einfachen Ungleichungen der Form
+$\mu_i\ge 0$.
+
+Die L"osung des Optimierungsproblems ist auf dem Rand des
+zul"assigen Gebietes zu finden.
+Die Ecken des Gebietes sind Schnittpunkt zweier Gleichungen.
+Sie werden also dadurch bestimmt, dass zwei Variablen 
+Null gesetzt werden, die verbleibenden drei Variablen
+lassen sich dann mit Hilfe des Gauss-Algorithmus bestimmen.
+Die oben graphisch gefundene L"osung entspricht der
+Wahl $s_2=0$ und $s_3=0$.
+
+Die Zielfunktion $Z$ ist eine lineare Funktion von $x$ und $y$.
+Da drei Variablen eindeutig bestimmt sind, sobald zwei der
+Variablen festgelegt sind, muss sich auch $Z$ durch diese beiden
+Variablen ausdr"ucken lassen.
+Um diesen Ausdruck zu finden,
+kann man den Gauss-Algorithmus
+verwenden, wenn man $Z$ als zus"atzliche erste Variable betrachtet.
+Das zugeh"orige Gaustableau ist dann
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x&y&s_1&s_2&s_3& \\
+\hline
+1&-2&-3& 0& 0& 0& 0\\
+\hline
+0&-1& 3& 1& 0& 0&12\\
+0& 1& 3& 0& 1& 0&18\\
+0& 4& 1& 0& 0& 1&28\\
+\hline
+\end{tabular}
+\]
+Die erste Zeile ist die Zielfunktion, die unteren drei Zeilen codieren die
+Ungleichungen.
+
+F"uhrt man jetzt den Gaussalgorithmus durch, erh"alt man
+\begin{align*}
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3& 0& 0& 0&  0\\
+\hline
+ 0& 1&-3&-1& 0& 0&-12\\
+ 0& 0& 6& 1& 1& 0& 30\\
+ 0& 0&13& 4& 0& 1& 76\\
+\hline
+\end{tabular}
+&&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3&      0    &      0    & 0&  0\\
+\hline
+ 0& 1&-3&     -1    &      0    & 0&-12\\
+ 0& 0& 1&\frac16    &\frac16    & 0&  5\\
+ 0& 0& 0&\frac{11}6 &-\frac{13}6& 1& 11\\
+\hline
+\end{tabular}
+\\
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2&-3&          0&             0&            0&  0\\
+\hline
+ 0& 1&-3&          0&-\frac{13}{11}& \frac{6}{11}& -6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+&&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1&-2& 0&          0& \frac{12}{11}&-\frac{3}{11}& 12\\
+\hline
+ 0& 1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+\\
+&\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ 1& 0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+ 0& 1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+ 0& 0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+ 0& 0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+\end{tabular}
+\end{align*}
+Aus dem letzten Tableau kann man die vollst"andige L"osung
+des Optimierungsproblems ablesen. Das Optimum wird angenommen
+f"ur $x=6$ und $y=4$, die erste der drei Ungleichungen ist
+nicht scharf erf"ullt, und der optimale Wert der Zielfunktion
+\[
+Z=24-\frac{10}{11}s_2-\frac{3}{11}s_3
+\]
+ist $24$.
+
+Ebenso kann man ablesen, dass sich der Wert der Zielfunktion
+nicht mehr verbessern l"asst.
+Dazu m"usste man n"amlich notwendigerweise $s_2$ oder $s_3$
+vergr"ossern, und beides w"urde den Wert der Zielfunktion verringern.
+
+Im allgemeinen Fall eines linearen Optimierungsproblems mit $n$
+Unbekannten und $m$ Ungleichungen ist also ein Gleichungssystem
+zu l"osen mit $n+m+1$ Variablen ($n$ Variablen, $m$ Schlupfvariablen und
+$Z$) und $m+1$ Gleichungen zu l"osen.
+Dabei sind $(n+m+1)-(m+1)=n$ Variablen frei w"ahlbar.
+Sobald man weiss, welche $n$ Variablen frei gew"ahlt werden k"onnen,
+kann das Problem mit dem Gauss-Algorithmus gel"ost werden.
+Ob man tats"achlich eine L"osung gefunden hat, kann man daran
+erkennen, ob alle Koeffizienten in der $Z$-Zeile des Gauss-Tableau
+positiv sind.
+
+\section{Simplex-Algorithmus\label{lp:section:simplex}}
+\rhead{Simplex-Algorithmus}
+\subsection{L"osungsprinzip}
+Der Simplex-Algorithmus l"ost das Problem, die $n$ Variablen
+zu bestimmen, die auf $0$ gesetzt werden k"onnen, um die L"osung
+des Optimierungsproblems zu finden.
+Kennt man bereits einen noch nicht optimalen Eckpunkt des zul"assigen
+Gebietes, dann gibt es mindestens einen benachbarten Eckpunkt,
+der die Funktion $Z$ vergr"ossert.
+Man kann also von Ecke zu Ecke den Kanten des zul"assigen
+Gebietes folgen, bis sich die Zielfunktion nicht mehr vergr"ossern
+l"asst. Dies ist das Prinzip des Simplex-Algorithmus.
+
+Die benachbarte Ecke erf"ullt bis auf eine Gleichung alle
+Gleichungen der aktuellen Ecke.
+Ausserdem erf"ullt sie eine Gleichung, die aktuelle Ecke nicht
+erf"ullt.
+Aus einer Menge der Variablen, die f"ur den urspr"unglichen
+Eckpunkt auf $0$ gesetzt werden m"ussen, muss eine Variable
+entfernt werden, und daf"ur eine neue Variable hinzugef"ugt
+werden, die bisher $>0$ war.
+Der Simplex-Algorithmus muss also in jedem Schritt entscheiden,
+welche der frei w"ahlbaren Variablen durch welche andere 
+Variable ersetzt werden soll.
+
+\subsection{Beispiel}
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-7.pdf}
+\end{center}
+\caption{Austauschschritte im Simplex-Algorithmus
+\label{lp:simplex-steps}}
+\end{figure}
+Wir f"uhren dies am Beispiel (\ref{lp-beispiel}) und 
+(\ref{lp-beispiel-zielfunktion}) durch, die einzelnen Schritte
+sind in Abbildung~\ref{lp:simplex-steps} graphisch dargestellt.
+Die Ecke $(0,0)$ ist im zul"assigen Gebiet, sie entspricht
+der Menge $\{x,y\}$ der frei w"ahlbaren Variablen. Das zugh"orige
+Gauss-Tableau ist
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x&y&s_1&s_2&s_3&\\
+\hline
+1&-2&-3& 0& 0& 0& 0\\
+\hline
+0&-1& 3& 1& 0& 0&12\\
+0& 1& 3& 0& 1& 0&18\\
+0& 4& 1& 0& 0& 1&28\\
+\hline
+ & *& *&  &  &  &  \\
+\hline
+\end{tabular}
+\]
+
+Zur Verbesserung des Resultats muss jetzt eine der Variablen $x,y$
+durch eine der Variablen $s_1,s_2, s_3$ ersetzt werden. Beide
+Koeffizienten von $x$ und $y$ in der Zielfunktion sind negativ, 
+beide Variablen kommen also daf"ur in Frage, ersetzt zu werden.
+Der Koeffizient von $y$ ist jedoch kleiner, so dass die Wahl von $y$
+eine gr"ossere Verbesserung der Zielfunktion verspricht, als die
+Wahl von $x$ als auszutauschender Variablen.
+
+Ersetzt man $y$ durch die Variable $s_i$, dann zeigt Gleichung
+$i$ an, wie gross $s_i$ gemacht werden kann, um zur n"achsten Ecke
+zu gelangen:
+\begin{align*}
+s_1&=0&\Rightarrow&& y&= \frac{12}3=4
+\\
+s_2&=0&\Rightarrow&& y&= \frac{18}3=6
+\\
+s_3&=0&\Rightarrow&& y&= 28
+\\
+\end{align*}
+Die n"achste Ecke wird also erreicht, wenn man f"ur $x$ den
+Wert $7$ nimmt, was geschieht, wenn man $s_1=0$ setzt.
+Es muss also $y$ gegen $s_1$ ausgetauscht werden.
+
+Neu soll jetzt also $s_1$ eine frei w"ahlbare Variable werden, man
+erreicht dies mit Hilfe eines Gauss-Schrittes, der das Element $-1$
+in der zweiten Zeile und der zweiten Spalte zu $1$ macht und die "ubrigen
+Elemente dieser Spalte zu $0$:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&        -3& 0&       1& 0& 0& 12\\
+\hline
+0&  -\frac13& 1& \frac13& 0& 0&  4\\
+0&         2& 0&      -1& 1& 0&  6\\
+0&\frac{13}3& 0&-\frac13& 0& 1& 24\\
+\hline
+ & *&  & *&  &  &  \\
+\hline
+\end{tabular}
+\]
+Weil nicht alle Koeffizienten in der ersten Zeile positiv sind,
+ist dies noch nicht die optimale L"osung.
+
+Im n"achsten Schritt muss die Variable $x$ ersetzt werden, zur 
+Auswahl stehen $y$, $s_2$ und $s_3$.
+\begin{align*}
+  y&=0&\Rightarrow&& -x&= 12
+\\
+s_2&=0&\Rightarrow&&  x&= \frac{6}{2} = 3
+\\
+s_3&=0&\Rightarrow&&  x&= \frac{72}{13}
+\end{align*}
+Damit die Ecke weiterhin im zul"assigen Bereich bleibt, ist $s_2=0$
+die verbleibende Ecke, also muss $y$ gegen $s_2$ ausgetauscht werden.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&   -\frac12&    \frac32&      0& 21\\
+\hline
+0&         0& 1&    \frac16&    \frac16&      0&  5\\
+0&         1& 0&   -\frac12&    \frac12&      0&  3\\
+0&         0& 0& \frac{11}6&-\frac{13}6&      1& 11\\
+\hline
+ &  &  & *& *&  &  \\
+\hline
+\end{tabular}
+\]
+Jetzt zeigt sich, dass $s_1$ ausgetauscht werden muss. 
+\begin{align*}
+  y&=0&\Rightarrow&& s_1&= 30
+\\
+  x&=0&\Rightarrow&& -s_1&= 6
+\\
+s_3&=0&\Rightarrow&& s_1&= 6
+\end{align*}
+Limitierend ist diesmal die dritte Gleichung. Also muss $s_1$ gegen
+$s_3$ ausgetauscht werden.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+0&         0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+0&         1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+0&         0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+ &          &  &           &             *&            *&  \\
+\hline
+\end{tabular}
+\Leftrightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+1&         0& 0&          0& \frac{10}{11}& \frac{3}{11}& 24\\
+\hline
+0&         1& 0&          0& -\frac{1}{11}& \frac{3}{11}&  6\\
+0&         0& 1&          0&  \frac{4}{11}&-\frac{1}{11}&  4\\
+0&         0& 0&          1&-\frac{13}{11}& \frac{6}{11}&  6\\
+\hline
+ &          &  &           &             *&            *&  \\
+\hline
+\end{tabular}
+\]
+Dieses Verfahren hat die gleiche L"osung gefunden wie das
+graphische Verfahren.
+
+\subsection{Austauschschritte\label{lp:subsection:austausch}}
+\index{Austauschschritt}
+Das lineare Programm
+\[
+\max\{ c^tx\,|\, Ax\le b, x\ge 0\}
+\]
+entspricht dem Tableau
+\begin{equation}
+\begin{tabular}{|
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}|}
+\hline
+Z&x_1&\dots&x_n&s_1&\dots&s_m&\\
+\hline
+1&-c_1&\dots&-c_2&0&\dots&0&0\\
+\hline
+0&a_{11}&\dots&a_{1n}&1&\dots&0&b_1\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&a_{m1}&\dots&a_{mn}&0&\dots&1&b_m\\
+\hline
+% &*&\dots&*& && & \\
+%\hline
+\end{tabular}
+\end{equation}
+Wir nehmen zun"achst an, dass der Punkt $x_i=0$, $i=1,\dots,n$ 
+im zul"assigen Gebiet liegt.
+Die Variablen $x_1,\dots,x_n$ sind also die frei w"ahlbar, die
+Schlupfvariablen $s_1,\dots,s_m$ sind durch die Wahl der
+$x_i$ bestimmt.
+Wir symbolisieren dies durch Markierung der Variablen $x_i$ mit
+Sternen in der untersten Zeile:
+\begin{equation}
+\begin{tabular}{|
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}
+>{$}c<{$}
+>{$}c<{$}|
+>{$}c<{$}|}
+\hline
+Z&x_1&\dots&x_n&s_1&\dots&s_m&\\
+\hline
+1&-c_1&\dots&-c_2&0&\dots&0&0\\
+\hline
+0&a_{11}&\dots&a_{1n}&1&\dots&0&b_1\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&a_{m1}&\dots&a_{mn}&0&\dots&1&b_m\\
+\hline
+ &*&\dots&*& && & \\
+\hline
+\end{tabular}
+\end{equation}
+
+Der Simplex-Algorithmus muss in jedem Schritt entscheiden,
+welche der ausgew"ahlten Variablen durch welche andere Variable
+ersetzt werden soll.
+Danach muss ein Gauss-Schritt mit dieser Variablen durchgef"uhrt werden,
+so dass alle abh"angigen Variablen durch neu als frei w"ahlbaren Variablen
+festgelegten ausgedr"uckt werdne. Nach einigen Schritten wird man also
+ein Tableau der Form
+\begin{equation}
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&y_1&y_2&y_3&\dots&y_n& \\
+\hline
+1&\tilde c_1&\tilde c_2&\tilde c_3&\dots&\tilde c_n&\tilde Z\\
+\hline
+&\tilde a_{11}&\tilde a_{12}&\tilde a_{13}&\dots&\tilde a_{1n}&\tilde b_1\\
+&\tilde a_{21}&\tilde a_{22}&\tilde a_{23}&\dots&\tilde a_{2n}&\tilde b_2\\
+&\vdots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+&\tilde a_{m1}&\tilde a_{m2}&\tilde a_{m3}&\dots&\tilde a_{mn}&\tilde b_m\\
+\hline
+& &*& &\dots&*&\\
+\hline
+\end{tabular}
+\end{equation}
+Wir haben die Bezeichnung der Variablen vereinheitlicht, und unterschieden
+nicht mehr zwischen $x_i$ und $s_j$.
+Mit einem Stern bezeichnete Spalten sind frei w"ahlbar. Setzt man diese
+Variablen auf $0$, findet man die Koordinaten der zugeh"origen Ecke
+des zul"assigen Gebietes. Die Spalten, die nicht mit $*$ bezeichnet sind,
+enthalten nur $0$ und genau eine $1$.
+
+Auf Grund dieses Tableau muss jetzt entschieden
+werden, zu welcher Ecke im n"achsten Schritt weitergewandert werden soll,
+d.\,h.~welche der Variablen im n"achsten Schritt neu frei w"ahlbar
+sein sollen, und welche nicht mehr. 
+
+Jede Variable, f"ur die in der Zeile der Zielfunktion ein negativer
+Koeffizient vorliegt, ist ein Austauschkandidat. Welche Variable
+man w"ahlt ist eigentlich gleichg"ultig, und es gibt eine breite Literatur
+dar"uber, durch welche Wahl die Laufzeit des Algorithmus
+optimiert werden kann.
+Eine einfache Regel ist, diejenige Variable zu w"ahlen, zu der der
+betragsm"assig gr"osste Koeffizient in der Zeile der Zielfunktion
+steht. Sie $j$ die Spalte, die neu frei w"ahlbar sein soll.
+
+Jetzt muss eine der bisher abh"angigen Variablen gew"ahlt werden.
+Dazu pr"ufen wir jeden m"oglichen Kandidaten $y_k$. Es gibt genau
+eine Gleichung $l$, f"ur welche $\tilde a_{lj}=1$ gilt.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&\dots &y_j           &\dots&y_k   &\dots  & \\
+\hline
+&\dots &\tilde a_{1j} &\dots& 0    & \dots &\tilde b_1\\
+&      &\vdots        &     &\vdots&       &\vdots    \\
+&\dots &\tilde a_{lj} &\dots& 1    & \dots &\tilde b_l\\
+&      &\vdots        &     &\vdots&       &\vdots    \\
+&\dots &\tilde a_{mj} &\dots& 0    & \dots &\tilde b_m\\
+\hline
+&      &*             &     &      &       &          \\
+\hline
+\end{tabular}
+\]
+Diese Gleichung legt fest, wie gross $y_j$ werden kann. Wenn $y_k$
+neue $=0$ sein soll, dann gilt offenbar
+\[
+y_j =\frac{\tilde b_{l}}{\tilde a_{lj}}.
+\]
+Es sind also alle Quotienten $\frac{\tilde b_l}{\tilde a_{lj}}$ auszurechnen
+und derjenige Auszuw"ahlen, der den kleinsten positiven Wert f"ur $y_j$ ergibt.
+Dann ist jene Variable $y_k$ zu w"ahlen, f"ur die $\tilde a_{lk}=1$.
+Dann wird ein Austauschschritt mit dieser Variablen vollzogen:
+D.\,h.~es wird die Zeile $l$ durch $\tilde a_{lj}$ geteilt:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&\dots &y_j           &\dots&y_k   &\dots           & \\
+\hline
+&\dots &\tilde a_{1j} &\dots& 0    & \dots          &\tilde b_1\\
+&      &\vdots        &     &\vdots&                &\vdots    \\
+&\dots &1             &\dots&\frac{1}{\tilde a_{lj}}& \dots &\frac{\tilde b_l}{\tilde a_{lj}}\\
+&      &\vdots        &     &\vdots&                &\vdots    \\
+&\dots &\tilde a_{mj} &\dots& 0    & \dots          &\tilde b_m\\
+\hline
+\end{tabular}
+\]
+Dann wird in jeder anderen Zeile das $\tilde a_{kj}$-fache der $l$-ten
+Zeile subtrahiert, analog auch in der Zeile der Zielfunktion:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&\dots &y_j           &\dots&y_k   &\dots           & \\
+\hline
+&\dots &0             &\dots&\tilde c_k-\frac{\tilde c_j}{\tilde a_{lj}}&\dots    &\tilde Z-\frac{\tilde c_j}{\tilde a_{lj}}\tilde b_l\\
+\hline
+&\dots &0             &\dots&-\frac{\tilde a_{1j}}{\tilde a_{lj}}& \dots          &\tilde b_1-\frac{\tilde a_{1j}}{\tilde a_{lj}}\tilde b_l\\
+&      &\vdots        &     &\vdots&                            &\vdots    \\
+&\dots &1             &\dots&\frac{1}{\tilde a_{lj}}            & \dots &\frac{\tilde b_l}{\tilde a_{lj}}\\
+&      &\vdots        &     &\vdots&                            &\vdots    \\
+&\dots &0             &\dots&-\frac{\tilde a_{mj}}{\tilde a_{lj}}& \dots          &\tilde b_m-\frac{\tilde a_{mj}}{\tilde a_{lj}}\tilde b_l\\
+\hline
+&      &              &     &       *                            &                &\\
+\hline
+\end{tabular}
+\]
+Damit ist jetzt die Variable $y_k$ eine frei w"ahlbare Variable geworden.
+
+\section{Anfangsecke\label{lp:section:anfang}}
+\index{Anfangsecke}
+Der Algorithmus im letzten Abschnitt hat nur funktioniert, weil wir
+davon ausgehen konnten, dass wir zu Beginn die Variablen $x_1=\dots=x_n=0$
+setzen k"onnen, ohne das zul"assige Gebiet zu verlassen. Wir befinden
+uns also zu Beginn mit dieser Wahl bereits auf einer Ecke.
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-4.pdf}
+\caption{Zul"assiges Gebiet des Beispiels
+(\ref{lp:gebiet2quadrant-ungl}), es git keine L"osung mit $x\ge0$ und $y\ge 0$,
+und die Ecke $(0,0)$ ist nicht zul"assig.
+\label{lp:gebiet2quadrant}}
+\end{center}
+\end{figure}
+Im allgemeinen wird dies nicht so sein. Das Gebiet beschrieben durch
+die Ungleichungen
+\begin{equation}
+\begin{linsys}{2}
+-x_1&-&x_2&\le&1\\
+ x_1& &   &\le&-1\\
+    & &x_2&\le&1
+\end{linsys}
+\label{lp:gebiet2quadrant-ungl}
+\end{equation}
+enth"alt zum Beispiel den Punkt $(0,0)$ nicht, siehe
+Abbildung~\ref{lp:gebiet2quadrant}. Ausserdem ist es vollst"andig
+im zweiten Quadranten enthalten, es gibt also gar keine zul"assigen 
+Punkte mit $x_1\ge 0$ und $x_2\ge 0$. 
+
+Das Bespiel illustriert, dass wir mit folgenden Problemen fertig werden
+m"ussen:
+\begin{compactenum}
+\item Das Gebiet ist nicht in $x_i\ge 0$ enthalten.
+\item Der Nullpunkt ist kein zul"assiger Punkt.
+\end{compactenum}
+
+\subsection{Negative Variablen}
+Unsere Beschreibung des Simplex-Algorithmus ging davon aus, dass die
+Variablen $x_i\ge 0$ sind.
+Im Allgemeinen k"onnen die Variablen aber jedes beliebige Vorzeichen
+haben.
+W"ussten wir bereits, dass zum Beispiel die Variable $x_3$ negativ ist,
+k"onnten wir sie durch $-x_3$ ersetzen.
+Da wir dies aber noch nicht wissen, verdoppeln wir die Anzahl der
+Variablen, und lassen sie je in einer positiven und negativen
+Variante zu. Die Variablen sind jetzt also
+$(y_1,\dots,y_n,z_1,\dots,z_n)$, wobei $y_i\ge 0$ und $z_i\ge 0$.
+Die urspr"unglichen Variablen erh"alt man dann als Differenz
+$x=y-z$ zur"uck.
+Die Zielfunktion ist dann $c^tx=c^t(y-z)$ und die Ungleichungen
+werden $A(y-z)=Ay-Az\le b$. Wir erhalten also ein neues lineares Programm
+\begin{equation}
+\max
+\left\{
+\begin{pmatrix}c^t&-c^t\end{pmatrix}
+\begin{pmatrix}y\\z\end{pmatrix}\,\left|\,
+\begin{pmatrix}A&-A\end{pmatrix}\begin{pmatrix}y\\z\end{pmatrix}\le 0, y\ge 0, z\ge 0
+\right.
+\right\}.
+\label{lp:nonegative}
+\end{equation}
+Dieses lineare Programm f"uhrt auf die gleichen Extrema wie das urspr"ungliche
+lineare Programm. Indem wir notfalls die Transformation 
+(\ref{lp:nonegative}) durchf"uhren d"urfen wir also annehmen, dass
+das zu l"osende lineare Programm eine L"osung mit $x_i\ge 0\forall i$ hat.
+
+\begin{beispiel}
+F"ur das Beispiel (\ref{lp:gebiet2quadrant-ungl}) ergeben sich neu die 
+Ungleichungen
+\begin{equation}
+\begin{linsys}{4}
+-y_1&-&y_2&+&z_1&+&z_2&\le&1\\
+ y_1& &   &-&z_1& &   &\le&-1\\
+    & &y_2& &   &-&z_2&\le&1
+\end{linsys}
+\qquad
+\Leftrightarrow
+\qquad
+\begin{pmatrix}
+-1&-1&1&1\\
+1&0&-1&0\\
+0&1&0&-1
+\end{pmatrix}
+\begin{pmatrix}y_1\\y_2\\z_1\\z_2\end{pmatrix}
+\le 
+\begin{pmatrix}1\\-1\\1\end{pmatrix}
+\notag
+\end{equation}
+\end{beispiel}
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-5.pdf}
+\end{center}
+\caption{Transformation eines Gebietes mit negativen Koordinaten
+in ein Gebiet doppelter Dimension mit positiven Koordinaten.
+Aus dem eindimesionalen Gebiet $G_1$ wird in einem ersten
+Schritt das zweidimensionale Gebiet $G_2$.
+\label{lp:transform-negative1}}
+\end{figure}
+\begin{figure}
+\begin{center}
+\includegraphics{images/lp-6.pdf}
+\end{center}
+\caption{Transformation eines Gebietes mit negativen Koordinaten:
+Einschr"ankung auf den Bereich $x_1\ge 0$ und $x_2\ge 0$.
+Rot eingezeichnet die Geraden der auf zwei Dimensionen erweiterten
+Zielfunktion f"ur die F"alle $c_1>0$ und $c_1<0$.
+\label{lp:transform-negative2}}
+\end{figure}
+Um besser verstehen zu k"onnen, was diese Transformation
+geometrisch bedeutet, betrachten wir das System mit nur einer
+Variablen
+\begin{equation}
+\begin{linsys}{1}
+ x_1&\le&-1\\
+-x_1&\le&2
+\end{linsys}
+\end{equation}
+Zul"assig ist nur das Intervall $G_1=[-2,-1]$, in
+Abbildung~\ref{lp:transform-negative1} rot eingezeichnet.
+Nach der Transformation haben wir ein System mit zwei Variablen:
+\begin{equation}
+\begin{linsys}{2}
+ x_1&-&x_2&\le&-1\\
+-x_1&+&x_2&\le&2
+\end{linsys}
+\end{equation}
+mit einem Gebiet $G_2$, welches auch einen Teil im ersten Quadranten
+umfasst. Allerdings ist das Gebiet jetzt unbeschr"ankt, und hat keine
+Ecken, also auch keine L"osungen eines linearen Programmes mit welcher
+Zielfunktion auch immer.
+
+Wenn jetzt zus"atzlich gefordert wird, dass $x_i\ge 0$ sein muss,
+erhalten wir ein Gebiet, welches nicht nur im ersten Quadranten enthalten
+ist, sondern auch Ecken und damit m"oglicherweise L"osungen eines hat
+(Abbildung~\ref{lp:transform-negative2}).
+
+Die Zielfunktion in diesem eindimensionalen Problem hat nur einen
+Koeffizienten, der positiv oder negativ sein kann. Ein positiver 
+Koeffizient $c_1>0$ bedeutet, dass das Optimum f"ur $x_1=-1$ angenommen
+wird, bei einem negativen Koeffizienten wird es f"ur $x_2=-2$ angenommen.
+
+Nach der Transformation hat die Zielfunktion die Koeffizienten
+$(c_1,-c_1)$. F"ur $c_1>0$ zeigt die Normale der Zielfunktionsgeraden
+nach rechts unten, also sind alle Punkte der Form $(x_1,x_1+1)$ L"osungen
+des Optimierungsproblems. Da die gesuchte L"osung die Differenz der L"osungen
+im erweiterten System ist, gibt es genau eine L"osung bei $-1$.
+Ist umgekehrt $c_1 < 0$, dann zeigt die Normale der
+Zielfunktionsgeraden in Richtung $(-1,1)$, das Optimum wird in den
+Punkten $(x_1,x_1+2)$ angenommen, also ist die L"osung des urspr"unglichen
+Problems bei $-2$ zu finden.
+
+\subsection{Nullpunkt nicht zul"assig\label{lp:zero-not-admissible}}
+Die Ungleichungen
+\begin{equation}
+\begin{linsys}{2}
+ x_1& &   &\le 1\\
+    & &x_2&\le 1\\
+-x_1&-&x_2&\le -1
+\end{linsys}
+\label{lp:zero-not-admissible-example}
+\end{equation}
+lassen den Punkt $(0,0)$ nicht zu. Ursache daf"ur ist offenbar die letzte
+Gleichung. Setzt man $(0,0)$ ein, entsteht auf der linken Seite immer $0$,
+eine Ungleichung mit einer negativen rechten Seite kann also niemals
+erf"ullt sein.
+
+Wir k"onnen die Ungleichungen $Ax\le b$ in zwei Teilmengen aufteilen.
+Die ersten $m'$ Ungleichungen haben rechte Seiten $\ge 0$. Die 
+verbleibenden $m''$ Ungleichungen haben rechte Seiten $<0$. Wir k"onnen
+das so schreiben:
+\begin{equation}
+Ax\le b \qquad\Leftrightarrow\qquad
+\left\{
+\begin{aligned}
+ A'x&\le b',  &b'&\ge 0,&&\text{$m'$ Ungleichungen}\\
+A''x&\le b'', &b''& < 0,&&\text{$m''$ Ungleichungen}
+\end{aligned}
+\right.
+\end{equation}
+Das Ziel ist, eine zul"assige Ecke f"ur das Gebiet $Ax\le b$ zu finden.
+Wie bereits erw"ahnt, m"ussen dazu auch einige der Variablen von $0$
+verschieden sein, damit die Ungleichungen $A''x\le b''$ ebenfalls erf"ullt
+sind.
+
+Die Differenz $y=b''-A''x$ wird bei einem zul"assigen Punkt positiv sein,
+wir suchen also eine L"osung des Ungleichungssystems
+\begin{equation}
+\begin{aligned}
+A'x&\le b',&x&\ge 0\\
+A''x+y&\ge b'',&y&\ge 0
+\end{aligned}
+\label{lp:first-corner-extended}
+\end{equation}
+Dadurch wurde zwar die Anzahl der Unbekannten von $n$ auf $n+m''$ erh"oht,
+daf"ur ist jetzt der Nullpunkt ein zul"assiger Punkt.
+
+Nicht jeder zul"assige Punkt von
+(\ref{lp:first-corner-extended}) 
+liefert auch einen zul"assigen Punkt von $Ax\le b$, der Nullpunkt
+liefert ein Gegenbeispiel.
+Die Menge
+\[
+\{ x\, |\, \text{$(x,y)$ ist zul"assig in 
+(\ref{lp:first-corner-extended}) }\}
+\]
+ist ein Schnitt durch das
+Gebiet (\ref{lp:first-corner-extended}).
+Ecken dieses Gebietes kommen also im Allgemeinen nur von Kanten
+von (\ref{lp:first-corner-extended}) her, wir m"ussen also eine
+ganz spezielle Ecke
+des Gebietes (\ref{lp:first-corner-extended}) ausw"ahlen.
+
+Wir bestimmen mit dem Simplex-Algorithmus eine Ecke von
+(\ref{lp:first-corner-extended}), die 
+\begin{equation}
+e^t (A''x + y) \ge e^t b''
+\label{lp:first-corner-objective}
+\end{equation}
+minimiert, wobei $e$ ein Vektor aus $m''$ Einsen ist.
+Die rechte Seite ist also einfach die Summe der Elemente von $b''$.
+Da also $e^t(A''x+y)$ nach unten beschr"ankt ist, kann es nicht
+beliebig klein werden, es muss ein Minimum geben.
+Da der Nullpunkt
+ein zul"assiger Punkt von (\ref{lp:first-corner-extended}) ist,
+k"onnen wir den Simplex-Algorithmus in der bereits
+dargestellten Form verwenden.
+
+Sei jetzt also  $(x,y)$ ein Minimum von
+(\ref{lp:first-corner-objective})
+unter den Bedingungen (\ref{lp:first-corner-extended}).
+Ein solche L"osung muss ein Ecke des Gebietes sein.
+Ob eine Ecke vorliegt erkennt man daran, wieviele Ungleichungen
+exakt erf"ullt sind. 
+von den $m+n+m''$ Ungleichungen in $n+m''$ Variablen m"ussen $n+m''$
+exakt erf"ullt sein.
+
+Es muss aber auch $A''x+y=b''$ gelten.
+W"are n"amlich eine der Ungleichungen, zum Beispiel die mit der Nummer $i$,
+nicht exakt erf"ullt, dann k"onnte man das entsprechende $y_i$ noch
+etwas kleiner machen, die Ungleichungen w"aren immer noch erf"ullt.
+Dabei w"urde auch die Zielfunktion
+(\ref{lp:first-corner-objective})
+nochmals kleiner, wir h"atten also noch gar nicht das Minimum gehabt.
+Also sind alle $m''$ Ungleichungen $A''x+y\ge b''$ als Gleichungen
+erf"ullt.
+
+Von den $n+m+m''$ Ungleichungen 
+(\ref{lp:first-corner-extended})
+wissen wir jetzt also, dass die $m''$ Ungleichungen $A''x+y\ge b''$
+als Gleichungen erf"ullt sind.
+Also m"ussen von den "ubrigen Ungleichungen
+deren $n+m$ als Gleichungen erf"ullt sein.
+
+Es bleiben also jetzt noch die Gleichungen
+\begin{align*}
+A'x&\le b' & m'&\;\text{Ungleichungen}\\
+x  &\ge 0  &  n&\;\text{Ungleichungen}\\
+y  &\ge 0  &m''&\;\text{Ungleichungen}
+\end{align*}
+Ist eine der Ungleichungen f"ur $y$ als Gleichung erf"ullt, dann
+ist auch die entsprechende Ungleichung aus $A''x\le b''$ als
+Gleichung erf"ullt. Denn wegen $y=b''-A''x$ folgt aus $y_i=0$
+sofort, dass die $i$-te Zeile in $A''x\le b''$ als Gleichung
+erf"ullt ist.
+
+Sind $k$ der Ungleichungen $y\ge 0$ als Gleichungen erf"ullt,
+dann auch $k$ der Ungleichungen $A''x\le b$. Ausserdem
+m"ussen dann noch $n-k$ Ungleichungen von
+\begin{align*}
+A'x&\le b' & m'&\;\text{Ungleichungen}\\
+x  &\ge 0  &  n&\;\text{Ungleichungen}
+\end{align*}
+als Gleichungen erf"ullt sein, oder $n=n-k+k$ von
+\begin{align*}
+A'x&\le b' & m'&\;\text{Ungleichungen}\\
+A''x\le b''&m''&\;\text{Ungleichungen}\\
+x  &\ge 0  &  n&\;\text{Ungleichungen}
+\end{align*}
+Es sind also genau $n$ der Ungleichungen des urspr"unglichen Systems
+als Gleichungen erf"ullt, was eine Ecke des urspr"unglichen Gebietes
+charakterisiert.
+
+\begin{beispiel}
+Man finde das Maximum von $Z=2x_1-x_2$ unter den Bedingungen
+\begin{equation}
+\begin{linsys}{2}
+x_1 & &    &\le& 2\\
+    & & x_2&\le& 1\\
+-x_1&-&2x_2&\le&-2
+\end{linsys}
+\end{equation}
+und $x_i\ge 0$.
+Wegen der letzten Gleichung ist $(0,0)$ kein zul"assiger Punkt, 
+wir m"ussen also den in diesem Abschnitt beschriebenen Algorithmus
+anwenden, um einen zul"assigen Punkt zu finden.
+
+Die Matrizen $A'$ und $A''$ und die Vektoren $b'$ und $b''$  sind 
+\begin{align*}
+A'&=\begin{pmatrix}
+1&0\\
+0&1
+\end{pmatrix}
+&
+b'&=\begin{pmatrix}
+2\\1
+\end{pmatrix}
+\\
+A''&=\begin{pmatrix}
+-1&-2
+\end{pmatrix}
+&
+b''&=
+\begin{pmatrix}-2\end{pmatrix}
+\end{align*}
+Das modifizierte Problem hat also zus"atzlich eine Variable $y$.
+Die Zielfunktion des modifizierten Systems ist
+\[
+e^t A''\begin{pmatrix}x_1\\x_2\end{pmatrix}
++
+e^t y
+=-x_1-2x_2+y
+\]
+Sie ist zu minimieren oder es ist
+\[
+x_1+2x_2-y
+\]
+zu maximieren unter den Bedingungen
+\[
+\begin{linsys}{3}
+ x_1& &    & &   &\le& 2\\
+    & & x_2& &   &\le& 1\\
+-x_1&-&2x_2&+&  y&\ge& -2
+\end{linsys}
+\]
+Durch Umkehren des Vorzeichens in der letzten Gleichung erreichen
+wir die Standardform
+\begin{equation}
+\begin{linsys}{3}
+ x_1& &    & &   &\le 2\\
+    & & x_2& &   &\le 1\\
+ x_1&+&2x_2&-&  y&\le 2
+\end{linsys}
+\end{equation}
+Ausserdem gelten die Bedingungen $x_i\ge 0$ und $y\ge 0$. 
+
+Auf dieses Problem wenden wir jetzt den Simplex-Algorithmus an.
+Dazu brauchen wir drei Schlupfvariablen $s_1$, $s_2$ und $s_3$, an
+denen wir sp"ater erkennen k"onnen, welche Ungleichungen als
+Gleichungen erf"ullt sind.
+Das Ausgangstableau ist also
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2& y&s_1&s_2&s_3& b\\
+\hline
+1& -1& -2& 1&  0&  0&  0& 0\\
+\hline
+0&  1&  0& 0&  1&  0&  0& 2\\
+0&  0&  1& 0&  0&  1&  0& 1\\
+0&  1&  2&-1&  0&  0&  1& 2\\
+\hline
+ &  *&  *& *&   &   &   &  \\
+\hline
+\end{tabular}
+\]
+Im ersten Schritt wird $x_2$ gegen $s_2$ ausgetauscht:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2& y&s_1&s_2&s_3& b\\
+\hline
+1& -1&  0& 1&  0&  2&  0& 2\\
+\hline
+0&  1&  0& 0&  1&  0&  0& 2\\
+0&  0&  1& 0&  0&  1&  0& 1\\
+0&  1&  0&-1&  0& -2&  1& 0\\
+\hline
+ &  *&   & *&   &  *&   &  \\
+\hline
+\end{tabular}
+\]
+Im zweiten Schritt wird $x_1$ gegen $s_1$ ausgetauscht:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2& y&s_1&s_2&s_3& b\\
+\hline
+1&  0&  0& 1&  1&  2&  0& 4\\
+\hline
+0&  1&  0& 0&  1&  0&  0& 2\\
+0&  0&  1& 0&  0&  1&  0& 1\\
+0&  0&  0&-1& -1& -2&  1&-2\\
+\hline
+ &   &   & *&  *&  *&   &  \\
+\hline
+\end{tabular}
+\]
+Daraus lesen wir ab, dass der Punkt $(2,1)$ ein zul"assiger Punkt ist, der
+als Anfangspunkt dienen kann.
+Dieser Punkt wird beschrieben durch $s_1=0$ und $s_2=0$.
+
+Damit k"onnen wir jetzt das Simplex-Tableau f"ur das urspr"ungliche
+Problem aufstellen
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2&s_1&s_2&s_3& b\\
+\hline
+1& -2&  1&  0&  0&  0& 0\\
+\hline
+0&  1&  0&  1&  0&  0& 2\\
+0&  0&  1&  0&  1&  0& 1\\
+0& -1& -2&  0&  0&  1&-2\\
+\hline
+\end{tabular}
+\]
+Wir wollen allerdings $s_1=0$ und $s_2=0$  setzen, d.~h. wir m"ussen
+die Gleichungen umformen, so dass die Variablen $x_1$, $x_2$ und $s_3$ 
+durch diese bestimmt sind:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2&s_1&s_2&s_3& b\\
+\hline
+1&  0&  0&  2& -1&  0& 3\\
+\hline
+0&  1&  0&  1&  0&  0& 2\\
+0&  0&  1&  0&  1&  0& 1\\
+0&  0&  0&  1&  2&  1& 2\\
+\hline
+ &   &   &  *&  *&   &  \\
+\hline
+\end{tabular}
+\]
+Offenbar kann das Resultat noch verbessert werden, indem man $s_2$
+gegen eine andere Variable austauscht. Das "ubliche Kriterium f"uhrt
+auf $x_2$ als auszutauschende Variable, der Austauschschritt ergibt
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&x_1&x_2&s_1&s_2&s_3& b\\
+\hline
+1&  0&  1&  2&  0&  0& 4\\
+\hline
+0&  1&  0&  1&  0&  0& 2\\
+0&  0&  1&  0&  1&  0& 1\\
+0&  0& -2&  1&  0&  1& 0\\
+\hline
+ &   &  *&  *&   &   &  \\
+\hline
+\end{tabular}
+\]
+Damit ist das Optimum im Punkt $(2, 0)$ mit maximalem Wert $4$ der Zielfunktion
+gefunden.
+\end{beispiel}
+
+\section{Das duale Problem}
+Das duale Problem hat bereits die Form, die wir f"ur die Durchf"uhrung des
+Simplex-Algorithmus brauchen: eine Menge von Gleichungen, und die
+einzigen Ungleichungen sind $\mu_i\ge 0$.
+Wir brauchen also nur einen Startpunkt, dann kann der Simplex-Algorithmus
+genau gleich wie beim urspr"unglichen Problem durchgef"uhrt werden.
+
+Setzt man im dualen Problem alle $\mu_i=0$, entsteht auf der linken Seite
+der Gleichungen $0$.
+Der Nullpunkt ist also im allgemeinen kein zul"assiger Punkt.
+Da es sich um Gleichungen, und nicht um Ungleichungen handelt, ist
+der in Abschnitt~\ref{lp:zero-not-admissible} nicht direkt anwendbar.
+
+Der Gleichung $A^t\mu=c$ entsprechen aber zwei Ungleichungen
+$Ax\le b$ und $A^t\mu \ge c$, letztere wird zur Standardform wenn wir
+das Vorzeichen kehren: $-A^t\mu\le -c$.
+Das duale Problem k"onnen wir also wie folgt l"osen:
+\begin{enumerate}
+\item Wende den Algorithmus von Abschnitt~\ref{lp:zero-not-admissible} auf
+das System
+\begin{align*}
+A^t \mu&\le c\\
+-A^t\mu&\le -c
+\end{align*}
+an, um einen zul"assigen Punkt zu finden.
+\item Wende den Simplexalgorithmus auf das duale Problem an, wobei
+der im ersten Schritt gefundene zul"assige Punkt als Startpunkt verwendet
+werden muss.
+\end{enumerate}
+Wir zeigen das Vorgehen am Beispiel des bereits mehrfach untersuchten
+Einf"uhrungsbeispiels.
+
+\begin{beispiel} Man l"ose das duale lineare Programm 
+(\ref{dual-lp-zielfunktion})
+und
+(\ref{lp-dual-gleichungen}).
+
+Zun"achst m"ussen wir also einen zul"assigen Punkt f"ur die Gleichungen
+(\ref{lp-dual-gleichungen}) finden.
+Das Ungleichungssystem dazu ist
+\begin{equation}
+\begin{linsys}{5}
+- \mu_1&+& \mu_2&+&4\mu_3&-&\mu_4& &      &\le&2\\
+ 3\mu_1&+&3\mu_2&+& \mu_3& &     &-& \mu_5&\le&3\\
+  \mu_1&-& \mu_2&-&4\mu_3&+&\mu_4& &      &\le&-2\\
+-3\mu_1&-&3\mu_2&-& \mu_3& &     &+& \mu_5&\le&-3\\
+\end{linsys}
+\end{equation}
+Problematisch sind nur die beiden letzten Gleichungen, wir haben
+\begin{align*}
+A'&=\begin{pmatrix}
+-1& 1& 4&-1& 0\\
+ 3& 3& 1& 0&-1
+\end{pmatrix}
+&
+b'&=\begin{pmatrix}2\\3\end{pmatrix}
+\\
+A''&=\begin{pmatrix}
+ 1&-1&-4& 1& 0\\
+-3&-3&-1& 0& 1
+\end{pmatrix}
+&
+b'&=\begin{pmatrix}-2\\-3\end{pmatrix}
+\end{align*}
+Das modifizierte Problem besteht also darin, die Zielfunktion
+\[
+e^tA''x+e^ty=
+-2\mu_1-4\mu_2-5\mu_3+\mu_4+\mu_5
++y_1+y_2
+\]
+zu minimieren unter den Bedingungen
+\begin{equation}
+\begin{linsys}{7}
+- \mu_1&+& \mu_2&+&4\mu_3&-&\mu_4& &      & &   & &   &\le&2\\
+ 3\mu_1&+&3\mu_2&+& \mu_3& &     &-& \mu_5& &   & &   &\le&3\\
+- \mu_1&+& \mu_2&+&4\mu_3&-&\mu_4& &      &-&y_1& &   &\le&2\\
+ 3\mu_1&+&3\mu_2&+& \mu_3& &     &-& \mu_5& &   &-&y_2&\le&3\\
+\end{linsys}
+\end{equation}
+Das zugeh"orige Simplex-Tableau ist
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&\mu_1&\mu_2&\mu_3&\mu_4&\mu_5&y_1&y_2&s_1&s_2&s_3&s_4&b\\
+\hline
+-1&  -2&   -4&   -5&    1&    1&  1&  1&  0&  0&  0&  0&0\\
+\hline
+ 0&  -1&    1&    4&   -1&    0&  0&  0&  1&  0&  0&  0&2\\
+ 0&   3&    3&    1&    0&   -1&  0&  0&  0&  1&  0&  0&3\\
+ 0&  -1&    1&    4&   -1&    0& -1&  0&  0&  0&  1&  0&2\\
+ 0&   3&    3&    1&    0&   -1&  0& -1&  0&  0&  0&  1&3\\
+\hline
+  &   *&    *&    *&    *&    *&  *&  *&   &   &   &   & \\
+\hline
+\end{tabular}
+\]
+Im ersten Schritt tauschen wir $\mu_3$ gegen $s_1$ aus.
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&       \mu_1&      \mu_2&\mu_3&   \mu_4&\mu_5&y_1&y_2&     s_1&s_2&s_3&s_4&      b\\
+\hline
+-1&-\frac{13}4&-\frac{11}4&    0&-\frac14&    1&  1&  1& \frac54&  0&  0&  0&\frac52\\
+\hline
+ 0&   -\frac14&    \frac14&    1&-\frac14&    0&  0&  0& \frac14&  0&  0&  0&\frac12\\
+ 0& \frac{13}4& \frac{11}4&    0& \frac14&   -1&  0&  0&-\frac14&  1&  0&  0&\frac52\\
+ 0&          0&          0&    0&       0&    0& -1&  0&      -1&  0&  1&  0&      0\\
+ 0& \frac{13}4& \frac{11}4&    0& \frac14&   -1&  0& -1&-\frac14&  0&  0&  1&\frac52\\
+\hline
+  &          *&          *&     &       *&    *&  *&  *&       *&   &   &   &       \\
+\hline
+\end{tabular}
+\]
+Im zweiten Schritt tauschen wir $\mu_1$ gegen $s_2$ aus:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+Z&         \mu_1&        \mu_2&\mu_3&       \mu_4&        \mu_5&y_1&y_2&          s_1&         s_2&s_3&s_4&      b\\
+\hline
+-1&           0&             0&    0&           0&            0&  1&  1&            1&           1&  0&  0&      5\\
+\hline
+ 0&           0& \frac{6}{13}&    1&-\frac{3}{13}&-\frac{1}{13}&  0&  0& \frac{3}{13}&\frac{1}{13}&  0&  0&\frac{9}{13}\\
+ 0&           1&\frac{11}{13}&    0& \frac{1}{13}&-\frac{4}{13}&  0&  0&-\frac{1}{13}&\frac{4}{13}&  0&  0&\frac{10}{13}\\
+ 0&           0&            0&    0&            0&            0& -1&  0&           -1&           0&  1&  0&      0\\
+ 0&           0&            0&    0&            0&            0&  0& -1&            0&          -1&  0&  1&      0\\
+\hline
+  &            &             *&     &           *&            *&  *&  *&            *&           *&   &   &       \\
+\hline
+\end{tabular}
+\]
+Damit ist eine Ecke gefunden, man kann also das urspr"ungliche duale Problem ausgehend
+von einer Ecke l"osen, die durch $\mu_2=\mu_4=\mu_5=0$ gegeben wird. 
+
+Da das duale Problem keine 
+Ungleichungen ausser den $\mu_i\ge 0$ hat, braucht es auch keine Schlupfvariablen.
+Das Starttableau ist 
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ Z&\mu_1&\mu_2&\mu_3&\mu_4&\mu_5&b\\
+\hline
+-1&   12&   18&   28&    0&    0&0\\
+\hline
+  &   -1&    1&    4&   -4&    0&2\\
+  &    3&    3&    1&    0&   -1&3\\
+\hline
+\end{tabular}
+\]
+aber es ist noch so umzuformen, dass die Variablen $\mu_2$, $\mu_4$ und $\mu_5$ frei
+w"ahlbar sind:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ Z&\mu_1&\mu_2&\mu_3&\mu_4&\mu_5& b\\
+\hline
+-1&    0&   30&   76&  -48&    0&24\\
+\hline
+  &    1&   -1&   -4&    4&    0&-2\\
+  &    0&    6&   13&  -12&   -1& 9\\
+\hline
+  &     &     &     &     &     &  \\
+\hline
+\end{tabular}
+\rightarrow
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ Z&\mu_1&         \mu_2&\mu_3&          \mu_4&        \mu_5&           b\\
+\hline
+-1&    0&-\frac{66}{13}&    0&\frac{288}{13}&\frac{76}{13}&-\frac{372}{13}\\
+\hline
+  &    1& \frac{11}{13}&    0&  \frac{4}{13}&-\frac{4}{13}&  \frac{10}{13}\\
+  &    0&  \frac{6}{13}&    1&-\frac{12}{13}&-\frac{1}{13}&   \frac{9}{13}\\
+\hline
+  &    &              *&     &             *&            *&               \\
+\hline
+\end{tabular}
+\]
+Offenbar kann man das Resultat verbessern, indem man $\mu_2$ gegen $\mu_1$ austauscht:
+\[
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}>{$}c<{$}|>{$}c<{$}|}
+\hline
+ Z&        \mu_1&         \mu_2&\mu_3&          \mu_4&       \mu_5&              b\\
+\hline
+-1&            6&             0&    0&            24&            4&            -24\\
+\hline
+  &\frac{13}{11}&             1&    0&  \frac{4}{11}&-\frac{4}{11}&  \frac{10}{11}\\
+  &-\frac{6}{11}&             0&    1&-\frac{12}{11}&-\frac{1}{11}&   \frac{3}{11}\\
+\hline
+  &            *&              &     &             *&            *&               \\
+\hline
+\end{tabular}
+\]
+Damit ist das Optimum gefunden.
+Es wird f"ur $\mu_2=\frac{10}{11}$ und $\mu_3=\frac{3}{11}$ erreicht,
+der minimale Wert ist $24$. 
+\end{beispiel}
+
+\section{Zusammenfassung: Das Wichtigste in K"urze}
+\rhead{Zusammenfassung}
+\begin{itemize}
+\item Ein lineares Programm ist ein Optimierungsproblem mit linearer
+Zielfunktion
+und einem zul"assigen Gebiet beschrieben durch lineare Gleichungen und/oder 
+Ungleichungen (Abschnitt~\ref{lp:section:problem}).
+\item Die graphische L"osung eines zweidimensionalen linearen Programms
+suggeriert, dass L"osungen Ecken des zul"assigen Gebietes sind
+(Abschnitt~\ref{lp:section:graphisch})
+\item Zu jedem linearen Programm gibt es ein duales lineares Programm.
+Eine L"osung des dualen linearen Programms f"uhrt in wenigen Schritten auch
+zur L"osung des urspr"unglichen Problems.
+Von $0$ verschiedene Variablen der L"osung des dualen Problems geben an,
+welche Ungleichungen des urspr"unglichen Problems als Gleichungen erf"ullt sind
+(Abschnitt~\ref{lp:section:dual}).
+\item Schlupfvariablen erlauben, ein System von Ungleichungen in ein System von
+Gleichungen umzuwandeln (Abschnitt~\ref{lp:section:ungleichungen}).
+\item Variablen, die Null gesetzt sind, entsprechen Ungleichungen, die
+als Gleichungen erf"ullt sind. Sind gen"ugend Variablen Null gesetzt,
+lassen sich die Gleichungen eindeutig l"osen und beschreiben daher eine
+Ecke des zul"assigen Gebiets (Abschnitt~\ref{lp:section:ungleichungen}).
+\item Gauss-Eliminations-Schritte erlauben, die Menge der Variablen zu
+ver"andern, die man frei w"ahlen kann, und insbesondere auch Nullsetzen
+m"ochte (Abschnitt~\ref{lp:subsection:austausch}).
+\item Der Simplex-Algorithmus liefert ausgehend von einer Ausgangsecke des
+zul"assigen Gebietes die L"osung eines linearen Programms, indem er
+eine Regel angibt, wie man von einer Ecke zu einer im Sinne der Zielfunktion
+besseren Nachbarecke kommen kann (Abschnitt~\ref{lp:section:simplex}).
+\item Zu jedem linearen Programm kann man ein modifiziertes Programm
+samt Anfangsecke finden, welches als L"osung, die zum Beispiel mit dem
+Simplex-Algorithmus gefunden werden kann, einen Anfangsecke des 
+urspr"unglichen Problems hat (Abschnitt~\ref{lp:section:simplex}).
+\end{itemize}

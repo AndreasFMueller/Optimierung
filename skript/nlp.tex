@@ -1,0 +1,1377 @@
+\chapter{Nichtlineare Optimierung\label{chapter-nichtlineare-optimierung}}
+\lhead{Nichtlineare Optimierung}
+Praktische Optimierungsprobleme sind oft nicht linear. 
+Nicht nur die Zielfunktion kann nichtlinear sein, auch die
+Beschreibung des zul"assigen Gebietes kann nichtlineare Ungleichungen
+verwenden. 
+
+Wir gehen in diesem Kapitel in drei Schritten vor:
+\begin{enumerate}
+\item Im ersten Abschnitt repetieren wir die Theorie der Bestimmung
+von Extremwerten von Funktionen.
+\item Im zweiten Abschnitt untersuchen wir Extremwerte von Funktionen
+von mehreren Variablen in einem zul"assigen Gebiet, welches durch
+Gleichungen gegeben wird.
+\item Im dritten Abschnitt verallgemeinern wir die Theorie auf
+ein Gebiet, welches durch nichtlineare Ungleichungen gegeben ist.
+\end{enumerate}
+In jedem Schritt werden wir ein L"osungsverfahren kennenlernen,
+welches mindestens im Prinzip in der Lage ist, die Optima zu
+finden.
+Allerdings m"ussen dazu jeweils nichtlineare Gleichungen
+gel"ost werden, was oft nur numerisch m"oglich ist.
+Daher gibt es auch eine Reihe von numerischen Verfahren, welche die ganze
+Theorie umgehen, und direkt optimale L"osungen zu finden versuchen.
+Eine Auswahl solcher Verfahren wird im vierten Abschnitt vorgestellt.
+
+\section{Extremwerte von Funktionen\label{nlp:extremwerte}}
+\rhead{Extremwerte}
+Das einfachste nichtlineare Optimierungsproblem verlangt nur die
+Optimierung einer Zielfunktion, zul"assig ist ganz $\mathbb R^n$.
+Es geht also darum, Maximum oder Minimum einer Funktion
+\[
+f\colon \mathbb R^n\to\mathbb R
+\]
+zu finden. Da der Definitionsbereich unberandet ist, ist ein
+Extremum notwendigerweise ein innerer Punkt des Definitionsbereiches.
+
+Beschr"ankungen des Definitionsgebietes f"uhren
+zu zus"atzlichen Komplikationen, es muss jetzt unterschieden
+werden, ob Extrema auf dem Rand oder doch im inneren des Definitionsgebietes
+liegen.
+Methoden, die auf Ableitungen basieren, die mit Grenzwerten
+arbeiten, zum Beispiel Ableitungen, d"urfen nur noch einseitige
+Grenzwerte verwenden.
+
+\subsection{Funktionen einer Variablen\label{nlp:extremwerte:einevariable}}
+Das einfachste nichtlineare Optimierungsproblem ist, das Maximum
+oder Minimum einer Funktion $f\colon\mathbb R\to\mathbb R$ zu finden.
+A priori ist nicht einmal klar, dass $f$ die verlangten Extrema
+besitzt, nicht einmal wenn $f$ eine glatte Funktion ist. So hat
+die Funktion
+\[
+x\mapsto e^{-x^2}
+\]
+ein Maximum im Punkt $x=0$, aber kein Minimum. Zwar kann jeder beliebig
+kleine Werte $\varepsilon>0$ erreicht werden, zum Beispiel mit
+$x=\sqrt{-\log \varepsilon}$, der Wert $0$ wird aber nicht angenommen.
+
+Auch lassen sich f"ur das Extremum keine Kriterien angeben, die 
+als Basis eines L"osungsverfahrens dienen k"onnten, wenn die Funktion
+$f$ nicht minimale Glattheitseigenschaften hat.
+Ist $f$ differenzierbar, dann muss in einem Extremum $x_0$
+$f'(x_0)=0$ gelten. Nur wenn $f$ zweimal differenzierbar ist,
+kann man auch noch entscheiden, ob $x_0$ eine lokale Extremalstelle
+ist: $f''(x_0)>0$ zeigt ein lokales Minimum an, $f''(x_0) < 0$
+ein lokales Maximum.
+
+Ein nichtlineares Maximumproblem (Minimumproblem) f"ur eine differenzierbare
+Funktion $f\colon\mathbb R\to\mathbb R$ wird also im Allgemeinen in
+folgenden Schritten gel"ost:
+\begin{enumerate}
+\item Finde alle Nullstellen $\{x_1,\dots,x_n\}$ der Ableitung $f'(x)$.
+\item Falls $f''(x_i)$ existiert, eliminiere alle $x_i$, f"ur die
+$f''(x_i) > 0$ ($f''(x_i) < 0$).
+gesucht wird.
+\item Berechne alle Funktionswerte $y_i=f(x_i)$, und w"ahle den
+gr"ossten (den kleinsten) aus.
+\end{enumerate}
+
+Ist die Funktion $f$ nicht "uberall differenzierbar, k"onnte sie Extrema
+auch an Stellen annehmen, wo $f$ nicht differenzierbar ist. Daher
+sind in Schritt~1 des obigen Algorithmus auch noch all jene Punkte
+zu ber"ucksichtigen, in denen $f'(x)$ nicht definiert ist.
+
+\begin{beispiel} Man finde das Maximum der Funktion $x\mapsto f(x)=\sin x$.
+\bigskip
+
+Die Ableitung der Funktion ist $f'(x)=\cos x$.
+Die Zahlen $\frac{\pi}2+k\pi$, $k\in\mathbb N$, 
+sind Nullstellen, dies sind die Kandidaten f"ur die Extremstellen.
+Um zu entscheiden, ob $\frac{\pi}2+k\pi$ ein Maximum oder Minimum ist, muss
+man diezweite Ableitung untersuchen: $f''(x)=-\sin x$. Es gilt
+\[
+f''\biggl(\frac{\pi}2+k\pi\biggr)
+=
+-\sin\biggl(\frac{\pi}2+ k\pi\biggr)
+=\begin{cases}
+1&\qquad \text{$k$ gerade}\\
+-1&\qquad\text{$k$ ungerade}
+\end{cases}
+\]
+Folglich sind die Stellen $\frac{\pi}2+2k\pi$ Maxima, und
+$\frac{\pi}2+(2k+1)\pi$ Minima, $k\in\mathbb Z$.
+\end{beispiel}
+
+
+\subsection{Funktionen mehrerer Variablen\label{nlp:extremwerte:mehrerevariable}}
+\subsubsection{Notwendige Bedingung}
+Hat eine Funktion mehrere Variablen
+\[
+f\colon\mathbb R^n\to\mathbb R:(x_1,\dots,x_n)\mapsto f(x_1,\dots,x_n)
+\]
+in einem Punkt $x_*=(x_{1*},\dots,x_{n*})$ ein Extremum,
+dann hat auch die partielle Funktion
+\[
+x_i\mapsto f(x_{1*},\dots,x_i,\dots,x_{n*})
+\]
+ein Extremum, also muss ihre Ableitung in diesem Punkt
+verschwinden. Die Ableitung der partiellen Funktion ist aber
+die partielle Ableitung nach $x_i$, mithin m"ussen
+alle partiellen Ableitungen von $f$ im Punkt $x_*$ verschwinden
+\begin{equation}
+\frac{\partial f}{\partial x_i}(x_{1*},\dots,x_{n*})=0\;\forall i,
+\qquad \Leftrightarrow\qquad
+\operatorname{grad}f=\nabla f=0.
+\end{equation}
+
+\subsubsection{Zweite Ableitungen}
+Ob in einem Punkt $x_*$ mit $\operatorname{grad}f(x_*)=0$ ein
+Minimum oder Maximum vorliegt, l"asst sich aus der Taylor-Entwicklung
+ableiten. In einer gen"ugend kleinen Umgebung von $x_*$ gilt
+\begin{align*}
+f(x)&=f(x_*)+\operatorname{grad}f(x_*)\cdot (x-x_*)+
+\sum_{i,k=1}^n\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k}(x_i-x_{i*})(x_k-x_{k*})+o((x-x_*)^2)
+\\
+&=f(x_*)+
+\sum_{i,k=1}^n\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k}(x_i-x_{i*})(x_k-x_{k*})
++o((x-x_*)^2)
+\end{align*}
+Ein lokales Minimum liegt vor, wenn die Summe in einer Umgebung
+von $x_*$ nur positive Werte annimmt, ein lokales Maximum liegt vor,
+wenn sie nur negative Werte annimmt.
+Die Summe kann in Matrixform etwas "ubersichtlicher geschrieben werden.
+Die Matrix $H$
+\begin{equation}
+H=D^2f(x_*) \quad\text{mit Matrixelementen}\quad
+h_{ik}=
+\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k},
+\end{equation}
+heisst {\it Hessesche Matrix} von $f$.
+\index{Hessesche Matrix}
+Schreiben wir den Vektor $\xi = (x-x_*)$, dann ist die Summe
+\[
+\sum_{i,k=1}^n\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k}(x_i-x_{i*})(x_k-x_{k*})
+=\xi^tH\xi.
+\]
+Ein Minimum liegt also vor,
+wenn $\xi^t H\xi > 0$ gilt f"ur jeden Vektor $\xi\ne 0$.
+\index{positiv definit}
+Eine Matrix mit dieser Eigenschaft heisst {\it positiv definit}.
+
+Ein lokales Maximum liegt vor, wenn $\xi^tH\xi<0$ f"ur $\xi\ne 0$,
+in diesem Fall heisst $H$ {\it negativ definit}.
+\index{negativ definit}
+
+\begin{beispiel}
+Die Funktion $f(x,y)=\frac12x^2+\frac12y^2$ hat an der Stelle $(0,0)$
+die hessesche Matrix
+\[
+A=\begin{pmatrix}
+1&0\\0&1
+\end{pmatrix},
+\]
+Sie ist positiv definit, denn
+\[
+\xi^t A\xi=\xi_1^2+\xi_2^2>0 \; \forall \xi\ne 0.
+\]
+$f$ hat an der Stelle $(0,0)$ ein Minimum.
+\end{beispiel}
+
+\begin{beispiel}
+Die Funktion $g(x)=-\frac12x^2-y^2$ hat an der Stelle $(0,0)$
+die Hessesche Matrix
+\[
+B=\begin{pmatrix}
+-1&0\\0&-2
+\end{pmatrix}.
+\]
+Sie ist negativ definit, denn
+\[
+\xi^tB\xi=-\xi_1^2-2\xi_2^2<0\;\forall \xi\ne 0.
+\]
+$g$ hat an der Stelle $(0,0)$ ein Maximum.
+\end{beispiel}
+
+\begin{beispiel}
+Die Funktion $h(x,y)=xy$ hat den Gradienten
+\[
+\operatorname{grad}h=\begin{pmatrix}
+y\\x
+\end{pmatrix}
+\]
+hat eine einzige Nullstelle: $(0,0)$. Die hessesche Matrix an dieser
+Stelle ist
+\[
+H=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+Sie ist indefinit, denn
+\[
+\xi^tH\xi=2\xi_1\xi_2\;
+\begin{cases}
+>0&\qquad \text{$\xi_1$ und $\xi_2$ haben gleiches Vorzeichen}\\
+<0&\qquad \text{$\xi_1$ und $\xi_2$ haben verschiedenes Vorzeichen}
+\end{cases}
+\]
+\end{beispiel}
+
+Das letzte Beispiel zeigt, dass eine Matrix weder positiv noch negativ
+definit zu sein braucht.
+
+\subsubsection{Kriterium f"ur positiv definite Matrizen}
+Wie entscheidet man, ob die hessesche Matrix positiv definit,
+negativ definit oder indefinit ist? Der folgende Satz gibt eine 
+Anwort.
+
+\begin{satz}Eine symmetrische Matrix $A$ ist genau dann positiv
+definit, wenn alle Eigenwerte von $A$ positiv sind. Sie ist negativ
+definit, wenn alle Eigenwerte negativ sind. Sie ist indefinit,
+wenn es Eigenwerte mit verschiedenen Vorzeichen gibt.
+\end{satz}
+
+\begin{proof}[Beweis]
+Symmetrische Matrizen sind diagonalisierbar.
+Man w"ahlt also ein Koordinatensystem, indem die Matrix diagonal wird:
+\[
+A'=\begin{pmatrix}
+\lambda_1&         &      &         \\
+         &\lambda_2&      &         \\
+         &         &\ddots&         \\
+         &         &      &\lambda_n
+\end{pmatrix}
+\]
+Dann ist
+\[
+\xi^tA'\xi =\lambda_1\xi_1^2+\lambda_2\xi_2^2+\dots+\lambda_n\xi_n^2.
+\]
+Dieser Ausdruck ist genau dann positiv definit, wenn alle $\lambda_i$ positiv
+sind, und negativ definit genau dann, wenn alle $\lambda_i$
+negativ sind.
+\end{proof}
+
+F"ur $2\times 2$-Matrizen muss man die Eigenwerte nicht ausrechnen
+um entscheiden zu k"onnen, ob sie positiv oder negativ definit sind.
+Es reicht, Determinante und Spur zu bestimmen
+\[
+\det A = \lambda_1\lambda_2,\qquad \operatorname{tr} A=\lambda_1+\lambda_2.
+\]
+Ist $\det A >$ ist bereits klar, dass $A$ definit ist. Ist das Vorzeichen
+der Spur positiv, ist $A$ positiv definit.
+
+F"ur stetig differenzierbare Funktion ist die Hessesche Matrix
+symmetrisch, und ist daher diagonalisierbar.
+Als einfaches Kriterium kann daher
+verwendet werden, dass ein lokales Minimum genau dann vorliegt,
+wenn alle Eigenwerte der Hesseschen Matrix positiv sind.
+
+\subsubsection{Algorithmus f"ur Extremwerte}
+Wir haben also folgenden Algorithmus zur Bestimmung der Extrema:
+\begin{enumerate}
+\item
+Finde alle Nullstellen des Gradienten
+$\operatorname{grad}f(x)$.
+Dazu ist eine System von $n$ nichtlinearen Ungleichungen zu l"osen.
+\item
+Berechne die Hessesche Matrix
+\[
+\frac{\partial^2 f(x)}{\partial x_i\,\partial x_j}
+\]
+f"ur jede Nullstelle $x$ des Gradienten.
+Eliminiere alle Nullstellen
+des Gradienten, f"ur die Hessesche Matrix indefinit ist.
+Falls Maxima (Minima) gesucht sind, elimiere auch alle Nullstellen
+des Gradienten, f"ur die die Hessesche positiv (negativ) definit sind.
+Damit sind die lokalen Maxima (Minima) gefunden.
+\item 
+Zur Bestimmung der absoluten Maxima (Minima), berechne die Funktionswerte
+$f(x)$ f"ur jede verbleibende Nullstelle des Gradienten und w"ahle jene
+mit dem gr"ossen (kleinsten) Funktionswert.
+\end{enumerate}
+
+\begin{beispiel}
+Man finde die Extrema der Funktion $(x,y)\mapsto \cos x\cos y$.
+\bigskip
+
+{\parindent 0pt
+Kandidaten f"ur die Extrema sind die Nullstellen des Gradienten, also
+des Vektors}
+\[
+\operatorname{grad}f = \begin{pmatrix}
+-\sin x\cos y\\
+-\cos x\sin y
+\end{pmatrix}.
+\]
+Die $x$-Komponente verschwindet, wenn 
+\begin{align*}
+x&=k\pi,\; k\in\mathbb Z & &\text{oder} & y&=\frac{\pi}2+k\pi,\;k\in\mathbb Z.
+\end{align*}
+Die $y$-Komponente verschwindet, wenn
+\begin{align*}
+x&=\frac{\pi}2+k\pi,\;k\in\mathbb Z
+& &\text{oder} &
+y&=k\pi,\; k\in\mathbb Z.
+\end{align*}
+Wenn beide Komponenten verschwinden sollen, dann kann das entweder
+dadurch geschehen, dass in der ersten Komponente der $\sin x$ 
+verschwindet, dann kann aber $\cos x$ nicht verschwinden, es muss
+also in der zweiten Komponente $\sin y$ verschwinden.
+Oder es kann dadurch geschehen, dass in der erste Komponente
+der $\cos y$ verschwindet, dann kann aber $\sin y$ nicht verschwinden,
+und es muss in der zweiten Komponente $\cos x$ verschwinden.
+Es gibt also zwei Familien von Nullstellen von $f$:
+\begin{align}
+x&=k\pi,\;k\in\mathbb Z
+& &\text{und} &
+y&=l\pi,\;l\in\mathbb Z
+\label{nlp:eierkarton:1}
+\\
+x&=\frac{\pi}2+k\pi,\;k\in\mathbb Z
+&&\text{und}&
+y&=\frac{\pi}2+l\pi,\;l\in\mathbb Z.
+\label{nlp:eierkarton:2}
+\end{align}
+Um zu entscheiden, ob ein Maximum, ein Minimum oder ein Sattelpunkt vorliegt,
+muss die Matrix der zweiten Ableitungen ausgerechnet werden:
+\begin{equation}
+h_{ij}=
+\biggl(
+\frac{\partial^2 f}{\partial x_i\,\partial x_j}
+\biggr)
+=
+\begin{pmatrix}
+-\cos x\cos y &  \sin x \sin y\\
+ \sin x\sin y & -\cos x \cos y
+\end{pmatrix}
+\end{equation}
+Setzt man alle vier M"oglichkeiten
+(\ref{nlp:eierkarton:1})--(\ref{nlp:eierkarton:2}) ein,
+findet man folgende Hesseschen Matrizen:
+\begin{align*}
+(\ref{nlp:eierkarton:1})
+&\Rightarrow
+&
+H
+&=
+\begin{pmatrix}
+-(-1)^{k+l}&0\\
+0&-(-1)^{k+l}
+\end{pmatrix},
+&
+\det H&=1,&
+\operatorname{tr} H&= -2\cdot (-1)^{k+l},
+\\
+(\ref{nlp:eierkarton:2})
+&\Rightarrow
+&
+H&=\begin{pmatrix}
+0&(-1)^{k+l}\\
+(-1)^{k+l}&0
+\end{pmatrix},
+&
+\det H&=-1,
+&
+\operatorname{tr}H&=0
+\end{align*}
+Im Fall (\ref{nlp:eierkarton:1}) hat man eine definite Matrix,
+postiiv definit falls $k+l$ ungerade ist. An diesen Stellen hat man
+also Extrema, und zwar Maxima f"ur gerades $k+l$ und Minima f"ur ungerades
+$k+l$.
+
+Im Fall (\ref{nlp:eierkarton:2}) hat man eine indefinite Matrix,
+an diesen Stellen findet man also Sattelpunkte.
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-2.pdf}
+\end{center}
+\caption{Extrema und Sattelpunkte der Eierkarton-Funktion $f(x,y)=\cos x\cos y$.
+\label{nlp:eggcrate}}
+\end{figure}
+In Abbildung~\ref{nlp:eggcrate} sind die Maxima rot, die Minima blau
+und die Sattelpunkte schwarz eingezeichnet.
+\end{beispiel}
+
+\section{Extremwerte mit Nebenbedingungen}
+\rhead{Extremwerte mit Nebenbedingungen}
+In diesem Abschnitt sollen Extremstellen einer Funktion $f(x)$ 
+unter zus"atzlichen Bedingungen $g_1(x)=0$, $g_2(x)=0$, $\dots$
+gefunden werden.
+\subsection{Funktionen einer Variablen\label{nlp:nebenbedingungen:einevariable}}
+Nebenbedingungen schr"anken den Definitionsbereich weiter ein.
+Bei einer Funktion von nur einer Variablen wird der Definitionsbereich
+also auf einzelne Punkte eingeschr"ankt. Exrema m"ussend durch ausrechnen
+der Funktionswerte und Vergleichen bestimmt werden. 
+Der Fall einer Variablen ist also nicht interessant.
+
+\subsection{Funktionen mehrerer Variablen\label{nlp:nebenbedingungen:mehrereariable}}
+In diesem Abschnitt
+sollen Gebiete betrachtet werden, die durch
+eine Menge von m"oglicherweise nichtlinearen Gleichungen
+\begin{equation}
+g_i(x) = g_i(x_1,\dots,x_n) = 0, \quad 1\le i\le m,
+\end{equation}
+auch Nebenbedingungen genannt,
+beschrieben sind. Man kann die $g_i$ auch als Komponenten einer
+vektorwertigen Funktion
+\begin{equation}
+g\colon \mathbb R^n\to \mathbb R^m:(x_1,\dots,x_n)\mapsto (g_1(x),\dots, g_m(x)).
+\end{equation}
+auffassen.
+
+Ein Minimum $x_*$ von $f$ muss nicht mehr die Bedingung
+$\operatorname{grad}f(x_*)=0$ erf"ullen. Diese Bedingung gibt ja
+wieder, dass jede Ver"anderung von $x_*$ einen gr"osseren Wert
+liefern wird. Dies muss jetzt nur noch erf"ullt sein f"ur
+Ver"anderungen, die tangential an die durch die Gleichungen
+$g_i(x)=0$ definierten Fl"achen erfolgen (Abbildung~\ref{nlp:lagrange}). 
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-3.pdf}
+\end{center}
+\caption{Notwendige Bedingung f"ur ein Extremum der Funktion $f(x)$ unter 
+der Nebenbedingung $g(x)=0$. Der Gradient $\operatorname{grad}f(x_*)$
+muss im Raum aufgespannt von den Gradienten $\operatorname{grad}g_i(x_*)$
+liegen.\label{nlp:lagrange}}
+\end{figure}
+Ein Vektor $\xi$ ist genau dann tangential an alle Fl"achen $g_i(x)=0$
+im Punkt $x_*$,
+wenn er auf dem Normalenvektor $\operatorname{grad}g_i(x_*)$
+senkrecht steht, wenn also
+\begin{equation}
+\operatorname{grad}g_i(x_*)\cdot \xi=0.
+\end{equation}
+Die Richtungsableitungen von $f$ in Richtung $\xi$ muss f"ur jedes solche
+$\xi$ verschwinden, also
+\begin{equation}
+\operatorname{grad}f(x_*)\cdot\xi = 0.
+\end{equation}
+Der Vektor $\operatorname{grad}f(x_*)$ muss also im Vektorraum
+aufgespannt von den Vektoren $\operatorname{grad}g_i(x_*)$ liegen,
+es muss also Zahlen $\lambda_i\in\mathbb R$ geben mit
+\begin{equation}
+\operatorname{grad}f(x_*)=\sum_{i=1}^m\lambda_i \operatorname{grad}g_i(x_*).
+\end{equation}
+Das Optimierungsproblem 
+\begin{align*}
+\text{Maximiere}\quad f(x)&=0\\
+\text{unter Nebenbedingungen}\quad g_i(x)&=0\;\forall 1\le i\le m
+\end{align*}
+kann daher mit folgendem Algorithmus gel"ost werden:
+\begin{enumerate}
+\item Finde L"osungen $x$, $\lambda_i$ des Gleichungssystems
+\begin{align*}
+g_i(x)&=0\quad\forall 1\le i\le m\\
+\operatorname{grad}f(x)-\sum_{i=1}^m\lambda_i\operatorname{grad}g_i(x)&=0
+\end{align*}
+Dies ist ein nichtlineares Gleichungssystem mit $m+n$ Gleichungen 
+f"ur die $m+n$ Unbekannten $x_1,\dots,x_n,\lambda_1,\dots,\lambda_m$.
+\item 
+Test durch Auswerten von $f(x)$ f"ur alle im ersten Schritt gefundenen
+Kandidaten, welche zu einem Maximum f"uhren.
+\end{enumerate}
+Dieser Algorithmus ist bekannt als die
+{\em Methode der Lagrange-Multiplikatoren}.
+\index{Lagrange-Multiplikator}
+
+\begin{beispiel}
+Man finde das Maximum von $f(x,y)=x^2 + xy + y^2$ unter der Nebenbedingung
+$g(x,y)=x^2+2y^2-2=0$.
+
+Die Methode der Lagrange-Multiplikatoren besagt, dass man das Gleichungssystem
+\begin{align*}
+\operatorname{grad}f(x,y)&=\lambda\operatorname{grad}g(x,y)\\
+g(x,y)&=0
+\end{align*}
+l"osen muss. Berechnen wir den Gradienten, erhalten wir die
+Gleichungen
+\begin{align*}
+2x+y &=2\lambda x& y&=2(\lambda-1)x\\
+x+2y&=4\lambda y& x&=2(2\lambda -1)y\\
+x^2+2y^2&=2
+\end{align*}
+Die zwei Gleichungen auf der rechten Seite ergeben
+\begin{align*}
+y=2(\lambda-1)x&=4(\lambda-1)(2\lambda-1)y.
+\\
+4(\lambda-1)(2\lambda-1)&=1
+\\
+8\lambda^2-12\lambda+3&=0
+\end{align*}
+Damit lassen sich die m"oglichen $\lambda$ bestimmen:
+\[
+\lambda_{\pm}=\frac{12\pm\sqrt{144-4\cdot 8\cdot 3}}{16}
+=\frac{12\pm\sqrt{48}}{16}
+=\frac{3\pm\sqrt{3}}{4}.
+\]
+und daraus dann auch $x$
+\begin{align*}
+x^2(1+8(\lambda-1)^2)&=2
+\\
+x&=\pm\sqrt{
+\frac{2}{1+8(\lambda-1)^2}}
+\end{align*}
+und $y$:
+\begin{align*}
+(4(2\lambda-1)^2+2)y^2&=2\\
+y&=\pm\sqrt{\frac{2}{4(2\lambda-1)^2+2}}.
+\end{align*}
+\end{beispiel}
+
+\subsection{Maximum-Kriterium\label{nlp:nebenbedingungen:maximumkriterium}}
+\index{Maximum-Kriterium}
+Die Matrix der zweiten Ableitungen erlaubt festzustellen, ob eine
+Nullstelle des Gradienten ein lokales Maximum oder Minimum ist.
+Dazu musste festgestellt werden, ob $\xi^tH\xi$ f"ur alle Vektoren
+$\xi\ne 0$ negativ oder positiv ist. 
+Unter Nebenbedingungen sind nat"urlich nur noch Vektoren $\xi\ne 0$
+zu testen, welche Tangential an die durch die Nebenbedingungen
+definierte Menge sind.
+
+Seien die Vektoren $b_1,\dots,b_m$ eine Basis des Raumes der Vektoren,
+die auf allen Gradienten $\operatorname{grad}g_i(x)$ senkrecht stehen.
+Zusammen bilden sie eine Matrix 
+\[
+B=\begin{pmatrix}
+b_{11}&b_{12}&\dots &b_{1m}\\
+b_{21}&b_{22}&\dots &b_{2m}\\
+\vdots&\vdots&\ddots&\vdots\\
+b_{n1}&b_{n2}&\dots &b_{nm}
+\end{pmatrix}.
+\]
+Weil die Spalten von $B$ eine Basis bilden,
+kann man Multiplikation mit einem $m$-dimensionalen Vektor $\eta$
+jeden beliebigen Tangentialvektor $\xi=B\eta$ erzeugen. Statt also
+das Vorzeichen von $\xi^tH\xi$ zu testen, kann man
+\[
+\xi^tH\xi=
+(B\eta)^tHB\eta=\eta^tB^tHB\eta
+\]
+testen. Man muss also nur herausfinden, ob die Matrix $B^tHB$
+negativ oder positiv definit ist.
+
+\begin{satz}
+\label{nlp:satz:nebenbedingungen-maximumkriterium}
+Ist $B$ eine Matrix, deren Spalten eine Basis des Vektorraumes
+\[
+\{
+\operatorname{grad}g_i(x)\,|\,1\le i\le m
+\}^{\perp}
+=
+\{\xi\in\mathbb R^n\,|\, \xi\cdot\operatorname{grad}g_i(x)=0\,\forall 1\le i\le m
+\}
+\]
+bilden, dann hat $f$ im Punkt $x$ ein Maximum (Minimum) wenn die Matrix
+\[
+\tilde H=B^tHB\quad\text{mit}\quad h_{ij}=\frac{\partial^2f(x)}{\partial x_i\,\partial x_j}
+\]
+negativ (positiv) definit ist.
+\end{satz}
+
+\begin{beispiel}
+Unter der Nebenbedingung $g(x)=x^2+y^2+z^2-1=0$ hat die Funktion
+$f(x,y,z)=xyz$ im Punkt $p=\frac1{\sqrt{3}}(1,1,1)$ einen Kandidaten
+f"ur eine Extremstelle, denn dort ist
+\begin{align*}
+\operatorname{grad}f(p)
+&=\begin{pmatrix}yz\\xz\\xy\end{pmatrix}
+=\frac13\begin{pmatrix}1\\1\\1\end{pmatrix}
+\\
+\operatorname{grad}g(p)
+&=\begin{pmatrix}2x\\2y\\2z\end{pmatrix}
+=\frac2{\sqrt{3}}\begin{pmatrix}1\\1\\1\end{pmatrix}
+\\
+\Rightarrow\qquad
+\operatorname{grad}f(p)
+&=\lambda\operatorname{grad}g(p),\text{ mit }\lambda=\frac1{2\sqrt{3}}.
+\end{align*}
+F"ur die Entscheidung, ob dies ein Maximum oder Minimum ist, ist gem"ass
+Satz~\ref{nlp:satz:nebenbedingungen-maximumkriterium}
+eine Basis der Vektoren zu finden, die auf dem Gradienten
+$\operatorname{grad}g(p)$ senkrecht stehen. Die Vektoren
+\[
+b_1=\begin{pmatrix} 1\\-1\\0\end{pmatrix},
+\quad
+b_2=\begin{pmatrix}0\\1\\-1\end{pmatrix}
+\]
+stehen beide senkrecht auf dem Gradienten. F"ur die Matrix $B$ kann daher
+verwendet werden:
+\[
+B=
+\begin{pmatrix}
+ 1& 0\\
+-1& 1\\
+ 0&-1
+\end{pmatrix}.
+\]
+Die Matrix der zweiten Ableitungen von $f$ ist
+\[
+H
+=
+\biggl(\frac{\partial^2f}{\partial x_i\,\partial x_j}\biggr)_{ij}
+=
+\begin{pmatrix}
+0&z&y\\
+z&0&x\\
+y&x&0
+\end{pmatrix}.
+\]
+Damit kann man f"ur die Stelle $p$ jetzt die Matrix $\tilde H$ berechnen:
+\begin{align*}
+\tilde H&=B^tHB
+=
+\begin{pmatrix}
+1&-1& 0\\
+0& 1&-1
+\end{pmatrix}
+\frac1{\sqrt{3}}
+\begin{pmatrix}
+0&1&1\\
+1&0&1\\
+1&1&0
+\end{pmatrix}
+\begin{pmatrix}
+ 1& 0\\
+-1& 1\\
+ 0&-1
+\end{pmatrix}
+\\
+&
+=
+\frac1{\sqrt{3}}
+\begin{pmatrix}
+-1& 1& 0\\
+ 0&-1& 1
+\end{pmatrix}
+\begin{pmatrix}
+ 1& 0\\
+-1& 1\\
+ 0&-1
+\end{pmatrix}
+=
+\frac1{\sqrt{3}}
+\begin{pmatrix}
+-2& 1\\
+ 1&-2
+\end{pmatrix}.
+\end{align*}
+Da dies eine $2\times 2$-Matrix ist, kann die Entscheidung, ob die
+Matrix positiv oder negativ definit ist, mit Spur und Determinante
+erfolgen:
+\begin{align*}
+\det\tilde H&=\frac13((-2)^2-1)=1>0&&\Rightarrow&&\text{$\tilde H$ definit}\\
+\operatorname{tr}\tilde H&=\frac{-4}{\sqrt{3}}<0&&\Rightarrow&&\text{$\tilde H$ negativ definit.}
+\end{align*}
+Wir schliessen, dass der Punkt $p$ ein Maximum ist.
+\end{beispiel}
+
+\section{Nichtlineare Ungleichungen}
+\rhead{Nichtlineare Ungleichungen}
+Dass zul"assige Gebiet eines
+nichtlinearen Optimierungsproblems kann ausserdem durch 
+nichtlineare Ungleichungen der Form
+\begin{equation}
+h_k(x) = h_k(x_1,\dots,x_n) \le 0,\quad 1 \le k\le l
+\end{equation}
+eingeschr"ankt werden.
+Extrema von $f$ k"onnen sowohl im Inneren des zul"assigen Gebietes
+wie auch auf dem Rand liegen.
+Dabei k"onnen einige der Ungleichungen auch als Gleichungen erf"ullt
+sein. Der Rand des zul"assigen Gebietes
+wird also in Kurven, Fl"achenst"ucke und Punkte aufgeteilt, je nachdem
+wie viele der Ungleichungen als Gleichungen erf"ullt sind.
+
+\subsection{Funktionen einer Variablen}
+Der zul"assige Bereich eines eindimensionalen Optimierungsproblems
+ist immer ein Interval, schreiben wir $f\colon[a,b]\to\mathbb R$.
+Extrema
+liegen entweder im Inneren eines Intervals, und sind dort mit
+Hilfe der Ableitung zu lokalisieren, oder sie sind in den
+Endpunkten des Intervals zu finden.
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-4.pdf}
+\end{center}
+\caption{Funktion einer Variablen $f(x)$ auf dem Interval $[a,b]$ mit
+lokalen Maxima in  $P_0$, $P_2$ und $P_4$, sowie lokalen Minima in
+$P_1$ und $P_3$. Am Rand des Intervals entscheidet das Vorzeichen der
+erste Ableitung dar"uber, ob ein lokales Maximum oder Minimum 
+vorliegt.\label{nlp:funktion1var}}
+\end{figure}
+
+W"ahrend bei einem inneren Punkt $x_0$ mit $f'(x_0)=0$
+das Vorzeichen der zweiten Ableitung dar"uber entscheidet,
+ob ein Maximum oder Minimum vorliegt, reicht dazu f"ur
+Randpunkte die erste Ableitung (Abbildung~\ref{nlp:funktion1var}).
+Der linke Randpunkt $a$ ist nur dann ein lokales Minimum, wenn $f'(a)\ge 0$
+ist.
+Ebenso ist der rechte Randpunkt nur dann ein lokales Minimum wenn
+$f'(a)\le 0$ ist.
+
+Als Vorbereitung und Motivation der Kuhn-Tucker-Bedingungen
+(\ref{kuhn-tucker}) des $n$-dimensionalen Falles, wollen
+wir diese Beobachtung noch auf eine andere Weise formulieren.
+Das Interval $[a,b]$ wird durch die zwei linearen Ungleichungen
+\begin{equation}
+\begin{aligned}
+h_1(x)&=a-x\le 0\\
+h_2(x)&=x-b\le 0
+\end{aligned}
+\label{nebenbedingungen-eindimensional}
+\end{equation}
+beschrieben.
+F"ur ein lokales Minimum in $x$ haben wir folgende Bedingungen
+abgeleitet:
+\begin{equation}
+f'(x)\quad
+\begin{cases}
+\le 0&\qquad\text{f"ur $x=a$}\\
+=0&\qquad a<x<b\\
+\ge 0&\qquad\text{f"ur $x=b$}
+\end{cases}
+\label{bedingungen-fuer-minimum}
+\end{equation}
+In den Randpunkten haben die Nebenbedingungen die Ableitung $h_1'(a)=-1$
+und $h_2'(b)=1$.
+Die Ableitung $f'(x)$ hat also in einem Ranbdpunkt entgegengesetzte
+Vorzeichen wie die Ableitung der Funktion, die den Randpunkt definiert.
+Es gibt also in jedem Fall Zahlen $\mu_1\le 0$, $\mu_2\le $,
+die die Gleichung
+\begin{equation}
+f'(x)-\mu_1h_1'(x)-\mu_2h_2'(x)=0
+\label{kuhn-tucker-eindimensional}
+\end{equation}
+erf"ullen.
+Je nach Fall in (\ref{bedingungen-fuer-minimum}) k"onnen einzelne
+der $\mu_i$ von $0$ verschieden sein, gem"ass folgender Tabelle
+\begin{center}
+\begin{tabular}{|l|>{$}c<{$}|>{$}c<{$}|}
+\hline
+Fall&\mu_1&\mu_2\\
+\hline
+Minimum am linken Rand&\ge 0&=0\\
+Extremum im Inneren&=0&=0\\
+Minimum am rechten Rand&=0&\ge 0\\
+\hline
+\end{tabular}
+\end{center}
+F"ur jedes $i$ muss also mindestens eine der Gr"ossen $\mu_i$
+und $h_i(x)$ verschwinden, was man auch durch die
+Bedingungen
+\begin{equation}
+\begin{aligned}
+\mu_1h_1(x)&=0\\
+\mu_2h_2(x)&=0
+\end{aligned}
+\label{kuhn-tucker-eindimensional-slack}
+\end{equation}
+ausdr\"ucken kann.
+
+Mit den Bedingungen (\ref{kuhn-tucker-eindimensional}) und
+(\ref{kuhn-tucker-eindimensional-slack})
+kann man also das Minimalproblem
+durch Einf"uhrung zweier neuer Variablen $\mu_1$ und $\mu_2$
+darauf zur"uckf"uhren, ein nichtlineares Gleichungssystem mit
+drei Unbekannten $x$, $\mu_1\ge 0$ und $\mu_2\ge0$ und den
+Gleichungen
+\begin{equation}
+\begin{aligned}
+f'(x)-\mu_1h_1'(x)-\mu_2h_2'(x)&=0\\
+\mu_1h_1(x)&= 0\\
+\mu_2h_2(x)&= 0
+\end{aligned}
+\label{karush-kuhn-tucker-eindimensional}
+\end{equation}
+zu l"osen.
+Die Gleichungen (\ref{karush-kuhn-tucker-eindimensional}) heissen
+die {\em Karush-Kuhn-Tucker-Bedingungen} oder {\em Kuhn-Tucker-Bedingungen}.
+Weiterhin erf"ullt sein m"ussen nat"urlich auch die
+Nebenbedingungen (\ref{nebenbedingungen-eindimensional}).
+
+So wie die Ableitung das Problem, ein Minimum zu finden, auf das
+Problem reduziert, eine Gleichung zu l"osen, so reduziert die
+eindimensionale Kuhn-Tucker-Bedingung (\ref{kuhn-tucker-eindimensional})
+das Problem, eine Minimum
+mit Nebenbedinungen zu finden, auf das Problem, eine L"osung der
+Gleichungen (\ref{karush-kuhn-tucker-eindimensional}) zu finden.
+
+\begin{beispiel}
+Man finde ein Minimum der Funktion $f(x)=x^3-3x$ im Interval $[-2,2]$.
+
+\medskip
+{\parindent 0pt
+Die Randbedingungen sind wieder (\ref{nebenbedingungen-eindimensional}).}
+Das Gleichungssystem (\ref{karush-kuhn-tucker-eindimensional}) wird
+zu
+\begin{align*}
+3x^2-3+\mu_1-\mu_2&=0\\
+\mu_1(-2-x)&= 0\\
+\mu_2(x-2)&= 0
+\end{align*}
+Aus der ersten Gleichung kann man ableiten:
+\[
+x=\pm
+\sqrt{1-\frac{\mu_1}3+\frac{\mu_2}3}.
+\]
+F"ur $\mu_1=\mu_2=0$ findet man daraus die L"osungskandidaten
+$x=\pm 1$. Da die zweite Ableitung $f''(x)=6x$ ist, gilt $f''(1)=6\ge 0$
+und $f''(-1)=-6<0$, nur $x=1$ ist also ein lokales Minimum. Dies sind die
+einzigen inneren lokalen Minima.
+
+Ist $\mu_1\ne 0$, muss zus"atzlich aus der zweiten
+Gleichung $x=-2$ gelten, also
+\begin{align*}
+-2&=-\sqrt{1+\frac{\mu_2}3}\\
+4&=1+\frac{\mu_2}3\\
+\mu_2&=9
+\end{align*}
+F"ur $\mu_2=0$  folgt analog $x=2$ und
+\begin{align*}
+2&=\sqrt{1-\frac{\mu_1}3}\\
+4&=1-\frac{\mu_1}3\\
+\mu_1&=-9
+\end{align*}
+Da aber $\mu_1\le 0$ sein muss, ist $x=2$ kein lokales Minimum.
+Es bleibt also nur noch, die beiden Kandidaten $x=-2$
+mit $f(-2)=(-2)^3-3\cdot(-2)=-8+6=-2$
+und $x=1$ mit $f(1)=-2$
+zu untersuchen, wir haben also zwei Minima im Interval $[-2,2]$.
+Man beachte, das das Minimum $x=-2$ von der Ableitung alleine nicht
+gefunden wird.
+\end{beispiel}
+
+\subsection{Karush-Kuhn-Tucker-Bedingung f"ur mehrere Variable}
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-5.pdf}
+\end{center}
+\caption{M"ogliche Lagen lokaler Extrema auf dem Rand eines durch
+nichtlineare
+Ungleichungen beschriebenen Gebietes.\label{nlp:kkt-moegliche-extrema}}
+\end{figure}
+Im Gegensatz zum linearen Optimierungsproblem muss bei einem durch
+lineare Ungleichungen beschriebenen Gebiet ein
+Optimum auf dem Rand nicht unbedingt in einer Ecke liegen,
+sondern kann auch isoliert auf einem Kurven- oder Fl"achenst"uck
+des Randes auftreten.
+In Abbildung~\ref{nlp:kkt-moegliche-extrema} werden insgesamt
+vier m"ogliche Kandidaten von Extrema (rote Puntke) jeweils zusammen mit
+der Niveaulinie der Zielfunktion $f(x)$ dargestellt.
+
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-6.pdf}
+\end{center}
+\caption{Herleitung der Karush-Kuhn-Tucker Bedingungen f"ur ein Extremum
+in einer Ecke des zul"assigen Gebietes.
+\label{nlp:kkt-ableitung}}
+\end{figure}
+Nehmen wir also an, ein Minimum werde im Punkt $x_*$ angenommen,
+und sei $h_k(x)\le 0$ eine der Ungleichungen, die im Punkt $x_*$ 
+als Gleichung erf"ullt sind, also $h_k(x_*)=0$.
+In Abbildung~\ref{nlp:kkt-ableitung} ist die Situation f"ur den
+Fall dargestellt, dass $h_1(x)\le 0$ und $h_2(x)\le0$ die zwei
+Ungleichungen sind, die im Punkt $x_*$ als Gleichungen erf"ullt
+sind.
+Richtungen $\xi\in\mathbb R^n$, f"ur die
+$\operatorname{grad}h_j(x_*)\cdot\xi > 0$ ist,
+f"uhren aus dem zul"assigen Gebiet hinaus. Es d"urfen also nur Richtungen
+$\xi$ betrachtet werden, f"ur die $\operatorname{grad}h_j(x_*)\cdot\xi <0$
+gilt.
+
+Wie bei der Untersuchung des dualen Problems eines linearen Programms
+muss in einem Maximum die Normale der Niveaulinien der Zielfunktion 
+in dem Sektor aufgespannt von den Normalen der Randkurven liegen,
+die durch die als Gleichungen erf"ullten Ungleichungen definiert
+werden. Es muss also Zahlen $\mu_j\ge 0$ geben so, dass
+\[
+\operatorname{grad}f(x_*)=\sum_{j=0}^l\mu_j\operatorname{grad}h_j(x_*).
+\]
+Die Zahl $\mu_j$ wird $0$, wenn $x_*$ im inneren des durch die Ungleichung
+$h_j(x)\le 0$ definierten Gebietes liegt, wenn also die Normale
+$\operatorname{grad}h_j(x_*)$ gar nicht ``gebraucht'' wird.
+Die Zahl $\mu_j$ heisst {\em Lagrange-Multiplikator} der
+Ungleichung $h_j(x)\le 0$.
+\index{Lagrange-Multiplikator}
+
+Zusammen mit dem Verfahren der Lagrange-Multiplikatoren bekommen wir 
+folgenden Algorithmus zur Bestimmung der Extrema einer nichtlinearen
+Funktion $f(x)$ unter nichtlinearen Nebenbedingungen $g_i(x)=0$
+und nichtlinearen Ungleichunge $h_j(x)\le 0$:
+
+\begin{satz}
+Seien $f, g_i, h_j\colon\mathbb R^n\to \mathbb R$ differenzierbare Funktionen
+mit $1\le i\le m$ und $1\le j\le l$.
+Ist ausserdem $x_*$ ein Maximum von $f$ unter
+den Nebenbedingungen $g_i(x_*)=0$ f"ur alle $1\le i\le m$ und unter den
+Ungleichungen $h_j(x_*)\le 0$ f"ur alle $1\le j\le l$, dann gibt es
+Zahlen $\lambda_i\in\mathbb R$ und $\mu_j\ge 0$ so, dass
+\begin{align}
+\operatorname{grad}f(x_*)
+&=
+\sum_{i=1}^m\lambda_i \operatorname{grad}g_i(x_*)
++
+\sum_{j=1}^l\mu_j \operatorname{grad}h_j(x_*)
+\label{nlp:karush-kuhn-tucker-gleichung}
+\\
+\mu_jh_j(x_*)&=0\quad \forall 1\le j\le l
+\label{nlp:komplementaritaet}
+\end{align}
+Die Gleichung (\ref{nlp:karush-kuhn-tucker-gleichung}) heisst
+{\em Karush-Kuhn-Tucker Bedingung}.
+Eine Ungleichung $h_j(x)\le 0$ ist genau dann als Gleichung erf"ullt,
+wenn das zugeh"orige $\mu_j=0$ ist.
+Die Bedingung (\ref{nlp:komplementaritaet})
+heisst {\em Komplementarit"atsbedingung}.
+\index{Komplementarit\"atsbedingung}
+\index{Karush-Kuhn-Tucker Bedingung}
+\end{satz}
+
+\begin{beispiel}
+Man finde das Maximum der Funtion
+\[
+f(x,y,z)=2x^2 + y^2
+\]
+unter den Bedingungen
+\begin{align*}
+g(x,y,z)&=xyz-1=0
+\\
+h(x,y,z)&=x^2+y^2+z^2-9 \le 0
+\end{align*}
+Die Ungleichung $h(x,y,z)\le 0$ verlangt, dass das Maximum
+im inneren einer Kugel mit Radius $3$ gefunden wird.
+
+\medskip
+F"ur die Karush-Kuhn-Tucker Bedingung brauchen wir die
+Gradienten aller drei Funktionen:
+\begin{align*}
+\operatorname{grad}f(x)
+&=
+\begin{pmatrix}4x\\2y\\0\end{pmatrix},
+&
+\operatorname{grad}g(x)
+&=
+\begin{pmatrix}yz\\xz\\xy\end{pmatrix},
+&
+\operatorname{grad}h(x)
+&=
+\begin{pmatrix}2x\\2y\\2z\end{pmatrix}.
+\end{align*}
+Die Karush-Kuhn-Tucker Bedingung wird dann
+\begin{align*}
+4x&=\lambda yz+2\mu x
+\\
+2y&=\lambda xz+2\mu y
+\\
+0&=\lambda xy + 2 \mu z
+\end{align*}
+Ausserdem m"ussen gelten
+\begin{align*}
+xyz-1&=0\\
+\mu(x^2+y^2+z^2-9)&=0\\
+\mu&\ge 0
+\end{align*}
+
+Wir untersuchen zun"achst, ob es ein Maximum im inneren des Gebietes
+geben k"onnte. Dass w"are dann der Fall, wenn $\mu=0$ w"are. Dann
+werden die Gleichungen zu
+\begin{align*}
+4x&=\lambda yz
+\\
+2y&=\lambda xz
+\\
+0&=\lambda xy
+\end{align*}
+Aus der Bedingung $g(x,y,z)=xyz-1=0$ folgt, dass keine der Variablen
+verschwinden darf. Die letzte Gleichung kann also nur erf"ullt werden,
+wenn $\lambda = 0$ ist. Dann folgt aber aus den ersten zwei Gleichungen,
+dass $x=0$ und $y=0$, ein Widerspruch.
+Es kann also nur Extrema mit $\mu >0$ geben.
+
+Wir bringen jetzt in Karush-Kuhn-Tucker Gleichungen die $\mu$ auf die
+linke Seite:
+\begin{equation}
+\begin{aligned}
+(4-2\mu)x&=\lambda yz\\
+(2-2\mu)y&=\lambda xz\\
+-2\mu z&=\lambda xy
+\end{aligned}
+\label{nlp:kkt-beispiel:gleichungen}
+\end{equation}
+Die rechte Seite kann man vereinfachen, indem man $g(x,y,z)=0$ verwenet:
+\[
+g(x,y,z)=xyz-1=0\qquad\Rightarrow\qquad
+xy=\frac1z,\quad
+xz=\frac1y,\quad
+yz=\frac1x
+\]
+Eingsetzt  in (\ref{nlp:kkt-beispiel:gleichungen}) bekommt man
+\begin{equation}
+\begin{aligned}
+x^2&=\frac{\lambda}{4-2\mu},&
+y^2&=\frac{\lambda}{2-2\mu},&
+z^2&=\frac{\lambda}{-2\mu}.
+\end{aligned}
+\label{nlp:kkt-beispiel:x2}
+\end{equation}
+Setzt man dies in $h$ ein, bekommt man
+\begin{equation}
+\frac{\lambda}2
+\biggl(
+\frac1{2-\mu}+\frac1{1-\mu}-\frac1{\mu}
+\biggr) =9
+\quad\Rightarrow\quad
+\lambda=18\biggl(
+\frac1{2-\mu}+\frac1{1-\mu}-\frac1{\mu}
+\biggr)^{-1}
+\label{nlp:kkt-beispiel:h}
+\end{equation}
+Setzt man es in die Gleichung $x^2y^2z^2=1$ ein, bekommt man
+\begin{equation}
+\lambda^3=-8(2-\mu)(1-\mu)\mu.
+\label{nlp:kkt-beispiel:g}
+\end{equation}
+Durch Einsetzen von (\ref{nlp:kkt-beispiel:h}) in (\ref{nlp:kkt-beispiel:g})
+kann man ein Polynom-Gleichung f"ur $\mu$ finden, die man numerisch
+l"osen kann. Oder man kann das Gleichungssystem aus
+(\ref{nlp:kkt-beispiel:h}) und (\ref{nlp:kkt-beispiel:g}) direkt
+mit dem Computer l"osen, und dann daraus die Koordinaten $x$, $y$ und
+$z$ mit den Formeln (\ref{nlp:kkt-beispiel:x2}) ausrechnen.
+\end{beispiel}
+
+\subsection{Karush-Kuhn-Tucker Bedingung f"ur lineare Programme}
+Ein lineares Programm
+\[
+\max\{ c^tx\,|\,Ax\le b\}
+\]
+kann nat"urlich auch mit der eben entwickelten Theorie behandelt
+werden.
+Dazu m"ussen die Gradienten der Zielfunktion und der Ungleichungen
+berechnet werden. Die Zielfunktion ist
+\[
+f(x)=c^tx=c_1x_1+c_2x_2+\dots c_nx_n
+\]
+und hat den Gradienten
+\[
+\operatorname{grad}f(x)
+=
+\begin{pmatrix}c_1\\c_2\\\vdots\\c_n\end{pmatrix}.
+\]
+Die Ungleichungen haben die Form
+\[
+h_j(x)=a_{j1}x_1+a_{j2}x_2+\dots+a_{jn}x_n,
+\]
+ihr Gradient ist
+\[
+\operatorname{grad}h_j(x)
+=
+\begin{pmatrix}a_{j1}\\a_{j2}\\\vdots\\a_{jn}\end{pmatrix}.
+\]
+Die Karush-Kuhn-Tucker Bedingung sagt dann, dass es Zahlen $\mu_j\ge 0$
+gibt mit 
+\[
+\begin{pmatrix}c_1\\c_2\\\vdots\\c_n\end{pmatrix}
+=
+\mu_1\begin{pmatrix}a_{11}\\a_{12}\\\vdots\\a_{1n}\end{pmatrix}
++
+\mu_2\begin{pmatrix}a_{21}\\a_{22}\\\vdots\\a_{2n}\end{pmatrix}
++\dots+
+\mu_m\begin{pmatrix}a_{m1}\\a_{m2}\\\vdots\\a_{mn}\end{pmatrix}.
+\]
+Oder in Matrixform:
+\[
+A^t\mu=c,
+\]
+also genau die Gleichungen des dualen Programms.
+Die Variablen des dualen linearen Programms sind also nichts anderes
+als die Lagrange-Multiplikatoren der Ungleichungen des linearen
+Programmes.
+\section{Numerische Verfahren}
+\rhead{Numerische Verfahren}
+Die vorangegangenen Abschnitte dieses Kapitels zeigen, dass
+sich ein Extremalproblem auch unter Nebenbedingungen oder Ungleichungen
+immer darauf zur"uckf"uhren l"asst, die L"osung eines Systems von
+nichtlinearen Ungleichungen zu finden.
+Damit Extremalprobleme effizient gel"ost werden k"onnen, sind also
+numerische Verfahren erforderlich, die nichtlineare Ungleichungen
+effizient mit dem Computer zu l"osen gestatten.
+
+\subsection{Newton-Verfahren}
+\begin{figure}
+\begin{center}
+\includegraphics{images/nlp-7.pdf}
+\end{center}
+\caption{Newton-Verfahren f"ur eine Funktion einer Variablen.
+\label{nlp:newton}}
+\end{figure}
+Zu l"osen ist also ein System von nichtlinearen Gleichungen
+\begin{align*}
+f_1(x_1,\dots,x_n)&=0\\
+\vdots\qquad&=0\\
+f_n(x_1,\dots,x_n)&=0
+\end{align*}
+Wir d"urfen annehmen, dass die Anzahl der Gleichungen gleich
+gross ist wie die Anzahl der Unbekannten, weil andernfalls ohnehin
+nicht mit einer eindeutigen L"osung zu rechnen ist.
+Die Gleichungen k"onnen auch als Vektorwertige Funktion
+geschrieben werden:
+\[
+f(x_1,\dots,x_n)=\begin{pmatrix}
+f_1(x_1,\dots,x_n)\\
+\vdots\\
+f_n(x_1,\dots,x_n)
+\end{pmatrix}.
+\]
+Ist $x_k$ eine approximative Nullstelle, dann kann man mit Hilfe
+der Ableitung eine bessere Approximation finden.
+In einer Dimension kann man die notwendige Korrektur aus der
+Abbildung~\ref{nlp:newton} ablesen:
+\begin{equation}
+x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}.
+\label{nlp:newton-iteration}
+\end{equation}
+Wiederholte Anwendung von (\ref{nlp:newton-iteration}) liefert
+schrittweise immer besser Approximationen der Nullstelle.
+
+\begin{beispiel}
+Man finde eine Nullstelle der Funktion $f(x)=x^2-2$.
+
+\medskip
+{\parindent 0pt Nat"urlich erwartet man als L"osung $x=\sqrt{2}$.}
+Als erste ungef"ahre Nullstelle verwenden wir $x_0=1$.
+Die Iterationsformel (\ref{nlp:newton-iteration}) wird zu
+\[
+x_{k+1}=x_k-\frac{x_k^2-2}{2x_k}=\frac{2x_k^2-x_k^2+2}{2x_k}=
+\frac12\biggl(x_k+\frac{2}{x_k}\biggr)
+\]
+Numerische Rechnung ergibt:
+\begin{center}
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}|}
+\hline
+k&x_k\\
+\hline
+0&1.0000000000\\
+1&1.5000000000\\
+2&1.4166666667\\
+3&1.4142156863\\
+4&1.4142135624\\
+5&1.4142135624\\
+\hline
+\end{tabular}
+\end{center}
+Die Konvergenz des Verfahrens ist ausserordentlich schnell: in jedem
+Schritt wird die Zahl der korrekten Stellen ungef"ahr verdoppelt.
+\end{beispiel}
+
+Das Newton-Verfahren kann auch auf ein System nichtlinearer
+Gleichungen verallgemeinert werden. Wir m"ochten die Korrektur
+$\xi=x_{k+1}-x_k$ berechnen, die jetzt ein Vektor ist.
+Die partiellen Ableitungen der Funktionen $f_i$ liefern eine
+lineare Approximation:
+\[
+f(x_k+\xi)\simeq f(x_k) + \sum_{j=1}^n\frac{\partial f_i}{\partial x_j}\xi_j
+\]
+Wir glauben nat"urlich, dass $f(x_k+\xi)=0$ sein wird, dass wir also
+im n"achsten Schritt eine viel bessere Approximation der L"osung haben werden.
+Die Approximation wird dann zu
+\[
+\begin{pmatrix}
+-f_1(x_k)\\
+-f_2(x_k)\\
+\vdots\\
+-f_n(x_k)
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{\partial f_1}{\partial x_1}
+	&\frac{\partial f_1}{\partial x_2}
+		&\dots
+			&\frac{\partial f_1}{\partial x_n}\\
+\frac{\partial f_2}{\partial x_1}
+	&\frac{\partial f_2}{\partial x_2}
+		&\dots
+			&\frac{\partial f_2}{\partial x_n}\\
+\vdots
+	&\vdots
+		&\ddots
+			&\vdots\\
+\frac{\partial f_n}{\partial x_1}
+	&\frac{\partial f_n}{\partial x_2}
+		&\dots
+			&\frac{\partial f_n}{\partial x_n}
+\end{pmatrix}\xi
+\]
+Dieses lineare Gleichungssystem kann man mit der inversen
+Matrix nach $\xi$ aufl"ossen. Schreiben wir $Df$ f"ur die Matrix
+der ersten Ableitungen, dann ist
+\[
+\xi = -(Df)^{-1}\, f(x_k).
+\]
+oder die Iterationsformel
+\begin{equation}
+x_{k+1} = x_k + (x_{k+1}-x_k)=x_k+\xi=x_k-(Df)^{-1}\,f(x_k).
+\label{nlp:newton-iteration-ndim}
+\end{equation}
+
+\subsection{Nullstellen der ersten Ableitung}
+Das Newton-Verfahren kann nat"urlich auch auf die erste Ableitung
+angewendet werden, um Nullstellen derselben zu finden.
+Es kann aus einer angen"aherten L"osung $x_0$
+mit Hilfe der Iteration
+\begin{equation}
+x_{k+1}=x_k-\frac{f'(x_k)}{f''(x_k)}
+\label{newton-1dim}
+\end{equation}
+eine verbesserte L"osung finden. Die Folge $x_k$ konvergiert mit
+quadratischer Konvergenz gegen eine L"osung, wenn der Anfangswert
+$x_0$ gen"ugend nahe bei einer L"osung liegt.
+
+Das Newton-Verfahren konvergiert schlecht, wenn $f''(x_*)=0$.
+Der kleine Nenner in (\ref{newton-1dim}) kann bewirken, dass
+$x_{k+1}$ weit weg von $x_*$ zu liegen kommt, so dass die
+Veraussetzung, dass $x_{k+1}$ bereits eine eingermassen gute 
+Approximation sein muss, nicht mehr erf"ullt ist.
+Diese Einschr"ankung ist allerdings nicht weiter schlimm, denn
+es interessieren ja ohnehin vor allem die Maxima ($f'(x_*)<0$)
+und die Minima ($f'(x)>0$), in beiden F"allen ist also
+$f'(x_*)\ne 0$.
+
+Da das Newton-Verfahren immer nur eine lokale Suche nach einer
+Nullstelle von $f'(x)$ unternimmt, ist es grunds"atzlich nicht
+in der Lage, alle lokalen Extrema zu finden.
+Es kann nur bereits approximativ bekannte Nullstellen verbessern,
+und h"ochstens in Ausnahmef"allen auch aus einer sehr schlechten
+Anfangssch"atzung eine gute L"osung finden.
+
+\subsection{Nullstellen des Gradienten}
+Auch f"ur die Nullstellen des Gradienten kann man das Newton-Verfahren
+verwenden. Die Funktion, deren Nullstellen man jetzt finden will,
+ist
+\[
+(x_1,\dots,x_n)\mapsto\begin{pmatrix}
+\frac{\partial f}{\partial x_1}\\
+\frac{\partial f}{\partial x_2}\\
+\vdots\\
+\frac{\partial f}{\partial x_n}
+\end{pmatrix}.
+\]
+F"ur die Newton-Iteration (\label{nlp:newton-iteration-ndim}) braucht
+man die Ableitungsmatrix, in diesem Fall ist dies
+die Matrix mit den Matrix-Elementen
+\[
+Df=\biggl(
+\frac{\partial^2f}{\partial x_i\,\partial x_j}
+\biggr),
+\]
+also die Hessesche Matrix, die man f"ur die Entscheidung, ob ein
+Maximum oder Minimum vorliegt, ohnehin berechnen muss.
+
+\begin{beispiel}
+Man finde Maxima der Funktion $f(x,y)=\sin x\sin y$.
+
+\medskip
+{\parindent 0pt Der Gradient dieser Funktion ist}
+\[
+\operatorname{grad}f(x,y)=
+\begin{pmatrix}
+\cos x\sin y\\
+\sin x\cos y
+\end{pmatrix}.
+\]
+Die Ableitung des Gradienten ist die Hessesche Matrix:
+\[
+H=\begin{pmatrix}
+-\sin x\sin y&\cos x\cos y\\
+\cos x\cos y&-\sin x\sin y
+\end{pmatrix}
+\]
+F"ur das Newton-Verfahren brauchen wir die Inverse, die kann aber
+f"ur eine $2\times 2$-Matrix leicht mit Hilfe der Determinanten
+berechnet werden:
+\[
+H^{-1}=\frac{1}{\sin^2x\sin^2y-\cos^2x\cos^2y}\begin{pmatrix}
+-\sin x\sin y&-\cos x\cos y\\
+-\cos x\cos y&-\sin x\sin y
+\end{pmatrix}
+\]
+Damit kann man jetzt die Newton-Iteration ausgehend vom Punkt $(1,1)$
+durchf"uhren:
+\begin{center}
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|}
+\hline
+k&x_k&y_k\\
+\hline
+0 & 1.0000000000 & 0.0000000000\\
+1 & 2.0925199316 & 2.0925199316\\
+2 & 1.2339468373 & 1.2339468373\\
+3 & 1.6330931388 & 1.6330931388\\
+4 & 1.5704719562 & 1.5704719562\\
+5 & 1.5707963268 & 1.5707963268\\
+6 & 1.5707963268 & 1.5707963268\\
+\hline
+\end{tabular}
+\end{center}
+Ein anderer Startpunkt kann nat"urlich ein anderes Resultat geben,
+von $(1,0.8)$ aus erh"alt man:
+\begin{center}
+\begin{tabular}{|>{$}c<{$}|>{$}c<{$}>{$}c<{$}|}
+\hline
+k&x_k&y_k\\
+\hline
+0 & 1.0000000000 & 0.8000000000\\
+1 & 3.0417758196 & 3.0444858551\\
+2 & 3.1428854616 & 3.1428854549\\
+3 & 3.1415926507 & 3.1415926507\\
+4 & 3.1415926536 & 3.1415926536\\
+\hline
+\end{tabular}
+\end{center}
+Wieder beobachtet man sehr schnelle Konvergenz.
+\end{beispiel}
+
+\section{Zusammenfassung: Das Wichtigste in K"urze}
+\begin{itemize}
+\item Kandidaten f"ur die Extremstellen von differenzierbaren
+Funktionen sind die Nullstellen der Ableitung (eine Variable,
+Abschnitt~\ref{nlp:extremwerte:einevariable})
+oder des Gradienten (mehrere Variable,
+Abschnitt~\ref{nlp:extremwerte:mehrerevariable}).
+\item Wenn die Matrix der zweiten Ableitungen
+\[
+h_{ij}=
+\frac{\partial^2f(x_*)}{\partial x_i\,\partial x_j}
+\]
+an einer Stelle $x_*$ mit $\operatorname{grad}f(x_*)=0$
+positiv definit ist, liegt ein lokales Minimum vor. Ist die Matrix $H$
+negativ definit ist $x_*$ ein lokales Maximum.
+\item Ein symmetrische $n\times n$-Matrix ist definit, wenn alle
+Eigenwerte das gleiche Vorzeichen haben.
+\item Ob eine zweidimensionale symmetrische Matrizen $H$ positiv oder negativ
+definit ist, kann man aus Determinante und Spur ablesen.
+Ist $\det H >0$, ist sie definit, andernfalls ist sie indefinit.
+Ist $\operatorname{tr}H>0$, ist sie positiv definit, sonst negativ
+definit.
+\item Kandidaten f"ur Extremstellen einer Funktion $f(x)$ unter
+Nebenbedingungen $g_i(x)=0$, $1\le i\le m$ erf"ullen die 
+Gleichung der Lagrange-Multiplikatoren $\lambda_i$
+\[
+\operatorname{grad}f(x_*)=\sum_{i=1}^m\lambda_i\operatorname{grad}g_i(x_*).
+\]
+\item Kandidaten f"ur eine Extremstelle einer Funktion $f(x)$ unter
+Nebenbedingungen $g_(x)$, $1\le i\le m$ und Ungleichungen $h_j(x)\le 0$,
+$1\le j\le l$ erf"ullen die Karush-Kuhn-Tucker Bedingung
+\[
+\operatorname{grad}f(x_*)=\sum_{i=1}^m\lambda_i\operatorname{grad}g_i(x_*).
++\sum_{j=1}^l\mu_j\operatorname{grad}h_j(x_*)
+\]
+und die Komplementarit"atsbedingung
+\[
+\mu_jh_j(x_*)=0,\quad\forall 1\le j\le l.
+\]
+Ausserdem m"ussen die $\mu_j\ge0$ sein.
+\item Ist $\mu_j>0$, dann ist die zugeh"orige Ungleichung $h_j(x_*)=0$
+als Gleichung erf"ullt.
+\item Mit dem Newton-Verfahren kann man ausgehend von Sch"atzungen
+der L"osungen eines nichtlinearen Gleichungssystems sehr schnell
+eine hochgenaue L"osung bekommen.
+\end{itemize}
