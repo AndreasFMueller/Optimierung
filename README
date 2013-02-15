@@ -1,7 +1,9 @@
 Das mathematische Seminar im Früjahrssemester 2013 an der HSR
 befasst sich mit Optimierungsfragen.
 
+
 Ziele des Seminars
+------------------
 
 - Teilnehmer verstehen, wie mathematische Optimierungsprobleme gestellt
   werden, und koennen sie grob klassifizieren
@@ -33,8 +35,16 @@ Ziele des Seminars
   * Teilchenschwarm-Optimierung
   * Ameisen-Kolonie-Optimierung
 
-- Teilnehmer verstehen, was ein Variationsproblem ist und k"onnen mit
+- Teilnehmer verstehen, was ein Variationsproblem ist und koennen mit
   Hilfe der Euler-Gleichung ein Variationsproblem in eine Differential-
   Gleichung umwandeln.
 
 
+Dokumentation
+-------------
+
+Die Dokumentation zum Seminar wird im Github-Repository
+
+    https://github.com/AndreasFMueller/Optimierung.git
+
+Zusaetzlich werden PDF Files auch auf der Skriptablage der HSR publiziert.
