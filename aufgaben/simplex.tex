@@ -1,0 +1,40 @@
+\begin{aufgabe}
+Wie findet der Simplex-Algorithmus die optimale L"osung?
+\end{aufgabe}
+
+{\parindent 0pt Der Simplex-Algorithmus}
+findet zuverl"assig eine optimale L"osung f"ur lineare Optimierungsprobleme.
+Trotzdem weiss man, dass seine Worst-case-Laufzeit exponentiell mit der
+Problemgr"osse anw"achst. Dieser scheinbare Widerspruch l"ost sich auf,
+wenn man besser verstehen kann, wie der Simplex-Algorithmus sich der
+L"osung n"ahert.  Sein Vorgehen ist "ahnlich einem Abstiegs-Verfahren.
+
+Um dies zu verstehen, wird folgendes Experiment vorgeschlagen. Man
+versucht, eine lineares Optimierungsproblem mit nur sehr wenigen Variablen
+$x_1,\dots,x_n$, z.~B.~$n=3$, aber sehr vielen Ungleichungen zu l"osen.
+Dann visualisiert man den Pfad der vom Simplex-Algorithmus in jedem
+Schritt gefundenen Ecke, und verfolgt, wie sich die Ecke dem Optimum
+n"ahert.
+
+Die grosse Zahl von Ungleichungen erzeugt man zuf"allig: man w"ahlt
+zun"achst $N$ (z.~B.~N=10000) zuf"allige Einheitsvektoren $\vec n_i$ im ersten
+Oktanten aus ($x\ge 0$, $y\ge 0$, $z\ge 0$). Dann nimmt man als
+Ungleichungen
+\[
+\vec n_i\cdot \vec x\le 1
+\]
+Die Ebenen $\vec n_i\cdot \vec x$ sind alle Tangentialgebenen
+der Einheitskugel. Dann sucht man mit dem Simplex-Algorithmus des
+Maximum der Zielfunktion 
+\[
+Z=\sum_{i=1}^nx_i,
+\]
+also $Z=x+y+z$ im dreidimensionalen Fall. Man erwartet als Maximum
+einen Punkt in der N"ahe von $\frac1{\sqrt{3}}(1,1,1)$.
+
+\begin{compactenum}
+\item Wieviele Schritte braucht der Simplex-Algorithmus im Schnitt,
+um das Optimum zu finden?
+\item Wie lange ist der Weg von der Ausgangsecke bis zum Optimum?
+\end{compactenum}
+

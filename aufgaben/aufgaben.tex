@@ -1,0 +1,184 @@
+%
+% aufgaben.tex -- Kurzbeschreibungen der Aufgabenstellungen fuer die
+%                 Seminar-Arbeiten
+%
+% (c) 2013 Prof Dr Andreas Mueller, Hochschule Rapperswil
+% $Id$
+%
+\documentclass[a4paper,12pt]{article}
+\usepackage{german}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{picins}
+\usepackage[all]{xy}
+\usepackage{txfonts}
+\usepackage{alltt}
+\usepackage{verbatim}
+\usepackage{paralist}
+\usepackage{makeidx}
+\usepackage{array}
+\begin{document}
+\title{Aufgabenstellungen f"ur das Seminar ``Optimierung''}
+\author{Andreas M"uller\footnote{
+University of Applied Sciences, Oberseestrasse 10, CH-8640 Rapperswil,
+Switzerland, Email: {\tt andreas.mueller@hsr.ch}}}
+\date{}
+\maketitle
+\section{Ziele des Seminars}
+\begin{itemize}
+\item
+Teilnehmer verstehen, wie mathematische Optimierungsprobleme gestellt
+werden, und k"onnen sie grob klassifizieren.
+\item
+Lineare Optimierung: Teilnehmer verstehen das Konzept des dualen
+Optimierungsproblems und k"onnen ein lineares Optimierungsproblem
+mit dem Simplex-Algorithmus l"osen.
+\item
+Analytische Behandlung nichtlineare Optimierungsprobleme:  Teilnehmer
+kennen die wichtigsten notwendigen und hinreichenden Bedingungen f"ur
+Extrema nichtlinearer Funktionen mehrere Variablen ohne und mit
+Nebenbedingungen und/oder Einschraenkungen, insbesondere das Verfahren
+der Lagrange-Multiplikatoren und die Karush-Kuhn-Tucker-Bedinungen.
+\item
+Numerische Verfahren zur Bestimmung eines Optimums ohne Nebenbedingungen:
+\begin{itemize}
+\item Simplex-Methode
+\item Abstieg
+\end{itemize}
+\item
+Algorithmen f"ur Optimierung mit Nebenbedingungen:
+\begin{itemize}
+\item Penalty Functions
+\end{itemize}
+
+\item
+Algorithmen f"ur ganzzahlige Optimierungsprobleme:
+\begin{itemize}
+\item Branch and Bound
+\end{itemize}
+
+\item
+Teilnehmer kennen eine Auswahl von modernen (nicht analytischen) Verfahren
+zur L"osung von Optimierungsproblemen, zum Beispiel
+\begin{itemize}
+\item genetische Algorithmen
+\item Simulated Annealing
+\item Teilchenschwarm-Optimierung
+\item Ameisen-Kolonie-Optimierung
+\end{itemize}
+
+\item
+Teilnehmer verstehen, was ein Variationsproblem ist und k"onnen mit
+Hilfe der Euler-Gleichung ein Variationsproblem in eine Differential-
+Gleichung umwandeln.
+\end{itemize}
+
+\section{Auftrag}
+Jeder Seminarteilnehmer bearbeitet ein Thema aus dem Bereich der
+mathematischen Optimierung, stellt seine Resultate in Form eines
+kurzen Papers (wenige Seiten) zusammen und stellt sie ausserdem
+in Form einer Pr"asentation im Klassenrahmen vor.
+
+Im Idealfall l"asst sich Ihr Paper fast unver"andert als Abschnitt
+in das Script aufnehmen, so dass den Teilnehmern am Ende des Seminars
+ein kleiner ``Leitfaden der Optimierungstheorie'' zur Verf"ugung steht,
+der als Einstieg in die Fachliteratur dienen kann.
+
+Die Pr"asentation sollte nicht nur einfach den Stoff vorf"uhren,
+sondern sollte gen"ugend Zahlenbeispiele, Aufgaben oder von Hand
+durchf"uhrbare Schritte einhalten, dass die Zuh"orer sich durch
+die Probleml"osung durcharbeiten und so ihr Verst"andnis des
+Stoffes vertiefen k"onnen. Die Pr"asentation soll sich auch darum
+bem"uhen, den Zusammenhang mit den anderen im Seminar behandelten
+Themen herzustellen, also zum Beispiel darlegen, warum eine bestimmte
+Methode in gewissen F"allen einer anderen, von jemand anderem behandelten
+Methode vorzuziehen ist.
+
+Die Darstellung soll vor allem verst"andlich und anschaulich
+sein, aber nat"urlich auch so exakt wie m"oglich.
+Sie muss alllerdings nicht die strengen Anforderungen an einen
+vollst"andigen Beweis erf"ullen. Es ist besser, sich auf die
+wesentlichsten F"alle zu beschr"anken, oder die Methode mit
+einem niedrigedimensionalen Beispiel zu illustrieren, welche
+die Methode verst"andlich macht, als den Zuh"orer mit stundenlangen
+Falldiskussionen zu langweilen.
+
+\section{Aufgaben}
+Die nachstehend skizzierten Aufgaben werden in dieser Reihenfolge im
+Seminar behandelt. Die genauen Termine werden sp"ater bekannt
+gegeben. Als Faustregel dient, dass Aufgabe Nummer $n$ in der Woche
+$n + 2$ behandelt wird.
+
+\newtheorem{aufgabe}{Aufgabe}
+
+\subsection{Lineare Optimierung}
+\input blas.tex
+\input simplex.tex
+\input karmarkar.tex
+
+\subsection{Nichtlineare Optimierung}
+\input fibonacci.tex
+\input descent.tex
+\input nlsimplex.tex
+
+\subsection{Ganzzahlige Optimierung}
+\input branchandbound.tex
+
+\subsection{Moderne Verfahren}
+\input genalg.tex
+\input simann.tex
+\input particles.tex
+\input antcolony.tex
+
+\subsection{Variationsrechnung}
+\input brechung.tex
+
+\section{Voraussetzungen}
+Die folgende Tabelle zeigt, welche Voraussetzungen man vor allem
+zur Bearbeitung einer der genannten Themen braucht.
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Aufgabe&LinAlg&Analysis&FuVar\\
+\hline
+ 1&$\checkmark$&            &            \\
+ 2&$\checkmark$&            &            \\
+ 3&$\checkmark$&$\checkmark$&            \\
+ 4&            &$\checkmark$&            \\
+ 5&$\checkmark$&$\checkmark$&$\checkmark$\\
+ 6&$\checkmark$&            &            \\
+ 7&$\checkmark$&            &            \\
+ 8&            &$\checkmark$&            \\
+ 9&            &$\checkmark$&            \\
+10&            &$\checkmark$&            \\
+11&            &$\checkmark$&            \\
+12&$\checkmark$&$\checkmark$&$\checkmark$\\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Bewertung}
+\subsection{Note}
+Die Vortr"age und Papers werden benotet und geben die Modulnote.
+Die Note setzt sich zusammen aus den Resultaten eines Fragebogens,
+den die Zuh"orer ausf"ullen, und einer Benotung durch den Dozenten.
+
+\subsection{Kurztests}
+Ausserdem wird zu den drei grossen Themen {\em Lineare Optimierung},
+{\em Nichtlineare Optimierung} und {\em Variationsrechnung} je
+ein Kurztest bestehend aus einer Standardaufgabe aus den jeweiligen
+Themengebieten verlangt. In diesem Kurztest d"urfen beliebige Hilfsmittel
+verwendet werden, auch Computer und das Internet, und es gibt keine
+Zeitlimite (ausser der Schliessung des Ge"audes). Mit dem Kurztest
+soll sichergestellt werden, dass jeder Teilnehmer mit den drei
+Basismethoden mindestens einmal eine L"osung erarbeitet hat.
+Die Kurztests geben keine Note, m"ussen aber alle erf"ullt sein,
+damit das Modul als bestanden gilt.
+
+\end{document}
+ 
