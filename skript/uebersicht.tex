@@ -39,6 +39,103 @@ besprechenden L"osungsmethoden kurz skizziert.
 
 \section{Einf"uhrungsbeispiele\label{section-einfuehrungsbeispiele}}
 \rhead{Beispiel}
+Wir stellen ein paar Probleme zusammen, die den allgemeinen Charakter
+von Optimierungsaufgaben verdeutlichen sollen.
+
+\subsection{Solarzellen\label{uebersicht:solarzellen}}
+Die Leistung, die eine photovoltaische Zelle abgeben kann, ist proportional
+zum einfallenden Lichtstrom. Maximale Leistung erreicht man also,
+wenn der einfallende Strom maximal ist. Die Stromdichte (Leistung 
+pro Quadratmeter) ist konstant, aber der Winkel $\alpha$ zwischen der
+Zellennormalen und der Richtung des einfallenden Sonnenlichts schwankt.
+Wie muss man die Solarzellen ausrichten, um maximale Leistung zu erhalten?
+
+Die produzierte Leistung ist proportional zu $\cos\alpha$, erreicht also
+das Maximum dort, wo die Funktion $\alpha\mapsto\cos\alpha$ ihr
+Maximum erreicht.
+
+Etwas interessanter wird das Problem, wenn nicht die maximale momentane
+Leistung interessiert, sondern, die "uber den Tag gewonnene Gesamtenergie.
+Die Leistung schwankt wegen des sich "andernden Sonnenstandes, es w"are
+daher interessant zu wissen, bei welcher Elevation sich im insgesamt
+die beste Energieausbeute ergeben w"urde.
+
+Unter der Annahme, dass die Strahlung "uber den ganzen Tag gleich bleibt,
+brauchen wir ein Modell f"ur die Elevation der Sonne "uber dem Horizont.
+Bei Tag- und Nachtgleiche geht die Sonne um 0600 auf, um 1800 unter,
+und erreicht als maximale Elevation "uber dem Horizont $1-\beta$,
+wobei $\beta$ die geographische Breite des Standortes ist.
+Zu anderen Zeiten des Jahres kommt noch die Elevation $\delta$
+(f"ur Deklination) der Sonne "uber dem Himmels"aquator hinzu.
+Wir k"onnen die zeitabh"angige Elevation der Sonne also mit einem
+einfachen Modell
+\[
+t\mapsto \delta + (1-\beta)\cos t,\quad t_A\le t\le t_U
+\]
+wobei $t_A$ die Zeit des Sonnenaufgangs vor dem h"ochsten Sonnenstand
+und $t_U$ die Zeit des Untergangs nach dem h"ochsten Stand ist.
+Die Gesamtenergie in Abh"angigkeit von der Neigung der
+Solarzellen ist dann
+\[
+f(\alpha)=
+\int_{t_A}^{t_U} \cos (\delta+(1-\beta)\cos t - \alpha)\,dt
+\]
+und es ist der Wert von $\alpha$ zu finden, der $f(\alpha)$
+maximiert.
+
+Nat"urlich weiss man, wie man ein solches Problem l"ost: man leitet
+$f(\alpha)$ nach $\alpha$ ab und sicht nach Nullstellen:
+\[
+f'(\alpha)=\int_{t_A}^{t_U}
+\sin(\delta + (1-\beta)\cos t-\alpha)
+\,dt
+\]
+Mit Hilfe der Additionstheoreme erh"alt man
+\begin{align*}
+0=
+f'(\alpha)
+&=
+\int_{t_A}^{t_U}
+\sin(\delta + (1-\beta)\cos t)\cos\alpha
+-
+\cos(\delta + (1-\beta)\cos t)\sin\alpha
+\,dt
+\\
+&=
+\cos\alpha
+\int_{t_A}^{t_U}
+\sin(\delta + (1-\beta)\cos t)\,dt
+-
+\sin\alpha
+\int_{t_A}^{t_U}
+\cos(\delta + (1-\beta)\cos t)
+\,dt
+\\
+\tan\alpha
+&=
+\frac{
+\int_{t_A}^{t_U}
+\sin(\delta + (1-\beta)\cos t)\,dt
+}{
+\int_{t_A}^{t_U}
+\cos(\delta + (1-\beta)\cos t)\,dt.
+}
+\end{align*}
+Dieses Optimierungsproblem kann also mit Hilfe der Analysis direkt
+gel"ost werden.
+
+Noch etwas spannender wird das Problem allerdings, wenn nicht nur
+die Energieausbeute eines einzelnen Tages, sondern die Ausbeute
+"uber ein ganzes Jahr optimiert werden soll, w"ahrend das Problem allerdings, wenn nicht nur
+die Energieausbeute eines einzelnen Tages, sondern die Ausbeute
+"uber ein ganzes Jahr optimiert werden soll. Die Deklination $\delta$
+der Sonnen schwankg im Laufe des Jahres um "uber $46^\circ$, und die
+Sonnenaufgangs- und Untergangszeiten $t_A$ und $t_U$ sind auch nicht mehr 
+so einfach zu bestimmen. Dieses erweiterte Problem ist nur noch
+numerische zu l"osen. Noch komplizierter wird es, wenn nicht der Energieertrag,
+sondern der finanzielle Ertrag "uber das ganze Jahr optimiert werden soll,
+der Ertrag pro Einergieeinheit h"angt ja
+auch noch von Tageszeit und Jahreszeit ab.
 
 \subsection{Hackfleischskandal\label{uebersicht:hackfleisch}}
 Ein Pizza-Hersteller braucht f"ur seine Pizza Hackfleisch, wobei er
@@ -66,6 +163,7 @@ Der Pizzahersteller versucht also den Gewinn
 \[
 G=
 c(x+y)-c_xx-c_yy
+=(c-c_x)x+(c-c_y)y
 \]
 zu maximieren unter der Einschr"ankungen
 \begin{align*}
@@ -73,7 +171,7 @@ x&\ge 0,\\y&\ge 0,\\
 x+y&\le c,\\
 x&\le m.
 \end{align*}
-Der Gewinn wie auch die Einschr"ankungen sind lineare Gleichunge
+Der Gewinn wie auch die Einschr"ankungen sind lineare Gleichungen
 bzw.~Ungleichungen.
 
 \subsection{Tankwanne\label{uebersicht:wanne}}
@@ -109,8 +207,8 @@ xyz&\ge V.
 \end{align*}
 
 \subsection{Pyramidenbau\label{uebersicht:pyramidenbau}}
-Ein Vorarbeiter auf der Baustelle der Pyramide des Pharaos
-Mathesis\footnote{Name von der Redaktion ge"andert}~V.~hat den Auftrag, mit
+Variatos, Vorarbeiter auf der Baustelle der Pyramide des Pharaos
+Mathesis\footnote{Name von der Redaktion ge"andert}~V.,hat den Auftrag, mit
 einer Equipe von Arbeitern einen Sandstein-Block von $A$ nach $B$
 zu bringen. Die Equipe steht ihm ab dem Zeitpunkt $a$ zur Verf"ugung,
 und ab Zeitpunkt $b$ soll sie an einer anderen Stelle auf der Baustelle
@@ -344,3 +442,29 @@ spricht man von einem {\em nichtlinearen Optimierungsproblem}.
 Das Beispiel \ref{uebersicht:wanne} der Tankwanne ist ein nichtlineares
 Optimierungsproblem.
 
+Ist die Zielfunktion ein Polynom in mehreren Variablen, dann spricht
+man von einem {\em geometrischen Optimierungsproblem}, vor allem
+aus praktischen Gr"unden: f"ur diese besonderen F"alle gibt es 
+spezielle L"osungsverfahren, die bei beliebigen Zielfunktionen
+nicht mehr funktionieren.
+
+In einigen Anwendungsproblemen k"onnen die Designvariablen nicht beliebige
+relle Werte annehmen. Zum Beispiel kann ein Zahnrad nur eine ganze Anzahl
+von Z"ahnen haben, oder Widerstandswerte sind nur in bestimmten Werten
+verf"ugbar, deren Logarithmus ein ganzzahliges Vielfaches einer
+Grundeinheit ist. Sind nur ganzzahlige L"osungen f"ur ein Optimierungsproblem
+erlaubt, spricht man von einem {\em ganzzahligen Optimierungsproblem}.
+
+H"aufig kommen auch Kombination vor: einige Designvariablen m"ussen
+ganzzahlig sein, die anderen k"onnen beliebige reelle Werte annehmen.
+Solche Probleme heissen {\em gemischte Optimierungsprobleme}.
+
+Problem, in denen nicht nur endlich viele diskrete Werte so zu bestimmen
+sind, dass eine Zielgr"osse optimal wird, sondern eine ganz Funktion,
+wie im Pyramidenbau-Beispiel \ref{uebersicht:pyramidenbau} heissen
+{\em Variationsprobleme}. Der folgende Speziallfall ist besonders wichtig.
+Ein System kann mit Hilfe einer "ausseren Kraft $x(t)$ gesteuert werden.
+Das System soll jetzt von Zustand $A$ in Zustand $B$ gebracht werden,
+wobei der Energieverbrauch (oder eine andere Gr"osse, zum Beispiel die
+daf"ur ben"otigte Zeit) minimiert werden soll. Ein solches Problem heisst
+ein {\em Kontroll-Problem}.
