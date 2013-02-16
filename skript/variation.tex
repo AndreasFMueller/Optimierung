@@ -378,20 +378,64 @@ Also muss die L"osungsfunktion die Differentialgleichung
 \frac{\partial F}{\partial x}(t,x(t),\dot x(t))
 =
 0
+\label{variation:euler-gleichung}
 \end{equation}
 erf"ullen. Diese Differentialgleichung heisst die {\it Euler-Gleichung}
 des Variationsproblems.
 
-% falsch
-%\subsection{Randbedingungen}
-%Man kann in (\ref{euler-1}) aber auch Funktionen $\delta(t)$ w"ahlen, 
-%die nur gerade einer Umgebung eines Endpunktes des Intervalls von
-%$0$ verschieden sind. Daraus folgt dann, dass 
-%\begin{equation}
-%\frac{\partial F}{\partial v}(t_i,x(t_i),\dot x(t_i))=0
-%\label{variation-randwerte}
-%\end{equation}
-%f"ur $i=0,1$ gelten muss. Dies ist eine Gleichung f"ur die Anfangswerte.
+\subsection{Variationsproblem mit Nebenbedingungen\label{variation:section-variationsproblem-nebenbedingungen}}
+Das isoperimetrische Problem verlangt ein Funktional zu maximieren,
+aber gleichzeitig muss ein anderes Funktional, die L"ange, konstant
+zu halten. Etwas allgemeiner muss also ein Funktional
+\[
+I_F(x)=
+\int_a^bF(t, x(t), \dot x(t))\,dt
+\]
+maximiert werden, w"ahrend gleichzeitig die Nebenbedingung
+\begin{equation}
+I_G(x)=
+\int_a^b G(t, x(t), \dot x(t))\, dt = 0
+\label{variation:nebenbedingung}
+\end{equation}
+gelten muss.
+
+Wie in Abschnitt \ref{nlp:nebenbedingungen:mehrereariable} k"onnen wir
+schliessen, dass bei einem Optimum die Richtungsableitungen
+der beiden Funktionale proportional sind. Es muss also eine Zahl
+$\lambda$ geben mit
+\[
+\delta I_F(x)=\lambda \delta I_G(x)
+\]
+Die gleiche Rechnung, die zu 
+(\ref{nlp:nebenbedingungen:mehrereariable})
+gef"uhrt hat, f"uhrt jetzt zu einer Gleichung
+\begin{equation}
+\frac{d}{dt}\frac{\partial F}{\partial v}(t,x(t),\dot x(t))
+-
+\frac{\partial F}{\partial x}(t,x(t),\dot x(t))
+=
+\lambda \left(
+\frac{d}{dt}\frac{\partial G}{\partial v}(t,x(t),\dot x(t))
+-
+\frac{\partial G}{\partial x}(t,x(t),\dot x(t))
+\right)
+\end{equation}
+oder 
+\begin{equation}
+\frac{d}{dt}\frac{\partial (F-\lambda G)}{\partial v}(t,x(t),\dot x(t))
+-
+\frac{\partial (F-\lambda G)}{\partial x}(t,x(t),\dot x(t))
+=
+0
+\label{variation:euler-gleichung-Nebenbedingung}
+\end{equation}
+F"ur die L"osung des Variationsproblems mit Nebenbedingungen ist also
+eine Funktion $x(t)$ und eine Zahl $\lambda$ zu finden, so
+dass die Gleichung 
+(\ref{variation:euler-gleichung-Nebenbedingung}) und
+die Nebenbedingung
+(\ref{variation:nebenbedingung})
+erf"ullt.
 
 \subsection{Beispiele}
 \subsubsection{K"urzeste Verbindung}
@@ -416,6 +460,69 @@ $x(t)$ eine lineare Funktion ist.
 Die k"urzeste Verbindung zwischen zwei Punkten ist also eine
 Gerade.
 
+\subsubsection{Isoperimetrisches Problem}
+Das isoperimetrische Problem ist ein Variationsproblem mit
+Nebenbedingungen.
+Nach Abschnitt 
+\ref{variation:section-variationsproblem-nebenbedingungen}
+muss es zu einer L"osung des Problems eine Zahl $\lambda$
+geben, so dass die Kurve $x(t)$ die Eulergleichung f"ur die Funktion
+\[
+F(t,x,v)-\lambda G(t,x,v)
+\]
+erf"ullt. Aus
+\begin{align*}
+F(t,x,v) &= x&
+G(t,x,v) &= \sqrt{1+v^2}
+\end{align*}
+kann man die Eulergleichung f"ur die Funktion $H=F+\lambda G$
+ableiten; zun"achst die partiellen Ableitungen von $H$
+\begin{align*}
+\frac{\partial H}{\partial x}&=1
+&
+\frac{\partial H}{\partial v}&=-\frac{\lambda v}{\sqrt{1+v^2}}
+\end{align*}
+und dann die Euler-Gleichungen
+\begin{align*}
+\frac{d}{dx} \frac{\lambda f'(x)}{\sqrt{1+f'(x)^2}}-1&=0
+\\
+\frac{d}{dx} \frac{\lambda f'(x)}{\sqrt{1+f'(x)^2}}&=1
+\\
+\frac{\lambda f'(x)}{\sqrt{1+f'(x)^2}}&=x - a
+\\
+\frac{f'(x)^2}{1+f'(x)^2}&=\frac{(x-a)^2}{\lambda^2}
+\end{align*}
+Unter Verwendung von
+\[
+\frac{X}{1+X}=Y
+\qquad
+\Rightarrow
+\qquad
+X=\frac{Y}{1-Y}
+\]
+wird aus der letzten Gleichung die Differentialgleichung
+\begin{align*}
+f'(x)^2&=\frac{(x-a)^2}{\lambda^2-(x-a)^2}
+\\
+f'(x)&=\frac{x-a}{\sqrt{\lambda^2-(x-a)^2}}
+\end{align*}
+f"ur die Funktion $f(x)$. Das Integral kann man durchf"uhren, 
+Mathematica findet zum Beispiel
+\[
+y=f(x)=\sqrt{\lambda^2 - (x-a)^2}+b
+\]
+oder
+\[
+(x-a)^2+(y-b)^2=\lambda^2,
+\]
+die Gleichung eines Kreises mit Mittelpunkt $(a,b)$ und Radius
+$\lambda$.
+Damit haben wir gezeigt, dass die optimale L"osung f"ur das
+isoperimetrische Problem ein Kreisbogen sein muss, und die
+Bedeutung des Lagrange-Multiplikators ist jetzt auch klar, es
+ist der Radius des Kreises.
+
+
 \subsubsection{Lagrange-Mechanik}
 Die Eulergleichungen zur Variation der Lagrange-Funktion
 (\ref{lagrange-funktion}) sind:
@@ -438,9 +545,69 @@ m\ddot x=F(x),
 \end{equation}
 also das erste Newtonsche Gesetz.
 
+\subsection{Anwendungen}
+\subsubsection{Spline-Interpolation}
+Das Interpolationsproblem verwendet das Funktional
+\begin{equation}
+I(g)=
+\int_a^b[g''(x)]^2\,dx,
+\label{variation:spline-funktional}
+\end{equation}
+welches nicht von der Art (\ref{variations-funktional}) ist.
+Es ist daher auch nicht m"oglich, die Euler-Gleichung anzuwenden.
+Aber die Methode der Variation, mit der die Euler-Gleichung gefunden
+wurde, ist auch in diesem Beispiel anwendbar, wir m"ussen die gleiche
+Ableitung nochmals durchf"uhren.
+Wir berechnen also die Variation
+des Funktionals
+(\ref{variation:spline-funktional})
+f"ur ein einziges Teilinterval $[t_k,t_{k+1}]$
+\begin{align*}
+0&=
+\left.
+\frac{d}{ds}\int_{t_k}^{t_{k+1}} [g''(x)+s\eta''(x)]^2\,dx
+\right|_{s=0}
+\\
+&=
+\int_{t_k}^{t_{k+1}} 2(g''(x)+s\eta''(x))\eta''(x)\bigg|_{s=0}\,dx
+\\
+&=
+\int_{t_k}^{t_{k+1}} 2g''(x)\eta''(x)\,dx
+\\
+&=
+\left[g''(x)\eta'(x)\right]_{t_k}^{t_{k+1}}
+-
+\int_{t_k}^{t_{k+1}}
+g'''(x)\eta'(x)\,dx
+\\
+&=
+\left[g''(x)\eta'(x)\right]_{t_k}^{t_{k+1}}
+-
+\left[g'''(x)\eta(x)\right]_{t_k}^{t_{k+1}}
++
+\int_{t_k}^{t_{k+1}} g^{(4)}(x)\eta(x)\,dx
+\end{align*}
+Da man $\eta(x)$ frei w"ahlen kann, auch so, dass
+$\eta(t_k)=\eta(t_{k+1})=0$
+und 
+$\eta'(t_k)=\eta'(t_{k+1})=0$
+folgt aus der letzten Gleichung, dass
+\begin{equation}
+g^{(4)}(x)=0
+\label{variation:spline-euler}
+\end{equation}
+sein muss.
+Die Gleichung 
+(\ref{variation:spline-euler}) ist die Euler-Gleichung f"ur das Funktional
+(\ref{variation:spline-funktional}).
+Eine Funktion, deren vierte Ableitung verschwindet, ist notwendigerweise in
+kubisches Polynom.
+Die optimale Interpolationsfunktion muss also notwendigerweise auf jedem
+Teilinterval $[t_k,t_{k+1}]$ ein Polynom dritten Grades sein.
 
-\section{Anwendungen}
-\subsection{Mechanik}
-\subsection{Interpolation}
-\subsection{Brachistochrone}
+Daraus l"asst sich jetzt eine Methode ableiten, mit der die optimale
+Interpolationsfunktion gefunden werden kann.
+Da dies jedoch nicht das eigentliche Thema dieses Skripts ist,
+verzichten wir auf die Details.
+
 
