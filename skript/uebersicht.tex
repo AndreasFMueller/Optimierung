@@ -1,4 +1,6 @@
 \chapter{"Ubersicht}
+\lhead{"Ubersicht}
+\rhead{}
 Steven Wozniak war daf"ur ber"uhmt, den ersten Apple-Computer mit
 einer m"oglichst kleinen Zahl von ICs konstruiert zu haben.
 Ausserdem soll der Firmware Code besonders schlank gewesen sein, so
@@ -36,25 +38,160 @@ eine grobe Klassifizierung der Optimierungsprobleme, und in Abschnitt
 besprechenden L"osungsmethoden kurz skizziert.
 
 \section{Einf"uhrungsbeispiele\label{section-einfuehrungsbeispiele}}
+\rhead{Beispiel}
+
+\subsection{Hackfleischskandal\label{uebersicht:hackfleisch}}
+Ein Pizza-Hersteller braucht f"ur seine Pizza Hackfleisch, wobei er
+zur Gewinnoptimierung Rindfleisch mit billigerem Pferdefleisch mischen
+will. Die kg-Kosten f"ur Rinds-Hack und f"ur Pferde-Hack sind bekannt.
+Seine Zulieferer k"onnen jedoch nur eine bestimmte maximale Menge
+an Pferdefleisch liefern, da der Markt nicht mehr hergibt.
+Da die Verarbeitung des Pferdefleisches Resourcen beim Zulieferer
+bindet, kann der Zulieferer umso weniger Rindfleisch liefern, je mehr
+Pferdefleisch der Pizza-Hersteller bestellt. In welchem Verh"altnis
+muss er Pferde und Rindfleisch bestellen, um einen m"oglichst hohen
+Gewinn zu erzielen?
+
+Offenbar muss der Pizza-Hersteller eine Menge $x$ von Pferdefleisch
+und eine Menge $y$ von Rindfleisch bestellen. Sein Zulieferer hat
+nur die Lieferkapazit"at $c$, es muss also gelten $x+y\le c$.
+Der Markt f"ur Pferdefleisch ist eher klein, es muss also gelten
+$x\le m$ sein. Und nat"urlich m"ussen $x\ge 0$ und $y\ge 0$ sein.
+Die "ubrigen Kosten und der Umsatz sind proportional zur Menge
+der gesamthaft produzierten Pizzas die immer gleich viel Fleisch
+enthalten (hier best"unde f"ur so einen diebischen Pizza-Hersteller
+durchaus auch noch ``Optimierungspotential''), also zu $x+y$. Die
+Kosten f"ur die Fleischsorten sind bekannt, nennen wir sie $c_x$ und $c_y$.
+Der Pizzahersteller versucht also den Gewinn
+\[
+G=
+c(x+y)-c_xx-c_yy
+\]
+zu maximieren unter der Einschr"ankungen
+\begin{align*}
+x&\ge 0,\\y&\ge 0,\\
+x+y&\le c,\\
+x&\le m.
+\end{align*}
+Der Gewinn wie auch die Einschr"ankungen sind lineare Gleichunge
+bzw.~Ungleichungen.
+
+\subsection{Tankwanne\label{uebersicht:wanne}}
+Es soll eine quaderf"ormige Wanne aus Stahlblech zusammengeschweisst
+werden, die ein Fassungsverm"ogen $V$ haben muss, sie soll n"amlich
+auslaufendes "Ol eines ebenfalls quaderf"ormigen Tankes auffangen k"onnen,
+dessen Grundfl"ache L"ange $l$ und Breite $b$ hat, und der in die
+Wanne gestellt werden soll.
+Das Blech hat die Fl"achendichte $\varrho$. Der Preis der Wann setzt sich
+zusammen aus den Masseabh"angigen Materialkosten $c_m$ und den allein
+von der L"ange der Schweissnaht abh"angigen Kosten f"ur den Schweisser
+$c_s$. Wie muss die Wanne konstruiert werden, damit sie m"oglichst 
+billig wird?
+
+Die Wanne ist quaderf"ormig, nennen wir $(x,y,z)$ die L"ange, Breite
+und H"ohe der Wanne. Damit die Wanne das verlangte
+Fassungsverm"ogen hat, muss $xyz\ge V$ sein.
+Damit der Tank in die Wanne passt, muss $x\ge l$ und $y\ge b$ sein.
+Die Masse der Wanne setzt sich zusammen aus der Masse von Boden
+und Seitenfl"achen, also
+$\varrho(xy+2xz+2yz)$. Der Schweisser muss vier vertikale N"ahte
+der L"ange $z$ und je zwei horizontale N"ahte der L"ange $x$ und $y$
+schweissen. Die Gesamtkosten f"ur die Wanne sind also
+\[
+f(x,y,z)=c_m\varrho(xy+2z(x+y))+c_s(4z+2x+2y).
+\]
+Die Aufgabe besteht also darin, die Variablen $x$, $y$ und $z$ so
+zu bestimmen, dass $f(x,y,z)$ minimal wird unter den Einschr"ankgungen
+\begin{align*}
+x&\ge l\\
+y&\ge b\\
+xyz&\ge V.
+\end{align*}
+
+\subsection{Pyramidenbau\label{uebersicht:pyramidenbau}}
+Ein Vorarbeiter auf der Baustelle der Pyramide des Pharaos
+Mathesis\footnote{Name von der Redaktion ge"andert}~V.~hat den Auftrag, mit
+einer Equipe von Arbeitern einen Sandstein-Block von $A$ nach $B$
+zu bringen. Die Equipe steht ihm ab dem Zeitpunkt $a$ zur Verf"ugung,
+und ab Zeitpunkt $b$ soll sie an einer anderen Stelle auf der Baustelle
+wieder eingesetzt werden, sie soll dann noch m"oglichst fit f"ur
+den Folgeauftrag sein. Die Wahl des Weges von $A$ nach $B$ ist
+dem Vorarbeiter freigestellt, er kann eine direkte Route w"ahlen, die
+jedoch "uber eine leichte Erhebung f"uhrt, oder er kann die Erhebung
+umgehen, was jedoch einen deutlich l"angeren Weg bedeutet. Wie soll
+er den Weg planen?
+
+Der Vorarbeiter muss also eine
+Kurve $x(t)$ w"ahlen, die den Weg des Blocks durch die Baustelle
+beschreibt.
+Wenn die Equipe m"oglichst fit sein soll, muss die aufgewendete
+Gesamtenergie minimiert werden. 
+Letztere kann aus der Momentanen Leistung bestimmt werden, wir 
+nehmen an, dass am Punkt $x(t)$ die Leistung $P(x(t), \dot x(t))$
+erbracht werden muss, um den Block mit Geschwindigkeit $\dot x(t)$
+zu bewegen. Die zu minimierende Gr"osse ist also
+\[
+\int_a^bF(x(t), \dot x(t))\,dt.
+\]
+Dieses Integral betrachten wir als eine Gr"osse, die von der Wahl
+der Funktion $x(t)$ abh"angt.
 
 \section{Begriffe\label{section-begriffe}}
+\rhead{Begriffe}
+\subsection{Zul"assiges Gebiet}
 Allen Beispielen von Optimierungsproblemen war gemeinsam, dass eine
 Anzahl von Variablen $x=(x_1,\dots,x_n)$ variert werden k"onnen.
+Im Ingenieur-Zusammenhang spricht man beim Vektor 
+\[
+\begin{pmatrix}
+x_1\\\vdots\\x_n
+\end{pmatrix}
+\]
+oft auch vom {\em Designvektor}, die einzelnen Variablen $x_i$ werden
+dann oft {\em Designvariablen} genannt, um sie von anderen im Problem
+auftretenden Variablen zu unterscheiden, die zum Beispiel zur Bestimmung
+eines Optimums nicht frei ver"andert werden d"urfen.
+
 Dabei sind Einschr"ankungen zu beachten.
-Die Einschr"ankungen k"onnen in der Form von Gleichungen
+Die {\em Einschr"ankungen} k"onnen in der Form von Gleichungen
 \begin{equation}
-g(x)=0
+g(x)=0,
 \label{begriff-nebenbedingungen}
 \end{equation}
-oder Ungleichungen
+auch {\em Nebenbedingungen} genannt, oder Ungleichungen
 \begin{equation}
 h(x)\le 0
 \label{begriff-einschraenkungen}
 \end{equation}
-vorliegen, auch Nebenbedingungen genannt.
+vorliegen.
 \index{Nebenbedingung}
-$g(x)$ und $h(x)$ k"onnen auch vektorwertig sein.
-Eine Gleichung $g(x)$ definiert eine Teilmenge, typischerweise eine
+$g(x)$ und $h(x)$ k"onnen auch vektorwertig sein,
+das heisst ist eine Menge von Nebenbedingungen
+\begin{align*}
+g_i(x)&=0&x&\in\mathbb R, 1\le i\le m
+\end{align*}
+oder von Einschr"ankungen durch Ungleichungen
+\begin{align*}
+h_j(x)&\le 0&x&\in\mathbb R, 1\le j\le l
+\end{align*}
+gegeben.
+
+Dass hier Gleichungen in der Form $g_i(x)=0$ betrachtet werden, also
+\marginpar{\raggedright\tiny Rechte Seite $0$ ist keine Einschr"ankung}
+nur mit $0$ auf der rechten Seite, ist keine wesentliche Einschr"ankung.
+Denn eine Gleichung der Form $g_i(x)=c$ kann in die Standardform gebracht
+werden, indem man $c$ auf beiden Seiten der Gleichung subtrahiert,
+und die Funktion $g_i(x)$ durch $g_i(x)-c$ ersetzt.
+
+Auch ist es keine Einschr"ankung, dass nur Ungleichungen der Form 
+\marginpar{\raggedright\tiny Andere Formen von Ungleichungen sind "aquivalent}
+$h_j(x)\le 0$ betrachtet werden. St"unde auf der rechten Seite eine
+Konstante $c$, k"onnte man diese wieder loswerden, indem man $h_j(x)$
+durch $h_j(x)-c$ ersetzt. Eine Ungleichung der Form $h_j(x)\ge 0$
+kann durch multiplizieren mit $-1$ auf die Standardform gebracht werden,
+man ersetzt also $h_j(x)$ durch $-h_j(x)$.
+
+Eine Gleichung $g(x)=0$ definiert eine Teilmenge, typischerweise eine
 Fl"ache oder Kurve (allgemeine eine Untermannigfaltigkeit) im 
 Parameterraum.
 Eine Ungleichung andererseits definiert eine berandete Teilmenge,
@@ -66,13 +203,27 @@ eine Vollkugel, deren Rand die Kugeloberfl"ache mit der Gleichung
 \[
 g(x,y,z)=x^2+y^2+z^2=1
 \]
-ist.
-Die Menge der Punkte $x\in\mathbb R^n$, die alle Nebenbedingungen
-erf"ullen, heisst {\it zul"assiges Gebiet}.
+ist. Im Allgemeinen wird die Zahl der 
+
+\begin{definition}
+Die Menge der Punkte $x\in\mathbb R^n$, die alle Einschr"ankungen
+erf"ullen, heisst {\em zul"assiges Gebiet}.
 \index{zul\"assiges Gebiet}
-Die zu optimierende Gr"osse ist eine Funktion $f$ der Variablen $x$,
-sie heisst die {\it Zielfunktion}.
+\end{definition}
+
+\subsection{Zielfunktion}
+Unter den gegebenen Einschr"ankungen sollen jetzt Werte der
+Variablen $x_1,\dots,x_n$ gefunden werden, f"ur die eine weitere
+Funktion $f\colon \mathbb R^n \to \mathbb R$ m"oglichst gross
+oder m"oglichst klein wird.
+Die Funktion $f(x_1,\dots,x_n)$ heisst {\em Zielfunktion}.
 \index{Zielfunktion}
+Offenbar spielt es keine grosse Rolle, ob nach einem Maximum oder einem
+\marginpar{\raggedright\tiny Kein mathematischer Unterschied zwischen
+Maximum- und Minimum-Problem}
+Minimum gefragt wird: Die Maxima von $f(x)$ sind die Minima von $-f(x)$.
+Man kann also jedes Optimierungsproblem als Maximum- oder Minimum-Problem
+formulieren.
 
 Ein Optimerungsproblem besteht also aus der Vorgabe einer Zielfunktion
 $f(x)$ und eines zul"assigen Bereichs $G\subset \mathbb R^n$, welcher
@@ -91,17 +242,105 @@ dass $f(x^*)$ maximal oder minimal ist unter allen Werten $f(x)$,
 wenn $x$ aus einer Umgebung von $x^*$ in $G$ stammt.
 \index{Optimum!lokal}
 
+\subsection{Variationsproblem}
+Das Beispiel \ref{uebersicht:pyramidenbau} passt nicht in das bisher
+entworfene allgemeine Schema: f"ur jeden
+Parameterwert $t$ ist die aktuelle Position des Blocks zu bestimmen,
+es sind also unendlich viele Positionen $x(t)$ zu bestimmen, so 
+dass die Gesamtenergie, also das Integral der Leistung
+\begin{equation}
+F(x)=
+\int_{a}^{b}P(x(t),\dot x(t))\,dt
+\label{uebersicht:funktional}
+\end{equation}
+minimal wird.
+Der Ausdruck (\ref{uebersicht:funktional}) h"angt von der Wahl der
+{\em Funktion} $x(t)$ ab (das $x$ in $F(x)$ ist nicht nur eine
+Variable), man nennt ihn ein {\em Funktional}.
+Die Aufgabe, eine Funktion $x(t)$ zu finden, die das Funktional
+(\ref{uebersicht:funktional}) minimiert oder maximiert heisst
+ein Variationsproblem.
+
+Man kann sich aber vorstellen, das Interval
+\marginpar{\raggedright\tiny Approximation eines Variationsproblems
+durch ein Optimierungsproblem}
+$[a,b]$ in $n$ Teilintervalle
+$[t_0,t_1]$, $[t_1,t_2]$, $\dots$, $[t_{n-1},t_n]$ zu
+zerlegen mit $a=t_0$ und $b=t_n$. Statt der Kurve
+$x(t)$ ist dann eine endliche Menge von Punktion $x_k=x(t_k)$ 
+zu bestimmen. Die Zielfunktion kann approximiert werden
+\begin{equation}
+\int_{a}^{b}P(x(t),\dot x(t))\,dt
+\simeq
+\sum_{k=1}^n P\biggl(x_k,\frac{x_k-x_{k-1}}{t_k-t_{k-1}}\biggr)\cdot (t_k-t_{k-1})
+=f(x_1,\dots,x_n).
+\label{uebersicht:funktional:diskret}
+\end{equation}
+Das Problem, die unendlich vielen Punkte der optimalen Kurve
+zu finden kann also approximiert werden durch eine endliche Menge
+von diskreten Punkten.
+Es ist dann die Funktion $f$ zu minimieren
+unter gewissen Einschr"ankungen an die Punkte $x_k$ (der Stein kann
+zum Beispiel nicht mit "Uberlichtgeschwindigkeit bewegt werden).
 
 
-\section{Klassifizierung von Optimierungsproblemen\label{section-klassifizierung}}
-\subsection{Extremwerte}
-Die einfachste Art von Optimierungsproblem ist das Finden der Extremwerte
-einer Funktion $f\colon\mathbb R^n\to\mathbb R$.
-Im eindimensionalen Fall einer differentzierbaren Funktion lernt man dazu
-in der Analysis, dass die Extrema entweder auf dem Rand des Definitionsbereichs
-zu finden sind, oder aber innere Punkte sind, in denen die Funktion
-verschwindende Ableitung $f'(x)=0$ hat.
+Umgekehrt k"onnen wir die bisher betrachteten Optimierungsproblem auch
+\marginpar{\raggedright\tiny Optimierungsproblem als ``diskretes''
+Variationsproblem}
+als Vartiationsproblem betrachten. Ein Vektor
+\[
+\begin{pmatrix}
+x_1\\\vdots\\ x_n
+\end{pmatrix}
+\]
+ist ja nichts anderes als eine Funktion
+\[
+x\colon \{1,\dots n\}\to \mathbb R: k\mapsto x_k,
+\]
+die ganzzahligen Werten zwischen 1 und $n$ einen Zahlenwert
+zuordnen.
+Die Funktion $k\mapsto x_k$ ist eine ``diskrete Variante'' einer
+Kurve $t\mapsto x(t)$, das Funktional f"ur eine ``diskrete Kurve''
+ist einfach nur die Summe (\ref{uebersicht:funktional:diskret}).
 
-Die Zielfunktion ist in diesem Optimierungsproblem $f$, das zul"assige
-Gebiet ist der Definitionsbereicht von $f$.
+
+
+\section{Klassifizierung \label{section-klassifizierung}}
+Wir gehen in diesem wieder von dem Problem aus, dass die Funktion
+$f\colon\mathbb R^n\to\mathbb R$ maximiert werden soll.
+Wir setzen im allgemeinen nicht voraus, dass die Funktion differenzierbar
+sein muss, doch viele L"osungsverfahren verwenden Ableitungen und 
+funktionieren daher nur f"ur differenzierbare Funktionen.
+
+Das Problem, das Extremum der Funktion $f$ zu finden f"ur beliebige
+Werte von $x\in\mathbb R^n$ heisst ein {\em nicht eingeschr"anktes
+Optimierungsproblem}.
+
+
+Ein {\em eingeschr"anktes Optimierungsproblem} liegt vor, wenn die
+Funktion $f$ unter
+Nebenbedingungen 
+\begin{align*}
+g_i(x)&=0&&x\in\mathbb R^n, 1\le i\le m
+\end{align*}
+und Einschr"ankungen
+\begin{align*}
+h_j(x)&=0&&x\in\mathbb R^n, 1\le j\le l
+\end{align*}
+maximiert werden soll. Beide Beispiele \ref{uebersicht:hackfleisch}
+und \ref{uebersicht:wanne} sind eingeschr"ankte Optimierungsprobleme.
+
+Ein {\em lineares Optimierungsproblem} liegt vor, wenn die
+Zielfunktion $f$ wie auch die Nebenbedingungen $g_i$ und
+Einschr"ankungen $h_j$ lineare Funktionen sind.
+F"ur lineare Optimierungsprobleme wird im
+Kapitel~\ref{chapter-lineare-optimierung} mit dem Simplexalgorithmus
+ein leistungsf"ahiges L"osungsverfahren vorgestellt.
+Das Hackfleisch-Beispiel \ref{uebersicht:hackfleisch} ist ein lineares
+Optimierungsproblem.
+
+Ist die Zielfunktion oder eine der Einschr"ankungen nicht linear
+spricht man von einem {\em nichtlinearen Optimierungsproblem}.
+Das Beispiel \ref{uebersicht:wanne} der Tankwanne ist ein nichtlineares
+Optimierungsproblem.
 
