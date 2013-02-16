@@ -159,6 +159,50 @@ minimiert werden unter den Nebenbedingungen $x(0)=x_0$ und
 $x(1)=x_1$.
 
 \subsubsection{Isoperimetrisches Problem}
+Gesucht ist eine Kurve gegebener L"ange in der Ebene, welche den
+gr"osstm"oglichen Fl"acheninhalt einschliesst.
+Der Sage nach soll K"onigin Dido auf der Flucht vor ihrem Bruder
+Pygmalion bei Ihrer Ankunft in Nordafrika den dortigen Berberk"onig
+Iarbas leihweise um ein St"uck Land gebeten haben nur so klein, dass man es mit
+einer Ochsenhaut umz"aunen k"onne. Nach Iarbas' Zustimmung schnitt
+Dido eine Ochsenhaut in einen langen Riemen und umz"aunte damit einen ganzen
+H"ugel.
+
+Etwas mathematischer, gesucht ist offenbar eine eine Funktion
+$\gamma\colon [0,1]\to\mathbb R^2:t\mapsto \gamma(t)$. Die
+L"ange muss einen ganz bestimmten Wert haben:
+\[
+\int_0^1 |\dot\gamma(t)|\,dt = l.
+\]
+Die eingeschlossene Fl"ache soll aber maximal sein:
+\[
+\frac12\int_0^1 x(t)\dot y(t)-y(t)\dot x(t)\,dt
+\]
+(Greensche Formel, siehe Vorlesung FuVar), wobei
+\[
+\begin{pmatrix}x(t)\\y(t)\end{pmatrix}=\gamma(t).
+\]
+
+"Aquivalent aber etwas "ubersichtlicher ist das folgende Problem.
+Gegen sind zwei Punkte $A$ und $B$ in der Ebene. Gesucht ist eine
+Kurve gegebener L"ange $l$ von $A$ nach $B$ so, dass die Fl"ache
+zwischen der Kurve und der Strecke $AB$ maximalen Fl"acheninhalt hat.
+
+Ohne Beschr"ankung der Allgemeinheit k"onnen wir annehmen, dass die
+Punkte $A$ und $B$ symmetrisch bez"uglich des Nullpunktes auf der
+$x$-Achse liegen, und dass die Kurve von $A$ nach $B$ sich durch eine
+Funktion $y=f(x)$ beschreiben l"asst. Gesucht ist jetzt offenbar eine
+Funktion $f(x)$ auf dem Intervall $[-a,a]$ so, dass die Fl"ache
+\[
+\int_{-a}^af(x)\,dx
+\]
+maximal wird, allerdings muss die L"ange der Kurve fest sein:
+\[
+\int_{-a}^{a} \sqrt{1+f'(x)^2}\,dx=l.
+\]
+Umgekehrt k"onnte man auch nach der Kurve minimaler L"ange
+fragen, welche eine gegebene Fl"ache umfassen kann.
+
 \subsubsection{Mechanik als Minimalproblem}
 Vielen Naturgesetzen liegen Optimalit"atsprinzipien zu Grunde.
 Das Brechungsgesetz kann man so formulieren: auf dem Weg $A$ 
@@ -202,6 +246,35 @@ Systems, wir
 verwenden sie im Funktional (\ref{lagrange-integral}).
 
 \subsubsection{Interpolation}
+F"ur die Berechnung einer Funktion $f(x)$ auf einem Interval
+$[a,b]$ mit dem Computer wird oft eine Interpolationsverfahren verwendet.
+Einige Funktionswerte $y_k=f(x_k)$, $a=x_0<x_1<\dots <x_n = b$,
+einer Funktion sind exakt bekannt,
+die Werte $f(x)$ f"ur die dazwischen liegenden $x$-Werte sollen
+mit einer einfach zu berechnenden N"aherungsformel $g(x)$ berechnet
+werden. 
+
+Nat"urlich gibt es unendlich viele Funktionen $g(x)$, welche mit der
+Funktion $f(x)$ in den Punkten $x_k$ "ubereinstimmt.
+Es braucht also ein Kriterium, nach dem man eine ``m"oglichst gute''
+Interpolationsfunktion $g(x)$ ausw"ahlen kann.
+
+Eine erfolgreiche L"osung geht von einer Idee aus dem Schiffsbau aus:
+man stellt sich die Interpolationsfunktion als eine Holzlatte vor, die
+in den Punkten $(x_k,y_k)$ drehbar gelagert ist. Die Holzlatte wird
+eine Form annehmen, bei der die Spannung in der Latte minimal ist.
+Als Mass f"ur die Spannung kann man die zweite Ableitung der Funktion $g(x)$
+nehmen. Gesucht ist also eine Funktion $g(x)$, die das Integral
+\[
+\int_a^b [g''(x)]^2\,dx
+\]
+minimiert, und in den Punkten $x_k$ den ``richtigen'' Funktionswert 
+$g(x_k)=f(x_k)$ annimmt. Ausserdem soll die Funktion einmal stetig 
+differenzierbar sein.
+
+Die L"osung dieses Variationsproblems f"uhrt auf die sogenannte
+Spline-Interpolation, die zum Beispiel in der Computer-Graphik oder
+in der Wegplanung f"ur Roboter beliebt sind.
 
 \section{Euler-Gleichungen}
 Es gibt kaum Verfahren, ein allgemeines Variationsproblem zu l"osen.
