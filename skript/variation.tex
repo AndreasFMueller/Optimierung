@@ -124,6 +124,28 @@ haben jedoch eine allgemeine L"osung, auf die wir im Folgenden
 hinarbeiten wollen.
 
 \subsection{Verallgemeinerungen}
+In der bisherigen Formulierung des Variationsproblems war eine
+Kurve $x(t)$ gesucht so, dass ein bestimmtes Funktional einen
+minimalen Wert annimmt. Dies ist eine Einschr"ankung der bisherigen
+Beispiele, nicht aber eine grunds"atzliche Einschr"ankung der Methode.
+
+Sucht man zum Beispiel die Form einer Seifenhaut einer in einem
+Rahmen eingespannten Seifenhaut, muss man offenbar eine Gleichung
+aufstellen f"ur eine Funktion von zwei Parametern $\varphi(x,y)$,
+definiert auf einem Definitionsgebiet $D\subset \mathbb R^2$ so, dass
+die Werte von $\varphi$ auf dem Rande des Definitionsgebietes $D$ mit
+den Punkten des Rahmens "ubereinstimmen. Die Seifenhaut nimmt eine
+Form minimalen Fl"acheninhaltes an.
+
+Weiter unten werden wir sehen, dass jedes Variationsproblem in eine
+Differentialgleichung verwandelt werden kann.
+Dies ist auch m"oglich f"ur das Minimalfl"achenproblem und die 
+Funktion $\varphi(x,y)$.
+Da jetzt allerdings
+zwei Variablen vorhanden sind, nach denen abgeleitet werden kann, wird
+sich eine partielle Differentialgleichung ergeben.
+Wir beschr"anken uns im folgenden daher auf das eindimensionale
+Variationsproblem.
 
 \subsection{Beispiele}
 \subsubsection{K"urzeste Verbindung}
@@ -180,7 +202,6 @@ Systems, wir
 verwenden sie im Funktional (\ref{lagrange-integral}).
 
 \subsubsection{Interpolation}
-\subsubsection{Minimalfl"achen}
 
 \section{Euler-Gleichungen}
 Es gibt kaum Verfahren, ein allgemeines Variationsproblem zu l"osen.
@@ -282,6 +303,8 @@ Also muss die L"osungsfunktion die Differentialgleichung
 \frac{d}{dt}\frac{\partial F}{\partial v}(t,x(t),\dot x(t))
 -
 \frac{\partial F}{\partial x}(t,x(t),\dot x(t))
+=
+0
 \end{equation}
 erf"ullen. Diese Differentialgleichung heisst die {\it Euler-Gleichung}
 des Variationsproblems.
