@@ -1,0 +1,23 @@
+\begin{aufgabe}
+Positionsbestimmung mit GPS als Minimalproblem.
+\end{aufgabe}
+
+{\parindent 0pt Das Global Positioning System GPS}
+erm"oglicht, aus den von Satelliten "ubermittelten Positionen
+$(x_i, y_i, z_i, t_i)$ durch Vergleich der Zeiten die eigene
+Position $(x,y,z,t)$
+zu bestimmen. Sobald man mehr als 4 Satelliten empfangen kann,
+k"onnen die Daten nicht mehr exakt einen Punkt bestimmen, das
+Problem ist "uberbestimmt. Da man nicht weiss, wie ``falsch''
+das Signal eines Satelliten ist, sucht man eine L"osung, die am
+``wenigsten falsch'', man l"ost also ein Optimierungsproblem.
+Konzipieren Sie einen Algorithmus, der die optimale Position findet.
+
+Man kann nat"urlich auch aus der Lage der Satelliten absch"atzen, welche
+nicht gut geeignet sind f"ur eine Positionsbestimmung. Das Signal
+eines Satelliten unmittelbar "uber dem Horizont wird zum Beispiel st"arker
+von der H"ohe der Tropopause beeinflusst. Auch die emfangene Feldst"arke
+liefert Hinweise darauf, wie gut ein Satellit geeignet ist. Erweitern
+Sie ihren Algorithmus, dass er auch mit einer solchen Gewichtung der
+Satelliten funktioniert.
+

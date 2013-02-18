@@ -6,7 +6,7 @@
 #
 TEXFILES = genalg.tex simann.tex particles.tex antcolony.tex \
 	simplex.tex blas.tex karmarkar.tex \
-	descent.tex nlsimplex.tex \
+	descent.tex nlsimplex.tex gps.tex \
 	branchandbound.tex \
 	brechung.tex
 
