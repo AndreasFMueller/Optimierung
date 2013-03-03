@@ -1,0 +1,24 @@
+#! /bin/sh
+#
+# makemovie
+#
+# (c) 2013 Prof Dr Andreas Mueller, Hochschule Rapperswil
+# $Id$
+#
+if [ $# -lt 1 ]
+then
+	exit 1
+fi
+cd ${1} || exit 1
+
+# convert all images you find into JPG
+for f in *.png
+do
+	filename=`basename $f .png`.jpg
+	pngtopnm $f | pamscale 0.5 | pamcut -top 6 -bottom 533 | \
+		pnmtojpeg > ${filename}
+	echo "converting $f to $filename"
+done
+jpeg2yuv -v 1 -I p -b 1 -f 25 -j curves%04d.jpg | \
+	mpeg2enc --no-constraints -q 1 -b 12000 -l m -f 8 -o curves.mpg
+
