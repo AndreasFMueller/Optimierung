@@ -7,11 +7,15 @@
 
 noinst_LIBRARIES = libsimplex.a
 
-libsimplex_a_SOURCES = linprog.c simplex.c random.c povray.c
+libsimplex_a_SOURCES = linprog.c simplex.c random.c povray.c \
+	clutils.c globals.c simplexocl.c
 
-noinst_HEADERS = linprog.h simplex.h random.h povray.h
+noinst_HEADERS = linprog.h simplex.h random.h povray.h \
+	clutils.h globals.h simplexocl.h
 
 noinst_PROGRAMS = test1 simplexanimation test3
+
+AM_CFLAGS = -D PKGDATADIR=\"$(pkgdatadir)\"
 
 simplexanimation_SOURCES = simplexanimation.c
 simplexanimation_LDADD = -L. -lsimplex -lblas -lm

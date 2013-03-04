@@ -25,6 +25,7 @@ void	simplex_tableau_free(simplex_tableau_t *t);
 void	simplex_tableau_set(simplex_tableau_t *t, int row, int col, double a);
 double	simplex_tableau_get(simplex_tableau_t *t, int row, int col);
 void	simplex_tableau_show(FILE *out, simplex_tableau_t *t);
+int	simplex_tableau_find(simplex_tableau_t *, int row, int col);
 void	simplex_tableau_pivot(simplex_tableau_t *, int row, int col);
 int	simplex_tableau_findpivot(simplex_tableau_t *t,
 		int *pivoti, int *pivotj);

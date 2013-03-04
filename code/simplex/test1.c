@@ -5,8 +5,24 @@
  */
 #include <stdlib.h>
 #include <simplex.h>
+#include <simplexocl.h>
+#include <globals.h>
 
 int	main(int argc, char *argv[]) {
+	int	c;
+	int	opencl = 0;
+	simplex_debug = 1;
+	while (EOF != (c = getopt(argc, argv, "do")))
+		switch (c) {
+		case 'd':
+			debug++;
+			break;
+		case 'o':
+			opencl = 1;
+			break;
+		}
+
+	simplexocl_t	*simplexocl = simplexocl_setup();
 
 	simplex_tableau_t	*tableau = simplex_tableau_new(3, 2);
 	simplex_tableau_set(tableau, 0, 0, 2);
@@ -27,9 +43,15 @@ int	main(int argc, char *argv[]) {
 
 	simplex_tableau_show(stdout, tableau);
 
-	simplex_tableau_compute(tableau);
+	if (opencl) {
+		simplexocl_tableau_compute(simplexocl, tableau);
+	} else {
+		simplex_tableau_compute(tableau);
+	}
 
 	simplex_tableau_show(stdout, tableau);
+
+	simplexocl_cleanup(simplexocl);
 
 	exit(EXIT_SUCCESS);
 }

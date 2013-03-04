@@ -1,3 +1,4 @@
+CPPFLAGS="-I/opt/AMDAPP/include"
 CFLAGS="-std=c99"
-export CFLAGS
+export CFLAGS CPPFLAGS
 ./configure

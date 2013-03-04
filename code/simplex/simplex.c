@@ -72,7 +72,7 @@ void	dger_(int *m, int *n, double *alpha, double *x, int *incx, double *y, int *
 /**
  * \brief Given a pivot element, find the 
  */
-static int	simplex_tableau_find(simplex_tableau_t *st, int row, int col) {
+int	simplex_tableau_find(simplex_tableau_t *st, int row, int col) {
 	for (int i = 0; i < st->n + st->m; i++) {
 		if ((st->flags[i] == 0)
 			&& (simplex_tableau_get(st, row, i) == 1)) {
