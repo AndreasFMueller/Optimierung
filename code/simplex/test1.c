@@ -5,42 +5,36 @@
  */
 #include <stdlib.h>
 #include <simplex.h>
-#include <simplexocl.h>
+#include <simplexcpu.h>
 #include <globals.h>
 #include <backend.h>
 #include <getopt.h>
 
 int	main(int argc, char *argv[]) {
 	int	c;
-	int	opencl = 0;
-	while (EOF != (c = getopt(argc, argv, "dot")))
+	while (EOF != (c = getopt(argc, argv, "db:t")))
 		switch (c) {
 		case 'd':
 			debug++;
 			break;
-		case 'o':
-			opencl = 1;
+		case 'b':
+			if (backend_select(optarg) < 0) {
+				fprintf(stderr, "cannot select backend %s\n",
+					optarg);
+			}
 			break;
 		case 't':
 			simplex_debug = 1;
 			break;
 		}
 
-	/* select the computational backend */
-	if (debug) {
-		fprintf(stderr, "%s:%d: selecting backend\n",
-			__FILE__, __LINE__);
-	}
-	if (opencl) {
-		if (backend_select("OpenCL") < 0) {
-			fprintf(stderr, "cannot select OpenCL backend\n");
-			exit(EXIT_FAILURE);
+	/* if there is no backend selected, we select the CPU backend */
+	if (NULL == backend_current()) {
+		if (debug) {
+			fprintf(stderr, "%s:%d: loading CPU backend vers %d\n",
+				__FILE__, __LINE__, simplexcpu_version);
 		}
-	} else {
-		if (backend_select("LAPACK") < 0) {
-			fprintf(stderr, "cannot select LAPACK backend\n");
-			exit(EXIT_FAILURE);
-		}
+		backend_select("CPU");
 	}
 
 	/* initialize the backend */

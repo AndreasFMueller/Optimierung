@@ -23,6 +23,7 @@ typedef struct backend_s {
 } backend_t;
 
 int	backend_select(const char *name);
+const char	*backend_current();
 int	backend_init();
 int	backend_release();
 int	backend_pivot(simplex_tableau_t *st, int row, int col);

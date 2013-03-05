@@ -30,6 +30,8 @@ static backend_registry_t	backend_registry[BACKEND_COUNT] = {
 	{ .name = NULL, .backend = NULL },
 };
 
+static int	backend_active = -1;
+
 /**
  * \brief Find the backend entry by name
  */
@@ -74,6 +76,12 @@ int	backend_unregister(const char *name) {
 		return -1;
 	}
 
+	/* if this is the active backend, we are not allowed to unregister */
+	if (backendindex == backend_active) {
+		fprintf(stderr, "backend active, cannot unregister %s\n", name);
+		return -1;
+	}
+
 	/* overwrite the backend structure */
 	memset(&backend_registry[backendindex], 0, sizeof(backend_registry_t));
 }
@@ -81,7 +89,6 @@ int	backend_unregister(const char *name) {
 /**
  * \brief select the currently active backend
  */
-static int	backend_active = -1;
 int	backend_select(const char *name) {
 	int	backendindex = backend_find(name);
 	if (backendindex < 0) {
@@ -92,11 +99,26 @@ int	backend_select(const char *name) {
 }
 
 /**
+ * \brief return the name of the currently active backend
+ */
+const char	*backend_current() {
+	if (backend_active < 0) {
+		return NULL;
+	}
+	return backend_registry[backend_active].name;
+}
+
+/**
  * \brief initialize a backend
  */
 int	backend_init() {
 	if (backend_active < 0) {
 		return -1;
+	}
+	if (debug) {
+		fprintf(stderr, "%s:%d: initializing %s backend\n",
+			__FILE__, __LINE__,
+			backend_registry[backend_active].name);
 	}
 	backend_t	*backend = backend_registry[backend_active].backend;
 	if (backend->init) {
