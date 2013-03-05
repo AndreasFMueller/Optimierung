@@ -176,14 +176,3 @@ backend_t	simplexocl_backend = {
 
 BACKEND_REGISTER(simplexocl, "OpenCL")
 
-#if 0
-
-static void	simplexocl_register() __attribute__ ((constructor));
-static void	simplexocl_register() {
-	if (backend_register("OpenCL", &simplexocl_backend)) {
-		fprintf(stderr, "could not register OpenCL backend\n");
-	}
-	fprintf(stderr, "OpenCL backend registered\n");
-}
-
-#endif

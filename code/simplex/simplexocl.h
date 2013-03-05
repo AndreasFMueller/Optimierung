@@ -9,6 +9,8 @@
 #include <simplex.h>
 #include <clutils.h>
 
+extern int	simplexocl_version;
+
 typedef struct simplexocl_s {
 	clu_device_t	*device;
 	clcompiler_t	*compiler;

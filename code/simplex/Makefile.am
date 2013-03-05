@@ -34,3 +34,22 @@ test1_DEPENDENCIES = libsimplex.a
 test3_SOURCES = test3.c
 test3_LDADD = -L. -lsimplex -lblas
 test3_DEPENDENCIES = libsimplex.a
+
+# build curves video
+curves:	curves/curves.mpg
+
+curves/curves.mpg:	Makefile makemovie
+	if [ ! -d curves ]; then mkdir -p curves; fi
+	./simplexanimation -d -b BLAS -m 10 -e 1 -r 1000 -P curves
+	cd curves; for f in *.pov; povray -W1920 -H1080 $${f}; done
+	./makemovie curves
+
+multi:	multi/multi.mpg
+
+multi/multi.mpg:	Makefile makemovie
+	if [ ! -d multi ]; then mkdir -p multi; fi
+	./simplexanimation -d -t 0.04 -b BLAS -m 10 -e 100 -r 10 -p multi2
+
+
+#	(cd multi; ./render)
+#	./makemovie multi

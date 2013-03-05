@@ -79,10 +79,6 @@ simplex_image_t	*compute(simplex_image_t *parameters) {
 
 	double	v[3];
 	getcoordinates(tableau, v);
-#if 0
-	printf("v = %12.6f %12.6f %12.6f,    Z = %12.6f\n", v[0], v[1], v[2],
-		simplex_tableau_get(tableau, 0, image->m + n));
-#endif
 
 	int	pivoti = 0, pivotj = 0;
 	int	counter = 0;
@@ -124,7 +120,7 @@ int	main(int argc, char *argv[]) {
 	};
 
 	int	c;
-	char	*filepattern = NULL;
+	char	*fileprefix = NULL;
 	char	*allcurves = NULL;
 	double	timestep = 1;
 	int	repeat = 1;
@@ -149,7 +145,7 @@ int	main(int argc, char *argv[]) {
 			debug++;
 			break;
 		case 'p':
-			filepattern = optarg;
+			fileprefix = optarg;
 			break;
 		case 'P':
 			allcurves = optarg;
@@ -200,12 +196,12 @@ int	main(int argc, char *argv[]) {
 		image.m += edgestep;
 
 		/* produce a povray file */
-		if (filepattern) {
+		if (fileprefix) {
 			double	t = 0;
 			while (t <= simage->nvertices - 1) {
 				char	filename[1024];
 				snprintf(filename, sizeof(filename),
-					filepattern, counter);
+					"%s/%05d.pov", fileprefix, counter);
 				FILE	*output = fopen(filename, "w");
 				if (NULL == output) {
 					fprintf(stderr, "cannot open file %s: %s\n",
@@ -235,7 +231,8 @@ int	main(int argc, char *argv[]) {
 	if ((solutions) && (allcurves)) {
 		for (int r = 1; r < repeat; r++) {
 			char	allfilename[1024];
-			snprintf(allfilename, sizeof(allfilename), allcurves, r);
+			snprintf(allfilename, sizeof(allfilename),
+				"%s/%05d.pov", allcurves, r);
 
 			/* create the file we want to write */
 			FILE	*allcurvesfile = fopen(allfilename, "w");

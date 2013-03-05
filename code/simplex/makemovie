@@ -20,6 +20,6 @@ do
 		pnmtojpeg > ${filename}
 	echo "converting $f to $filename"
 done
-jpeg2yuv -v 1 -I p -b 1 -f 25 -j ${prefix}%05d.jpg | \
+jpeg2yuv -v 1 -I p -b 1 -f 25 -j %05d.jpg | \
 	mpeg2enc --no-constraints -q 1 -b 12000 -l m -f 8 -o ${prefix}.mpg
 

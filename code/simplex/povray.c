@@ -43,7 +43,8 @@ static void	povray_preamble(FILE *out) {
 }
 
 static void	povray_point(FILE *out, double *p) {
-	fprintf(out, "\tsphere { <%f, %f, %f>, %f }\n", p[1], p[0], p[2], radius * 1.5);
+	fprintf(out, "\tsphere { <%f, %f, %f>, %f }\n",
+		p[1], p[0], p[2], radius * 1.5);
 }
 
 static double	sqr(double x) { return x * x; }
@@ -52,7 +53,8 @@ static double	distance(double *p1, double *p2) {
 }
 
 static void	povray_line(FILE *out, double *p1, double *p2) {
-	fprintf(out, "\tsphere { <%f, %f %f>, %f }\n", p1[1], p1[0], p1[2], radius);
+	fprintf(out, "\tsphere { <%f, %f %f>, %f }\n",
+		p1[1], p1[0], p1[2], radius);
 	if (distance(p1, p2) > 0.00001) {
 		fprintf(out, "\tcylinder { <%f,%f,%f>,<%f,%f,%f>,%f }\n",
 			p1[1], p1[0], p1[2],
@@ -66,8 +68,10 @@ static void	povray_goal(FILE *out, double *normal, double *point) {
 		d += normal[i] * point[i];
 	}
 	fprintf(out, "intersection {\n");
-	fprintf(out, "\tplane { <%f, %f, %f>, %f }\n", normal[1], normal[0], normal[2], d);
-	fprintf(out, "\tplane { <%f, %f, %f>, %f }\n", -normal[1], -normal[0], -normal[2], -d + 0.001);
+	fprintf(out, "\tplane { <%f, %f, %f>, %f }\n",
+		normal[1], normal[0], normal[2], d);
+	fprintf(out, "\tplane { <%f, %f, %f>, %f }\n",
+		-normal[1], -normal[0], -normal[2], -d + 0.001);
 	fprintf(out, "\tbox { <-0.1,-0.1,-0.1>, <1.1,1.1,1.1> }\n");
 	fprintf(out, "\tpigment { color rgb <0.9, 0.9, 1, 0.99> }\n");
 	fprintf(out, "}\n");
@@ -109,7 +113,8 @@ void	povray_image(FILE *out, simplex_image_t *image, double t) {
 	if (POVRAY_CURVE & image->flags) {
 		fprintf(out, "union {\n");
 		for (int i = 1; (i <= t) && (i < image->nvertices); i++) {
-			povray_line(out, &image->vertices[3 * (i - 1)], &image->vertices[3 * i]);
+			povray_line(out, &image->vertices[3 * (i - 1)],
+				&image->vertices[3 * i]);
 		}
 	}
 
@@ -122,12 +127,14 @@ void	povray_image(FILE *out, simplex_image_t *image, double t) {
 		int	last = image->nvertices - 1;
 		int	previous = image->nvertices - 2;
 		if (t >= image->nvertices) {
-			memcpy(intermediate, &image->vertices[3 * last], 3 * sizeof(double));
+			memcpy(intermediate, &image->vertices[3 * last],
+				3 * sizeof(double));
 		} else {
 			previous = trunc(t);
 			double	tau = t - previous;
 			if (tau == 0) {
-				memcpy(intermediate, &image->vertices[3 * previous],
+				memcpy(intermediate,
+					&image->vertices[3 * previous],
 					3 * sizeof(double));
 			} else {
 				intermediate[0] = (1 - tau) * image->vertices[3 * previous + 0]
@@ -139,7 +146,8 @@ void	povray_image(FILE *out, simplex_image_t *image, double t) {
 			}
 		}
 		if (POVRAY_CURVE & image->flags) {
-			povray_line(out, &image->vertices[3 * previous], intermediate);
+			povray_line(out, &image->vertices[3 * previous],
+				intermediate);
 		}
 	}
 
@@ -166,12 +174,14 @@ void	povray_image_free(simplex_image_t *image) {
 }
 
 simplex_image_t	*povray_image_new() {
-	simplex_image_t	*result = (simplex_image_t *)calloc(1, sizeof(simplex_image_t));
+	simplex_image_t	*result = (simplex_image_t *)calloc(1,
+		sizeof(simplex_image_t));
 	return result;
 }
 
 simplex_image_t	*povray_image_copy(simplex_image_t *parameters) {
-	simplex_image_t	*result = (simplex_image_t *)calloc(1, sizeof(simplex_image_t));
+	simplex_image_t	*result = (simplex_image_t *)calloc(1,
+		sizeof(simplex_image_t));
 	result->m = parameters->m;
 	result->flags = parameters->flags;
 	return result;
@@ -180,7 +190,8 @@ simplex_image_t	*povray_image_copy(simplex_image_t *parameters) {
 double	povray_image_length(simplex_image_t *image) {
 	double	d = 0;
 	for (int i = 1; i < image->nvertices; i++) {
-		d += distance(&image->vertices[3 * (i - 1)], &image->vertices[3 * i]);
+		d += distance(&image->vertices[3 * (i - 1)],
+			&image->vertices[3 * i]);
 	}
 	return d;
 }

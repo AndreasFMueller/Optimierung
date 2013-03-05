@@ -1,5 +1,5 @@
 /*
- * clutils.h
+ * clutils.h -- utilities to simplify using OpenCL 
  *
  * (c) 2011 Prof Dr Andreas Mueller, Hochschule Rapperswil 
  * $Id$
