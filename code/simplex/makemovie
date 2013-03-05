@@ -9,7 +9,8 @@ if [ $# -lt 1 ]
 then
 	exit 1
 fi
-cd ${1} || exit 1
+prefix=${1}
+cd ${prefix} || exit 1
 
 # convert all images you find into JPG
 for f in *.png
@@ -19,6 +20,6 @@ do
 		pnmtojpeg > ${filename}
 	echo "converting $f to $filename"
 done
-jpeg2yuv -v 1 -I p -b 1 -f 25 -j curves%04d.jpg | \
-	mpeg2enc --no-constraints -q 1 -b 12000 -l m -f 8 -o curves.mpg
+jpeg2yuv -v 1 -I p -b 1 -f 25 -j ${prefix}%05d.jpg | \
+	mpeg2enc --no-constraints -q 1 -b 12000 -l m -f 8 -o ${prefix}.mpg
 

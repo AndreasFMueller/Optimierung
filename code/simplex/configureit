@@ -1,4 +1,5 @@
 CPPFLAGS="-I/opt/AMDAPP/include"
-CFLAGS="-std=c99"
-export CFLAGS CPPFLAGS
+CFLAGS="-std=c99 -Wl,--undefined,simplexlapack_version -Wl,--undefined,simplexocl_version"
+LDFLAGS="-L/opt/AMDAPP/lib/x86_64"
+export CFLAGS CPPFLAGS LDFLAGS
 ./configure

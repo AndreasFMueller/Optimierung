@@ -6,6 +6,9 @@
 #include <simplexocl.h>
 #include <globals.h>
 #include <simplex.h>
+#include <backend.h>
+
+int	simplexocl_version = 1;
 
 simplexocl_t	*simplexocl_setup() {
 	simplexocl_t	*result = calloc(1, sizeof(simplexocl_t));
@@ -148,45 +151,18 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
  * \brief Simplex algorithm exchange step with pivot element (row,col)
  *
  */
-void	simplexocl_tableau_pivot(simplexocl_t *simplexocl,
+int	simplexocl_pivot(backend_t *backend,
 		simplex_tableau_t *st, int row, int col) {
-	/* find out where the other column is by looking for 1 in the
-	   the row */
-	int	xi = simplex_tableau_find(st, row, col);
-	if (xi < 0) {
-		fprintf(stderr, "data inconsistency found\n");
-		exit(EXIT_FAILURE);
-		return;
-	}
-	st->flags[xi] = 1;
-	st->flags[col] = 0;
+	simplexocl_t	*simplexocl = (simplexocl_t *)backend->private_data;
 
 	/* perform the exchange step */
 	simplexocl_eliminate(simplexocl, st, row, col);
+	return 0;
 }
 
 /**
- * \brief Run the Simplex algorithm
+ * \brief Cleanup of the OpenCL backendCleanup of the OpenCL backend
  */
-int	simplexocl_tableau_compute(simplexocl_t *simplexocl,
-		simplex_tableau_t *t) {
-	int	pivoti, pivotj;
-	int	rc = 0;
-	int	stepcounter = 0;
-	do {
-		stepcounter++;
-		rc = simplex_tableau_findpivot(t, &pivoti, &pivotj);
-		if (rc > 0) {
-			simplexocl_tableau_pivot(simplexocl, t, pivoti, pivotj);
-			if (simplex_debug) {
-				printf("step %d:\n", stepcounter);
-				simplex_tableau_show(stdout, t);
-			}
-		}
-	} while (rc > 0);
-	return rc;
-}
-
 void	simplexocl_cleanup(simplexocl_t *simplexocl) {
 	clu_freecompiler(simplexocl->compiler);
 	simplexocl->compiler = NULL;
@@ -194,4 +170,40 @@ void	simplexocl_cleanup(simplexocl_t *simplexocl) {
 	clu_releasedevice(simplexocl->device);
 	simplexocl->device = NULL;
 	clu_releaseplatform(platform);
+}
+
+/*
+ * The functions below integrate the OpenCL backend into the backend
+ * infrastructre
+ */
+int	simplexocl_init(backend_t *backend) {
+	if (NULL != backend->private_data) {
+		return -1;
+	}
+	backend->private_data = simplexocl_setup();
+	if (NULL == backend->private_data) {
+		return -1;
+	}
+	return 0;
+}
+
+int	simplexocl_release(backend_t *backend) {
+	simplexocl_t	*simplexocl = (simplexocl_t *)backend->private_data;
+	simplexocl_cleanup(simplexocl);
+	backend->private_data = NULL;
+}
+
+backend_t	simplexocl_backend = {
+	.private_data = NULL,
+	.init = simplexocl_init,
+	.release = simplexocl_release,
+	.pivot = simplexocl_pivot
+};
+
+static void	simplexocl_register() __attribute__ ((constructor));
+static void	simplexocl_register() {
+	if (backend_register("OpenCL", &simplexocl_backend)) {
+		fprintf(stderr, "could not register OpenCL backend\n");
+	}
+	fprintf(stderr, "OpenCL backend registered\n");
 }

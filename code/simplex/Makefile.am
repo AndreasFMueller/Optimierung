@@ -8,10 +8,10 @@
 noinst_LIBRARIES = libsimplex.a
 
 libsimplex_a_SOURCES = linprog.c simplex.c random.c povray.c \
-	clutils.c globals.c simplexocl.c
+	clutils.c globals.c simplexocl.c backend.c simplexlapack.c
 
 noinst_HEADERS = linprog.h simplex.h random.h povray.h \
-	clutils.h globals.h simplexocl.h
+	clutils.h globals.h simplexocl.h backend.h simplexlapack.h
 
 noinst_PROGRAMS = test1 simplexanimation test3
 
