@@ -15,9 +15,13 @@ noinst_HEADERS = linprog.h simplex.h random.h povray.h \
 	clutils.h globals.h simplexocl.h backend.h simplexblas.h \
 	simplexcpu.h
 
-noinst_PROGRAMS = test1 simplexanimation test3
+noinst_PROGRAMS = test1 simplexanimation test3 backendinfo
 
 AM_CFLAGS = -D PKGDATADIR=\"$(pkgdatadir)\"
+
+backendinfo_SOURCES = backendinfo.c
+backendinfo_LDADD = -L. -lsimplex -lblas -lm
+backendinfo_DEPENDENCIES = libsimplex.a
 
 simplexanimation_SOURCES = simplexanimation.c
 simplexanimation_LDADD = -L. -lsimplex -lblas -lm

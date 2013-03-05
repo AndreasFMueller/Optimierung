@@ -174,6 +174,10 @@ backend_t	simplexocl_backend = {
 	.pivot = simplexocl_pivot
 };
 
+BACKEND_REGISTER(simplexocl, "OpenCL")
+
+#if 0
+
 static void	simplexocl_register() __attribute__ ((constructor));
 static void	simplexocl_register() {
 	if (backend_register("OpenCL", &simplexocl_backend)) {
@@ -181,3 +185,5 @@ static void	simplexocl_register() {
 	}
 	fprintf(stderr, "OpenCL backend registered\n");
 }
+
+#endif

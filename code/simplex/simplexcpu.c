@@ -11,15 +11,20 @@
 
 int simplexcpu_version = 1;
 
+/**
+ * \brief perform the exchange step at pivot (row, col)
+ */
 static int	simplexcpu_pivot(backend_t *backend,
 			simplex_tableau_t *st, int row, int col) {
 	/* get the pivot element value */
 	double	pivot = simplex_tableau_get(st, row, col);
 
 	/* divide the pivot row by the pivot element */
-	int	offset = row * (st->n + st->m + 1);
-	for (int i = 0; i < st->n + st->m + 1; i++) {
-		st->t[offset + i] /= pivot;
+	int	rowlength = st->n + st->m + 1;
+	int	offset = row * rowlength;
+	double	*pivotrow = &st->t[offset];
+	for (int j = 0; j < rowlength; j++, pivotrow++) {
+		*pivotrow /= pivot;
 	}
 	
 	/* subtract suitable multiples of the pivot row from all other
@@ -30,10 +35,19 @@ static int	simplexcpu_pivot(backend_t *backend,
 		if (i == row) {
 			continue;
 		}
-		double	a = simplex_tableau_get(st, i, col);
-		for (int j = 0; j < st->m + st->n + 1; j++) {
-			simplex_tableau_set(st, i, j,
-				simplex_tableau_get(st, i, j) - x[j] * a);
+
+		/* we use two pointers when doing the row operation,
+		   this allows us to do without an address computation,
+		   and is slightly faster */
+		pivotrow = &st->t[offset];
+		double	*row = &st->t[i * rowlength];
+		double	a = row[col];
+		int	j = 0;
+		while (j < rowlength) {
+			*row -= a * *pivotrow;
+			row++;
+			pivotrow++;
+			j++;
 		}
 	}
 	return 0;
@@ -46,11 +60,5 @@ static backend_t	simplexcpu_backend = {
 	.pivot = simplexcpu_pivot
 };
 
-static void	simplexcpu_register() __attribute__ ((constructor));
-static void	simplexcpu_register() {
-	if (backend_register("CPU", &simplexcpu_backend) < 0) {
-		fprintf(stderr, "cannot register CPU backend\n");
-		exit(EXIT_FAILURE);
-	}
-	fprintf(stderr, "CPU backend registered\n");
-}
+BACKEND_REGISTER(simplexcpu, "CPU")
+

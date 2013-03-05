@@ -21,5 +21,21 @@ OpenCL:	Diese Implementation fuehrt die Pivot-Operation in OpenCL
 	durch. Es stellt sich allerdings heraus, dass der OpenCL Overhead
 	so gross ist, dass sich dadurch keine Beschleunigung ergibt.
 
+Build
+-----
+
+Das Paket verwendet Autotools, es sollte mit folgenden Befehlen gebaut
+werden können:
+
+   $ aclocal
+   $ autoheader
+   $ automake -a -c
+   $ autoconf
+   $ ./configure
+   $ make
+
+Zum Konfigurieren kann auch das Script configureit verwendet werden,
+welches die Optionen fuer BLAS und OpenCL (AMDAPP) richtig setzt.
+
 --
 $Id$

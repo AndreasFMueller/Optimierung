@@ -145,3 +145,47 @@ int	backend_pivot(simplex_tableau_t *st, int row, int col) {
 	backend_t	*backend = backend_registry[backend_active].backend;
 	return backend->pivot(backend, st, row, col);
 }
+
+/**
+ * \brief Return the number of registered backends
+ */
+int	backend_count() {
+	int	counter = 0;
+	for (int i = 0; i < BACKEND_COUNT; i++) {
+		if (backend_registry[i].name) {
+			counter++;
+		}
+	}
+	return counter;
+}
+
+/**
+ * \brief Get the backends 
+ */
+static backend_registry_t	*backend_byindex(int backendindex) {
+	int	counter = -1;
+	for (int i = 0; i < BACKEND_COUNT; i++) {
+		if (backend_registry[i].name) {
+			counter++;
+			if (counter == backendindex) {
+				return &backend_registry[i];
+			}
+		}
+	}
+	return NULL;
+}
+
+char	*backend_name(int backendindex) {
+	backend_registry_t	*be = backend_byindex(backendindex);
+	if (be) {
+		return be->name;
+	}
+	return NULL;
+}
+backend_t	*backend_backend(int backendindex) {
+	backend_registry_t	*be = backend_byindex(backendindex);
+	if (be) {
+		return be->backend;
+	}
+	return NULL;
+}

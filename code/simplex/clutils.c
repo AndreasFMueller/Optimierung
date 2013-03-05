@@ -783,7 +783,7 @@ static char	*clu_search(clcompiler_t *compiler, const char *programname) {
 				printf("%s:%d: found %s\n", __FILE__, __LINE__,
 					buffer);
 			}
-			return strdup(buffer);
+			return (char *)strdup(buffer);
 		}
 	}
 	snprintf(buffer, sizeof(buffer), "%s/%s", PKGDATADIR, programname);
@@ -792,7 +792,7 @@ static char	*clu_search(clcompiler_t *compiler, const char *programname) {
 			printf("%s:%d: found %s\n", __FILE__, __LINE__,
 				buffer);
 		}
-		return strdup(buffer);
+		return (char *)strdup(buffer);
 	}
 	return result;
 }

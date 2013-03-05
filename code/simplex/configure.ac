@@ -11,8 +11,18 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 AC_PROG_RANLIB
 
-# Checks for libraries.
-AC_CHECK_LIB([OpenCL], [clGetPlatformInfo])
+# Checks for libraries. 
+
+# if we find the BLAS library, we also force linking of the simplexblas_version
+# symbol, which links the whole BLAS based backend
+AC_CHECK_LIB([blas], [dger_], [
+	LDFLAGS="${LDFLAGS} -lblas -Wl,--undefined,simplexblas_version"
+])
+# if we find the OpenCL library, we also force linking of the 
+# simplexocl_version symbol, which links the OpenCL based backend
+AC_CHECK_LIB([OpenCL], [clGetPlatformInfo], [
+	LDFLAGS="${LDFLAGS} -lOpenCL -Wl,--undefined,simplexocl_version"
+])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
