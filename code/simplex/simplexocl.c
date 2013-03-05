@@ -43,22 +43,19 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 	
 	cl_mem	simplex_tableau = clCreateBuffer(
 		simplexocl->device->platform->context,
-		CL_MEM_READ_WRITE, sizeof(double) * size,
-		NULL, &err);
+		CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, sizeof(double) * size,
+		st->t, &err);
 	if (CL_SUCCESS != err) {
-		fprintf(stderr, "cannot create matrix buffer\n");
+		clu_perror(err, "cannot create matrix buffer\n");
 		exit(EXIT_FAILURE);
 	}
 	cl_mem	simplex_pivot = clCreateBuffer(
 		simplexocl->device->platform->context,
-		CL_MEM_READ_ONLY, sizeof(int) * 3, NULL, &err);
+		CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(int) * 3,
+		pivot, &err);
 	if (CL_SUCCESS != err) {
-		fprintf(stderr, "cannot create pivot buffer\n");
+		clu_perror(err, "cannot create pivot buffer\n");
 		exit(EXIT_FAILURE);
-	}
-	if (debug) {
-		fprintf(stderr, "%s:%d: parameters created\n",
-			__FILE__, __LINE__);
 	}
 
 	/* set kernel arguments */
@@ -85,20 +82,6 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 		&simplex_pivot);
 	if (CL_SUCCESS != err) {
 		clu_perror(err, "cannot set kernel argument 1\n");
-		exit(EXIT_FAILURE);
-	}
-
-	/* enqueue parameter buffers */
-	err = clEnqueueWriteBuffer(simplexocl->device->queue, simplex_tableau,
-		CL_TRUE, 0, sizeof(double) * size, st->t, 0, NULL, NULL);
-	if (CL_SUCCESS != err) {
-		clu_perror(err, "cannot send tableau buffer\n");
-		exit(EXIT_FAILURE);
-	}
-	err = clEnqueueWriteBuffer(simplexocl->device->queue, simplex_pivot,
-		CL_TRUE, 0, sizeof(int) * 3, pivot, 0, NULL, NULL);
-	if (CL_SUCCESS != err) {
-		clu_perror(err, "cannot send pivot buffer\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -130,14 +113,6 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 	err = clFinish(simplexocl->device->queue);
 	if (CL_SUCCESS != err) {
 		clu_perror(err, "kernel execution error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	/* read back the result buffer */
-	err = clEnqueueReadBuffer(simplexocl->device->queue, simplex_tableau,
-		CL_TRUE, 0, sizeof(double) * size, st->t, 0, NULL, NULL);
-	if (CL_SUCCESS != err) {
-		clu_perror(err, "cannot read result buffer\n");
 		exit(EXIT_FAILURE);
 	}
 

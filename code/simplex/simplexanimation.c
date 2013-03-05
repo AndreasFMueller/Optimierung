@@ -15,6 +15,9 @@
 #include <getopt.h>
 #include <povray.h>
 #include <sys/time.h>
+#include <simplexcpu.h>
+#include <backend.h>
+#include <globals.h>
 
 static int	n = 3;
 
@@ -36,7 +39,7 @@ void	getcoordinates(simplex_tableau_t *t, double *v) {
 }
 
 /*
- * perform the simpelx computation
+ * perform the simplex computation
  */
 simplex_image_t	*compute(simplex_image_t *parameters) {
 	/* the container structure */
@@ -84,16 +87,8 @@ simplex_image_t	*compute(simplex_image_t *parameters) {
 	int	pivoti = 0, pivotj = 0;
 	int	counter = 0;
 	while (simplex_tableau_findpivot(tableau, &pivoti, &pivotj) > 0) {
-#if 0
-		printf("pivot(%d,%d)\n", pivoti, pivotj);
-#endif
 		simplex_tableau_pivot(tableau, pivoti, pivotj);
-		//simplex_tableau_show(stdout, tableau);
 		getcoordinates(tableau, v);
-#if 0
-		printf("v[%3d] = %12.6f %12.6f %12.6f,    Z = %12.6f\n", ++counter, v[0], v[1], v[2],
-			-simplex_tableau_get(tableau, 0, image->m + n));
-#endif
 		/* add the point we just found to the list of points */
 		image->vertices = (double *)realloc(image->vertices,
 			3 * sizeof(double) * (image->nvertices + 1));
@@ -141,8 +136,18 @@ int	main(int argc, char *argv[]) {
 	srandom(time(NULL));
 
 	/* parse the command line */
-	while (EOF != (c = getopt(argc, argv, "dp:m:s:t:r:P:R:e:")))
+	while (EOF != (c = getopt(argc, argv, "dp:m:s:t:r:P:R:e:b:")))
 		switch (c) {
+		case 'b':
+			if (backend_select(optarg) < 0) {
+				fprintf(stderr, "cannot select backend %s\n",
+					optarg);
+				exit(EXIT_FAILURE);
+			}
+			break;
+		case 'd':
+			debug++;
+			break;
 		case 'p':
 			filepattern = optarg;
 			break;
@@ -170,6 +175,23 @@ int	main(int argc, char *argv[]) {
 			edgestep = atoi(optarg);
 			break;
 		}
+
+	/* if there is no backend selected so far, we use the CPU backend
+	   which supposedly is always present */
+	if (NULL == backend_current()) {
+		if (debug) {
+			fprintf(stderr, "%s:%d: loading CPU backend vers %d\n",
+				__FILE__, __LINE__, simplexcpu_version);
+		}
+		if (backend_select("CPU") < 0) {
+			fprintf(stderr, "backend CPU failed\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (backend_init() < 0) {
+		fprintf(stderr, "backend initialization failed\n");
+		exit(EXIT_FAILURE);
+	}
 
 	int	counter = 0;
 	for (int r = 0; r < repeat; r++) {
@@ -241,6 +263,9 @@ int	main(int argc, char *argv[]) {
 			fclose(allcurvesfile);
 		}
 	}
+
+	/* cleanup the backend */
+	backend_release();
 
 	exit(EXIT_SUCCESS);
 }
