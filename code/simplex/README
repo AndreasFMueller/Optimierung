@@ -1,8 +1,25 @@
 Implementation des Simplex Algorithmus
 --------------------------------------
 
+Diese Implementation des Simplex-Algorithmus ist nicht als generische
+Bibliothek angelegt, sondern vielmehr als Testumgebung, in der man
+Performance-Messungen machen kann und die Vorgehensweise des Simplex-
+Algorithmus illustrieren kann.
 
+Die Implementation trennt den eigentlichen Simplex Algorithmus von den
+rechnerisch aufwendigen Austauschschritten. Fuer letztere werden koennen
+verschiedene Backends verwendet werden. Ein Backend muss im wesentlichen
+eine Initialisierungs- und eine Release-Funktion bereitstellen sowie die
+eigentliche Pivot-Operation. Die Implementation enthaelt drei Backends:
 
+CPU:	In diesem Backend sind die Gauss-Operationen in C ausprogrammiert. 
+
+BLAS:	Dieses Backend verwendet eine BLAS Funktion aus libblas fuer
+	den Austauschschritt. Dies ist klar die schnellste Implementation.
+
+OpenCL:	Diese Implementation fuehrt die Pivot-Operation in OpenCL
+	durch. Es stellt sich allerdings heraus, dass der OpenCL Overhead
+	so gross ist, dass sich dadurch keine Beschleunigung ergibt.
 
 --
 $Id$

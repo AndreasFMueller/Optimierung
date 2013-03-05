@@ -34,7 +34,10 @@ int	main(int argc, char *argv[]) {
 			fprintf(stderr, "%s:%d: loading CPU backend vers %d\n",
 				__FILE__, __LINE__, simplexcpu_version);
 		}
-		backend_select("CPU");
+		if (backend_select("CPU") < 0) {
+			fprintf(stderr, "cannt select CPU backend");
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	/* initialize the backend */

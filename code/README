@@ -1,2 +1,5 @@
 In diesem Verzeichnis finden sich einige Programmbeispiele, die die
 Optimierungsalgorithmen im Skript illustrieren.
+
+simplex	Implementation des Simplex-Algorithmus mit verschiedenen waehlbaren
+	computational backends

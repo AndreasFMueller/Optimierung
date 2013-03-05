@@ -101,7 +101,7 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 	size_t	local_eliminate[2] = { 1, 1 };
 	size_t	global_eliminate[2] = { st->m + 1, st->m + st->n + 1 };
 	err = clEnqueueNDRangeKernel(simplexocl->device->queue,
-		simplexocl->compiler->eliminate, 2, NULL,
+		simplexocl->compiler->eliminate, 1, NULL,
 		global_eliminate, local_eliminate,
 		0, NULL, NULL);
 	if (CL_SUCCESS != err) {
@@ -116,10 +116,9 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 		exit(EXIT_FAILURE);
 	}
 
-	/* fix pivot column */
-	for (int i = 0; i <= st->m; i++) {
-		simplex_tableau_set(st, i, col, (i == row) ? 1 : 0);
-	}
+	/* fix the pivot element, we cannot do this in OpenCL because
+	   it would introduce a race condition */
+	simplex_tableau_set(st, row, col, 1);
 }
 
 /**
