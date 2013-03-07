@@ -64,4 +64,6 @@ extern clu_device_t	*clu_getdevice(clu_platform_t *platform,
 				int device);
 extern void		clu_releasedevice(clu_device_t *);
 
+extern int	clu_usegpu;
+
 #endif /* _clutils_h */

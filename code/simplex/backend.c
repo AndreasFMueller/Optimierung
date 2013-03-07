@@ -189,3 +189,29 @@ backend_t	*backend_backend(int backendindex) {
 	}
 	return NULL;
 }
+
+/**
+ * option interface
+ */
+void	backend_set_option(const char *optionname, const char *optionvalue) {
+	if (backend_active < 0) {
+		return;
+	}
+	backend_t	*backend = backend_registry[backend_active].backend;
+	if (NULL == backend->option) {
+		return;
+	}
+	backend->option(backend, optionname, optionvalue);
+}
+
+const char	*backend_get_option(const char *optionname) {
+	if (backend_active < 0) {
+		return;
+	}
+	backend_t	*backend = backend_registry[backend_active].backend;
+	if (NULL == backend->option) {
+		return;
+	}
+	return backend->option(backend, optionname, NULL);
+}
+

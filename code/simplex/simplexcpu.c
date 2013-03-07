@@ -57,7 +57,8 @@ static backend_t	simplexcpu_backend = {
 	.private_data = NULL,
 	.init = NULL,
 	.release = NULL,
-	.pivot = simplexcpu_pivot
+	.pivot = simplexcpu_pivot,
+	.option = NULL
 };
 
 BACKEND_REGISTER(simplexcpu, "CPU")

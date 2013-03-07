@@ -4,6 +4,8 @@
  *
  * (c) 2013 Prof Dr Andreas Mueller, Hochschule Rapperswil
  */
+#pragma OPENCL EXTENSION cl_khr_fp64  : enable
+#pragma OPENCL EXTENSION cl_amd_fp64  : enable
 
 /* if USE_DOUBLE16 is defined, the kernel uses vector operations which
    hopefully are faster than scalar operations. However, this does not

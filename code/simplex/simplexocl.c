@@ -7,6 +7,7 @@
 #include <globals.h>
 #include <simplex.h>
 #include <backend.h>
+#include <clutils.h>
 
 int	simplexocl_version = 1;
 
@@ -146,6 +147,19 @@ void	simplexocl_cleanup(simplexocl_t *simplexocl) {
 	clu_releaseplatform(platform);
 }
 
+/**
+ * \brief option interface
+ */
+const char	*simplexocl_option(backend_t *backend, const char *optionname,
+	const char *optionvalue) {
+	if (0 == strncasecmp(optionname, "USE_GPU")) {
+		if (optionvalue) {
+			clu_usegpu = (0 == strcasecmp(optionvalue, "YES")) ? 1 : 0;
+		}
+		return clu_usegpu ? "YES" : "NO";
+	}
+}
+
 /*
  * The functions below integrate the OpenCL backend into the backend
  * infrastructre
@@ -171,7 +185,8 @@ backend_t	simplexocl_backend = {
 	.private_data = NULL,
 	.init = simplexocl_init,
 	.release = simplexocl_release,
-	.pivot = simplexocl_pivot
+	.pivot = simplexocl_pivot,
+	.option = simplexocl_option
 };
 
 BACKEND_REGISTER(simplexocl, "OpenCL")

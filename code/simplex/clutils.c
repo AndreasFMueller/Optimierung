@@ -18,6 +18,8 @@
 #include <globals.h>
 #include <clutils.h>
 
+int	clu_usegpu = 0;
+
 /*
  * create a program given the CL file name
  */
@@ -962,7 +964,7 @@ clu_platform_t	*clu_getplatform(int platform) {
 	result->platformid = platformids[platform];
 
 	err = clGetDeviceIDs(result->platformid,
-		(usegpu) ? CL_DEVICE_TYPE_GPU : CL_DEVICE_TYPE_CPU,
+		(clu_usegpu) ? CL_DEVICE_TYPE_GPU : CL_DEVICE_TYPE_CPU,
 		4, result->device_id, &result->ndeviceids);
 	if (CL_SUCCESS != err) {
 		clu_perror(err, "cannot retrieve device ID");

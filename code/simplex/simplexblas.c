@@ -62,7 +62,8 @@ static backend_t	simplexblas_backend = {
 	.private_data = NULL,
 	.init = NULL,
 	.release = NULL,
-	.pivot = simplexblas_pivot
+	.pivot = simplexblas_pivot,
+	.option = NULL
 };
 
 BACKEND_REGISTER(simplexblas, "BLAS")

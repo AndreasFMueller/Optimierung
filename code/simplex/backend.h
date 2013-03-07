@@ -14,13 +14,17 @@ struct backend_s;
 /* function types for the backend methods */
 typedef int (*backend_init_func)(struct backend_s *);
 typedef int (*backend_release_func)(struct backend_s *);
-typedef int (*backend_pivot_func)(struct backend_s *, simplex_tableau_t *, int, int);
+typedef int (*backend_pivot_func)(struct backend_s *, simplex_tableau_t *,
+		int, int);
+typedef const char	*(*backend_option_func)(struct backend_s *,
+		const char *, const char *);
 
 typedef struct backend_s {
 	void	*private_data;
 	backend_init_func	init;
 	backend_release_func	release;
 	backend_pivot_func	pivot;
+	backend_option_func	option;
 } backend_t;
 
 /* backend selection and use */
@@ -29,6 +33,9 @@ extern const char	*backend_current();
 extern int	backend_init();
 extern int	backend_release();
 extern int	backend_pivot(simplex_tableau_t *st, int row, int col);
+extern const char	*backend_get_option(const char *optionname);
+extern void	backend_set_option(const char *optionname,
+			const char *optionvalue);
 
 /* listing backends */
 extern int	backend_count();

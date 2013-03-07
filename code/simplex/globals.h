@@ -7,6 +7,5 @@
 #define _globals_h
 
 extern int	debug;
-extern int	usegpu;
 
 #endif /* _globals_h */

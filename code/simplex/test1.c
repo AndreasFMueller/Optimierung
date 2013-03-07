@@ -12,7 +12,8 @@
 
 int	main(int argc, char *argv[]) {
 	int	c;
-	while (EOF != (c = getopt(argc, argv, "db:t")))
+	int	usegpu = 0;
+	while (EOF != (c = getopt(argc, argv, "db:tg")))
 		switch (c) {
 		case 'd':
 			debug++;
@@ -26,6 +27,9 @@ int	main(int argc, char *argv[]) {
 		case 't':
 			simplex_debug = 1;
 			break;
+		case 'g':
+			usegpu = 1;
+			break;
 		}
 
 	/* if there is no backend selected, we select the CPU backend */
@@ -38,6 +42,10 @@ int	main(int argc, char *argv[]) {
 			fprintf(stderr, "cannt select CPU backend");
 			exit(EXIT_FAILURE);
 		}
+	}
+
+	if (usegpu) {
+		backend_set_option("USE_GPU", "YES");
 	}
 
 	/* initialize the backend */

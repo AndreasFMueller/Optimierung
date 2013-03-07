@@ -6,4 +6,3 @@
 #include <globals.h>
 
 int	debug = 0;
-int	usegpu = 0;
