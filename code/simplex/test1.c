@@ -44,6 +44,8 @@ int	main(int argc, char *argv[]) {
 		}
 	}
 
+	/* set the GPU option so that it will be known when the backend
+	   is initialized */
 	if (usegpu) {
 		backend_set_option("USE_GPU", "YES");
 	}

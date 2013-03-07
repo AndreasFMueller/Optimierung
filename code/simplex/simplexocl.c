@@ -86,6 +86,8 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 		exit(EXIT_FAILURE);
 	}
 
+	/* enqueue the memory objects */
+
 	/* launch the dividerow kernel */
 	size_t	local_dividerow[1] = { 1 };
 	size_t	global_dividerow[1] = { st->m + st->n + 1 };
@@ -114,6 +116,14 @@ void	simplexocl_eliminate(simplexocl_t *simplexocl,
 	err = clFinish(simplexocl->device->queue);
 	if (CL_SUCCESS != err) {
 		clu_perror(err, "kernel execution error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* get the memory objects back */
+	err = clEnqueueReadBuffer(simplexocl->device->queue, simplex_tableau,
+		CL_TRUE, 0, sizeof(double) * size, st->t, 0, NULL, NULL);
+	if (CL_SUCCESS != err) {
+		clu_perror(err, "cannot read simplex tableau back from device");
 		exit(EXIT_FAILURE);
 	}
 

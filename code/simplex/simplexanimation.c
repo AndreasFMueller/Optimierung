@@ -127,12 +127,13 @@ int	main(int argc, char *argv[]) {
 	simplex_image_t	**solutions = NULL;
 	int	R = 10;
 	int	edgestep = 1;
+	int	usegpu = 0;
 
 	/* initialize the random number generator */
 	srandom(time(NULL));
 
 	/* parse the command line */
-	while (EOF != (c = getopt(argc, argv, "dp:m:s:t:r:P:R:e:b:")))
+	while (EOF != (c = getopt(argc, argv, "dp:m:s:t:r:P:R:e:b:g")))
 		switch (c) {
 		case 'b':
 			if (backend_select(optarg) < 0) {
@@ -170,6 +171,9 @@ int	main(int argc, char *argv[]) {
 		case 'e':
 			edgestep = atoi(optarg);
 			break;
+		case 'g':
+			usegpu = 1;
+			break;
 		}
 
 	/* if there is no backend selected so far, we use the CPU backend
@@ -184,6 +188,12 @@ int	main(int argc, char *argv[]) {
 			exit(EXIT_FAILURE);
 		}
 	}
+
+	/* set backend options (must be done before initialization, because
+	   initialization also selects the device */
+	backend_set_option("USE_GPU", (usegpu) ? "YES" : "NO");
+
+	/* initialize the backend */
 	if (backend_init() < 0) {
 		fprintf(stderr, "backend initialization failed\n");
 		exit(EXIT_FAILURE);
