@@ -52,7 +52,7 @@ double	linprog_a_get(linprog_t *linprog, int i, int j) {
  */
 void	linprog_a_set(linprog_t *linprog, int i, int j, double a) {
 	int	offset = i * linprog->n + j;
-	linprog->a[i * linprog->n + j] = a;
+	linprog->a[offset] = a;
 }
 
 /**
@@ -111,6 +111,7 @@ linprog_t	*linprog_positive(linprog_t *linprog) {
 	for (int j = 0; j < linprog->m; j++) {
 		result->b[j] = linprog->b[j];
 	}
+	return result;
 }
 
 /**
@@ -118,7 +119,7 @@ linprog_t	*linprog_positive(linprog_t *linprog) {
  */
 linprog_t	*linprog_initial(linprog_t *linprog) {
 	/* count the number of negative right hand sides */
-	int	negative = 0;
+	int	negative = 0; // number of negative right hand sides
 	for (int i = 0; i < linprog->m; i++) {
 		if (linprog->b[i] < 0) {
 			negative++;
@@ -142,18 +143,22 @@ linprog_t	*linprog_initial(linprog_t *linprog) {
 		result->c[linprog->n + j] = 1;
 	}
 
-	/* fill in the coefficients */
+	/* fill in the coefficient matrix and right hand side */
 	for (int i = 0; i < linprog->m; i++) {
 		if (linprog->b[i] < 0) {
+			// negative right hand side: add new variable y
 			for (int j = 0; j < linprog->n; j++) {
 				linprog_a_set(result, i, j,
 					-linprog_a_get(linprog, i, j));
 			}
 			for (int j = 0; j < negative; j++) {
-				linprog_a_set(result, i, linprog->n + j, 1);
+				linprog_a_set(result, i, linprog->n + j,
+					(i == j) ? -1 : 0);
 			}
 			result->b[i] = -linprog->b[i];
 		} else {
+			// positive right hand side, just copy original
+			// inequality over
 			for (int j = 0; j < linprog->n; j++) {
 				linprog_a_set(result, i, j,
 					linprog_a_get(linprog, i, j));

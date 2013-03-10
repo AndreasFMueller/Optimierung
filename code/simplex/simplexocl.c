@@ -3,11 +3,14 @@
  *
  * (c) 2013 Prof Dr Andreas Mueller, Hochschule Rapperswil
  */
+#define _GNU_SOURCE
+
 #include <simplexocl.h>
 #include <globals.h>
 #include <simplex.h>
 #include <backend.h>
 #include <clutils.h>
+#include <string.h>
 
 int	simplexocl_version = 1;
 
@@ -162,12 +165,13 @@ void	simplexocl_cleanup(simplexocl_t *simplexocl) {
  */
 const char	*simplexocl_option(backend_t *backend, const char *optionname,
 	const char *optionvalue) {
-	if (0 == strncasecmp(optionname, "USE_GPU")) {
+	if (0 == strcasecmp(optionname, "USE_GPU")) {
 		if (optionvalue) {
 			clu_usegpu = (0 == strcasecmp(optionvalue, "YES")) ? 1 : 0;
 		}
 		return clu_usegpu ? "YES" : "NO";
 	}
+	return NULL;
 }
 
 /*
@@ -189,6 +193,7 @@ int	simplexocl_release(backend_t *backend) {
 	simplexocl_t	*simplexocl = (simplexocl_t *)backend->private_data;
 	simplexocl_cleanup(simplexocl);
 	backend->private_data = NULL;
+	return 0;
 }
 
 backend_t	simplexocl_backend = {

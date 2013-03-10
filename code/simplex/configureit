@@ -1,5 +1,5 @@
 CPPFLAGS="-I/opt/AMDAPP/include"
-CFLAGS="-std=c99"
+CFLAGS="-std=c99 -g -Wall -O2"
 LDFLAGS="-L/opt/AMDAPP/lib/x86_64"
 export CFLAGS CPPFLAGS LDFLAGS
 ./configure

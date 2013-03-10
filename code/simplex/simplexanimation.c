@@ -1,5 +1,5 @@
 /*
- * test2.c -- simplex algorithm on a sphere
+ * simplexanimation.c -- simplex algorithm on a sphere
  *
  * (c) 2013 Prof Dr Andreas Mueller, Hochschule Rapperswil
  */
@@ -31,7 +31,8 @@ void	getcoordinates(simplex_tableau_t *t, double *v) {
 		} else {
 			for (int j = 1; j <= t->m; j++) {
 				if (simplex_tableau_get(t, j, i) == 1) {
-					v[i] = simplex_tableau_get(t, j, t->n + t->m);
+					v[i] = simplex_tableau_get(t, j,
+						t->n + t->m);
 				}
 			}
 		}
