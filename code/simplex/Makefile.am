@@ -15,7 +15,7 @@ noinst_HEADERS = linprog.h simplex.h random.h povray.h \
 	clutils.h globals.h simplexocl.h backend.h simplexblas.h \
 	simplexcpu.h
 
-noinst_PROGRAMS = test1 simplexanimation test3 test4 backendinfo
+noinst_PROGRAMS = test1 simplexanimation test3 test4 backendinfo sphere
 
 AM_CFLAGS = -D PKGDATADIR=\"$(pkgdatadir)\"
 
@@ -38,6 +38,10 @@ test3_DEPENDENCIES = libsimplex.a
 test4_SOURCES = test4.c
 test4_LDADD = -L. -lsimplex -lblas
 test4_DEPENDENCIES = libsimplex.a
+
+sphere_SOURCES = sphere.c
+sphere_LDADD = -L. -lsimplex -lblas -lm
+sphere_DEPENDENCIES = libsimplex.a
 
 # build curves video
 curves:	curves/curves.mpg

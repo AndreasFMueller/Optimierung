@@ -117,7 +117,9 @@ int	main(int argc, char *argv[]) {
 		.nvertices = 0,
 		.vertices = NULL,
 		.normal = { 1/sqrt(3), 1/sqrt(3), 1/sqrt(3) },
-		.flags = POVRAY_CURVE | POVRAY_PREAMBLE | POVRAY_DOMAIN | POVRAY_GOAL
+		.flags = POVRAY_CURVE | POVRAY_PREAMBLE | POVRAY_DOMAIN
+				| POVRAY_GOAL | POVRAY_PLANES,
+		.scale = 1
 	};
 
 	int	c;

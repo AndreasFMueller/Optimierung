@@ -95,11 +95,15 @@ linprog_t	*linprog_dual(linprog_t *linprog) {
 linprog_t	*linprog_positive(linprog_t *linprog) {
 	linprog_t	*result = linprog_new(linprog->m, 2 * linprog->n);
 
+	/* fill in the target function coefficients */
+	for (int j = 0; j < linprog->n; j++) {
+		result->c[j] = linprog->c[j];
+		result->c[j + linprog->n] = -linprog->c[j];
+	}
+
 	/* fill the A array and the target function coefficients */
-	for (int i = 0; i < linprog->n; i++) {
-		result->c[i] = linprog->c[i];
-		result->c[i + linprog->n] = -linprog->c[i];
-		for (int j = 0; j < linprog->m; j++) {
+	for (int i = 0; i < linprog->m; i++) {
+		for (int j = 0; j < linprog->n; j++) {
 			linprog_a_set(result, i, j,
 				linprog_a_get(linprog, i, j));
 			linprog_a_set(result, i, j + linprog->n,
@@ -108,8 +112,8 @@ linprog_t	*linprog_positive(linprog_t *linprog) {
 	}
 
 	/* copy the right hand side of the inequalities */
-	for (int j = 0; j < linprog->m; j++) {
-		result->b[j] = linprog->b[j];
+	for (int i = 0; i < linprog->m; i++) {
+		result->b[i] = linprog->b[i];
 	}
 	return result;
 }
