@@ -25,16 +25,18 @@ static void	povray_plane(FILE *out, double *x, double d) {
 	fprintf(out, "\tplane { <%f, %f, %f>, %f }\n", x[1], x[0], x[2], d);
 }
 
-static void	povray_preamble(FILE *out) {
+static void	povray_preamble(FILE *out, simplex_image_t *image) {
 	fprintf(out, "#include \"colors.inc\"\n");
 	fprintf(out, "camera {\n");
-	fprintf(out, "\tlocation <1.15, 1.15, 1.6>\n");
-	fprintf(out, "\tlook_at <0.0, 0.5, 0.0>\n");
-	fprintf(out, "\tright 0.6 * 16/9 * x\n");
-	fprintf(out, "\tup 0.6 * y\n");
+	fprintf(out, "\tlocation <1.15, 1.5, 1.6>\n");
+	fprintf(out, "\tlook_at <0.0, %f, 0.0>\n",
+		(image->flags & POVRAY_PLANES) ? 0.5 : 0.0);
+	fprintf(out, "\tright %f * 16/9 * x\n", 0.6 * image->scale);
+	fprintf(out, "\tup %f * y\n", 0.6 * image->scale);
 	fprintf(out, "}\n");
-	fprintf(out, "light_source { <4, 10, 10> color White }\n");
-	fprintf(out, "global_settings { ambient_light rgb<1, 1, 1> }\n");
+	fprintf(out, "light_source { <1, 4, 10> color White }\n");
+	fprintf(out, "light_source { <10, 4, 1> color rgb <1,1,0.8> }\n");
+	fprintf(out, "global_settings { ambient_light rgb<1, 0.9, 0.9> }\n");
 	fprintf(out, "sky_sphere {\n");
 	fprintf(out, "\tpigment {\n");
 	fprintf(out, "\t\tcolor <1,1,1>\n");
@@ -79,15 +81,18 @@ static void	povray_goal(FILE *out, double *normal, double *point) {
 
 void	povray_image(FILE *out, simplex_image_t *image, double t) {
 	if (POVRAY_PREAMBLE & image->flags) {
-		povray_preamble(out);
+		povray_preamble(out, image);
 	}
 
 	/* the sphere inside the domain */
 	if (POVRAY_SPHERE & image->flags) {
 		fprintf(out, "intersection {\n");
 		fprintf(out, "\tsphere { <0,0,0>,1 }\n");
-		fprintf(out, "\tbox { <0,0,0>, <1,1,1> }\n");
+		if (image->flags & POVRAY_PLANES) {
+			fprintf(out, "\tbox { <0,0,0>, <1,1,1> }\n");
+		}
 		fprintf(out, "\tpigment { color rgb<0.9,0.9,0.9,0.4> }\n");
+		fprintf(out, "\tfinish { specular 0.7 metallic }\n");
 		fprintf(out, "}\n");
 	}
 
@@ -95,17 +100,24 @@ void	povray_image(FILE *out, simplex_image_t *image, double t) {
 	if (POVRAY_DOMAIN & image->flags) {
 		fprintf(out, "intersection {\n");
 		double	v[3] = { -1, 0, 0 };
-		povray_plane(out, v, 0);
-		v[0] = 0; v[1] = -1;
-		povray_plane(out, v, 0);
-		v[1] = 0; v[2] = -1;
-		povray_plane(out, v, 0);
+		if (image->flags & POVRAY_PLANES) {
+			povray_plane(out, v, 0);
+			v[0] = 0; v[1] = -1;
+			povray_plane(out, v, 0);
+			v[1] = 0; v[2] = -1;
+			povray_plane(out, v, 0);
+		}
+
 		for (int i = 0; i < image->m; i++) {
 			povray_plane(out, &image->points[3 * i], 1);
 		}
-		fprintf(out, "\tpigment {\n");
-		fprintf(out, "\t\t color rgbf<0.8,0.8,0.8, 0.5>\n");
-		fprintf(out, "\t}\n");
+		if (0 == image->transparency) {
+			fprintf(out, "\tpigment { color rgb <0.6,0.6,0.6> }\n");
+		} else {
+			fprintf(out, "\tpigment { color rgbf<0.6,0.6,0.6,%f> }\n",
+				image->transparency);
+		}
+		fprintf(out, "\tfinish { specular 0.7 metallic }\n");
 		fprintf(out, "}\n");
 	}
 
@@ -154,6 +166,7 @@ void	povray_image(FILE *out, simplex_image_t *image, double t) {
 	if (POVRAY_CURVE & image->flags) {
 		povray_point(out, intermediate);
 		fprintf(out, "\tpigment { color rgb<1,0,0> }\n");
+		fprintf(out, "\tfinish { specular 0.7 metallic }\n");
 		fprintf(out, "}\n");
 	}
 

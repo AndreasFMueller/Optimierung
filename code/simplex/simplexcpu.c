@@ -29,7 +29,6 @@ static int	simplexcpu_pivot(backend_t *backend,
 	
 	/* subtract suitable multiples of the pivot row from all other
 	   rows. */
-	double	*x = &st->t[offset]; /* pivot row */
 	for (int i = 0; i <= st->m; i++) {
 		/* skip the pivot row */
 		if (i == row) {

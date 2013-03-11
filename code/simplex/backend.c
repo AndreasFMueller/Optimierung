@@ -3,6 +3,8 @@
  *
  * (c) 2013 Prof Dr Andreas Mueller
  */
+#define _GNU_SOURCE
+
 #include <backend.h>
 #include <errno.h>
 #include <string.h>
@@ -84,6 +86,7 @@ int	backend_unregister(const char *name) {
 
 	/* overwrite the backend structure */
 	memset(&backend_registry[backendindex], 0, sizeof(backend_registry_t));
+	return 0;
 }
 
 /**
@@ -206,11 +209,11 @@ void	backend_set_option(const char *optionname, const char *optionvalue) {
 
 const char	*backend_get_option(const char *optionname) {
 	if (backend_active < 0) {
-		return;
+		return NULL;
 	}
 	backend_t	*backend = backend_registry[backend_active].backend;
 	if (NULL == backend->option) {
-		return;
+		return NULL;
 	}
 	return backend->option(backend, optionname, NULL);
 }
