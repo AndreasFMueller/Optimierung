@@ -1,4 +1,6 @@
 \chapter{Implementation des Simplex Algorithmus}
+\lhead{Simplex Algorithmsu}
+\rhead{Implementation}
 Der Simplex Algorithmus basiert auf Operationen, die man typischerweise
 vom Gaussschen Eliminationsalgorithmus her kennt.
 Trotzdem bieten die "ublichen Bibliotheken f"ur lineare Algebra,
@@ -44,6 +46,11 @@ f"ur Schritt 2 verwendet wird.
 
 \section{Implementationsm"oglichkeiten f"ur die Austausch-Operation}
 Im Verzeichnis {\tt code/simplex} findet man eine Implementation
+des Simplex-Algorithmus mit drei verschiedenen Techniken.
+Im File {\tt backend.c} wird gezeigt, wie man die Wahl des berechnenden
+Backends weitgehend transparent machen kann, so dass es einfacher wird,
+vergleichende Performance-Messungen durchzuf"uhren.
+
 \subsection{Implementation in C}
 Die Implementation der Pivot-Operation ist problemlos, im Beispiel-Code
 wird sie im File {\tt simplexcpu.c} implementiert.
@@ -134,7 +141,7 @@ dger_(int *m, int *n, int *alpha, double *x, int *incx,
 \item {\tt x}: Pivot-Zeile
 \item {\tt incx}: Schritt von Element zu Element in der Spalte 
 \item {\tt y}: Pivot-Spalte
-\item {\tt incy}: Schirtt von Element zu Element in der Zeile
+\item {\tt incy}: Schritt von Element zu Element in der Zeile
 \item {\tt a}: Matrix
 \item {\tt lda}: f"uhrende Dimension der Matrix
 \end{itemize}
@@ -156,6 +163,18 @@ Austausch-Schritt getan. Darin werden mehr als $n\times m$ Multiplikationen
 und Additionen durchgef"uhrt, der Aufwand ist also $O(nm)$.
 Der Aufwand f"ur die Pivot-Auswahl ist dagegen nur von der Ordnung
 $O(n+m)$.
+
+Im die Performance genauer messen zu k"onnen wurde wie folgt zuf"allig
+ein Optimierungsproblem generiert. Zun"achste wurden $n$ im 
+ersten Oktanten gleichverteilte Einheitsvektoren $v_i$ erzeugt.
+Als Ungleichungen wurden dann die Ungleichungen $v_i^t x\le 1$ 
+verwendet. Als Zielfunktion diente $x+y+z$. So erh"alt man
+ein Optimierungsproblem mit $n$ Ungleichungen und $3$ Variablen.
+Wegen der Gleichverteilung sind alle Simplex-Schritte ungef"ahr gleich
+gross, es ist nicht mit starken Variationen von Laufzeit und
+Anzahl Schritten bis zum Optimum zu rechnen. Damit eignet sich
+dieses Modellproblem, um die Abh"angigkeit der Laufzeit oder
+der Schrittzahl von $n$ abzusch"atzen.
 
 \section{Resultate}
 Die numerischen Experimente haben gezeigt, dass OpenCL in dieser Anwendung
@@ -190,7 +209,36 @@ in logarithmischer Darstellung.
 Blau die Hypothese $\sim\sqrt{n}$.
 \label{simplex:pathsteps}}
 \end{figure}
+Abbildung~\ref{simplex:pathsteps} zeigt die Anzahl Austauschschritte bis
+zum Erreichen des Optimums. Die f"ur das Beispiel
+verwendeten $n$ Ungleichungen zerlegen die Oberfl"ache einer Kugel in
+$n$ Teile, von denen ein Weg des Simplex-Algorithmus ungef"ahr 
+$O(\sqrt{n})$ treffen m"usste. In Wahrheit ist der Simplex-Algorithmus
+sogar noch etwas effizienter.
 
+\section{Wahl des Weges}
+Die Wahl des Weges, den der Simplex-Algorithmus w"ahlt, wurde mit
+mit Hilfe von graphischen Darstellungen ebenfalls untersucht.
+Zun"achst f"allt in der Abbildung \ref{simplex:kanten} auf,
+dass der Algorithmus nicht den direktesten Weg nimmt. Im ersten
+Schritt findet er vom Ursprung aus den Schnittpunkt der $z$-Achse mit
+dem Rand. Dann folgt er der Koordinatenebene bis ca.~$45^\circ$
+n"ordlicher Breite, erst von dort folgt er den Kanten bis zum Maximum.
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\hsize]{add/sphere.jpg}
+\end{center}
+\caption{Weg des Simplex-Algorithmus entlang der Kanten 
+des zul"assigen Gebietes.
+\label{simplex:kanten}}
+\end{figure}
+Weitere Beispiel in den Animationen auf Youtube:
+\url{http://www.youtube.com/watch?v=54blxYi5JF8}
+und
+\url{http://www.youtube.com/watch?v=k9em_7B6298}.
+Die zweite Animation zeigt, dass dieses z"ogerliche Vorgehen nicht
+ein Zufall in Abbildung~\ref{simplex:kanten} ist, sondern das
+generelle Verhalten des Algorithmus.
 \section{Alternative Ans"atze}
 Eine eigene Implementation des Simplex-Algorithmus ist oft nicht
 notwendig, so kann man in Open Source Projekten oder in Projekten,
