@@ -1,0 +1,6 @@
+#
+# commonly used options
+#
+CFLAGS="-Wall -g -O2"
+export CFLAGS
+./configure
