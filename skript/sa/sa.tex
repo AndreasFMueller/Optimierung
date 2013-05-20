@@ -196,8 +196,20 @@ $V(x_{n+2})$};
 Es w"are also sinnvoll, tempor"ar auch schlechtere Parameterkombinationen zu zulassen, damit lokale Minima wieder verlassen werden k"onnen.
 
 \section{Metropolis-Kriterium}
-	Nicholas Metropolis publizierte 1953 den Metropolisalgorithmus, welcher sich genau diesem Problem annimmt. Er simuliert das Erreichen des thermodynamischen Gleichgewichts eines Systems mit der Temperatur $T$.\\
-Dabei wird wiederum wie bei der Lokalen Suchstrategie vorgegangen. Ausgehend von einem Punkt (Parameterkombination) $\vec{x}_{n}$ wird in dessen Umgebung ein zuf"alliger Punkt $\vec{x}_{n+1}$ gew"ahlt und $$\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})$$ berechnet.
+Nicholas Metropolis publizierte 1953 den Metropolisalgorithmus, welcher
+\index{Metropolis, Nicolas}
+\index{Metropolis-Kriterium}
+sich genau diesem Problem annimmt. Er simuliert das Erreichen des
+thermodynamischen Gleichgewichts eines Systems mit der Temperatur $T$.
+
+Dabei wird wiederum wie bei der Lokalen Suchstrategie
+vorgegangen. Ausgehend von einem Punkt (Parameterkombination)
+$\vec{x}_{n}$ wird in dessen Umgebung ein zuf"alliger Punkt
+$\vec{x}_{n+1}$ gew"ahlt und
+\[
+\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})
+\]
+berechnet.
 Ist $\Delta f < 0$ wird mit $\vec{x}_{n+1}$ fortgefahren, ist hingegen $\Delta f \geq 0$, wird $\vec{x}_{n+1}$ mit der Wahrscheinlichkeit $$ p(\Delta f) = {\rm e}^{-\frac{\Delta f}{k_{\rm B} T}}\quad \text{mit } \begin{matrix}k_{\rm B} = \text{Bolzmann-Konstante}\\
 T = \text{Temperatur des Systems}
 \end{matrix}$$ trotzdem als neue L"osung akzeptiert.\\
@@ -247,10 +259,24 @@ $V(x_{n})$};
 \label{metropolissingle}
 \end{figure}
 
-Nicholas Metropolis bediente sich dabei der Boltzmann-Statistik\footnote{Man erh"alt die Boltzmann-Statistik aus der Annahme, dass alle Zust"ande im abgeschlossenen Gesamtsystem a priori gleich wahrscheinlich sind. In den meisten F"allen wird der Einfachheit halber $k_{\rm B} =1$ gesetzt} der Thermodynamik. Diese definiert die Wahrscheinlichkeit $p(x)$ bei einer Temperatur $T$, den Zustand $x$ zu messen.
+Nicholas Metropolis bediente sich dabei der
+Boltzmann-Statistik\footnote{Man erh"alt die Boltzmann-Statistik aus der
+Annahme, dass alle Zust"ande im abgeschlossenen Gesamtsystem a priori
+gleich wahrscheinlich sind. In den meisten F"allen wird der Einfachheit
+halber $k_{\rm B} =1$ gesetzt} der Thermodynamik. Diese definiert die
+Wahrscheinlichkeit $p(x)$ bei einer Temperatur $T$, den Zustand $x$
+zu messen.
 \begin{equation}p_x = {\rm e}^{-\frac{x}{k_{\rm B} T}}\label{Bolzmann}\end{equation}
 
-Gem"ass der Formel \ref{Bolzmann} wird dem Optimierungsproblem also ein zus"atzlicher Paramater, der Temperaturparameter, hinzugef"ugt. Dieser definiert die Temperatur des Systems/Problems. Je h"oher dabei die Temperatur ist, desto h"oher ist die Wahrscheinlichkeit, dass eine schlechtere Parameterkombination akzeptiert wird. Atomar betrachtet heisst das, dass die einzelnen Atome (L"osungspunkte) des Systems sich freier bewegen k"onnen.\\
+Gem"ass der Formel \ref{Bolzmann} wird dem Optimierungsproblem also ein
+\index{Bolzmann, Ludwig}
+zus"atzlicher Paramater, der Temperaturparameter, hinzugef"ugt. Dieser
+definiert die Temperatur des Systems/Problems. Je h"oher dabei die
+Temperatur ist, desto h"oher ist die Wahrscheinlichkeit, dass eine
+schlechtere Parameterkombination akzeptiert wird. Atomar betrachtet
+heisst das, dass die einzelnen Atome (L"osungspunkte) des Systems sich
+freier bewegen k"onnen.
+
 Erst dadurch ist es also m"oglich lokale Minima wieder zu verlassen. Jedoch ist es mit konstanter Temperatur auch nicht mehr m"oglich eine konvergierende L"osung zu finden, da jedes Minimum wieder verlassen werden kann (siehe Abb. \ref{metropolis}).
 \begin{figure}
 \centering
