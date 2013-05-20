@@ -1,0 +1,127 @@
+\section{Partikelschwarm-Algorithmus}
+
+\subsection{Algorithmus}
+F"ur die Partikelschwarm-Optimierung sind folgende Zustandsdaten zu
+jedem Partikel notwendig:
+\begin{align*}
+	x_i: & \text{ aktuelle Position}\\
+	v_i: & \text{ aktuelle Geschwindigkeit}\\
+	p_i: & \text{ pers"onlich beste Position} \\
+	l_i: & \text{ beste Position des Schwarms}
+\end{align*} 
+
+\subsubsection{Initialisierung}
+Üblich ist die Initialisierung gem"ass folgenden Formeln:
+\begin{align}
+	x_i(0) &= U(min,max) \\
+	v_i(0) &= \frac{U(min,max) - x_i(0)}{2} \label{Vi-old} \\ 
+	p_i(0) &= x_i(0)
+\end{align}
+Die Erfahrung hat gezeigt, dass mit der Initialisierung der
+Geschwindigkeit gem"ass Gleichung \ref{Vi-old} die Partikel bei hohen
+Dimensionen den Suchraum praktisch unmittelbar verlassen. Um dies zu
+beheben wurde folgende angepasste Initialisierung eingef"uhrt:
+\begin{equation}
+	v_i(0) = U(min - x_i(0), max - x_i(0))
+\end{equation}
+
+\subsubsection{Update der Geschwindigkeit}
+\index{Geschwindigkeits-Update}
+Bei jeder Iteration werden die Zustandsdaten f"ur jedes Partikel
+neu berechnet. Die neue Geschwindigkeit ist eine Linearkombination
+$\mathcal{C}$ von drei Vektoren: der aktuellen Geschwindigkeit, dem
+Abstand zur pers"onlich besten Position, sowie dem Abstand zur besten
+Position des Schwarms.
+\begin{equation}
+	v_{i}(t+1) = \mathcal{C}(v_i(t),\, p_i(t)-x_i(t),\, l_i(t)-x_i(t))
+\end{equation}
+
+Die Position wird nach der Geschwindigkeit gem"ass Gleichung
+\ref{Pos-Update} aktualisiert. \\
+\begin{equation}
+	x_{i}(t+1) = x_i(t) + v_i(t+1) \label{Pos-Update}
+\end{equation}
+\index{Positions-Update}
+
+"uber die korrekte Wahl der Linearkombination $\mathcal{C}$ wurden bereits
+ganze Arbeiten geschrieben. Weit verbreitet, wenn auch nicht ganz ideal
+ist die Berechnung gem"ass Gleichung \ref{Vel-Update}. \\
+\begin{equation}
+	v_i(t+1) = w v_i(t) + U(0,c_1) (p_i(t)-x_i(t)) + U(0,c_2) (l_i(t)-x_i(t))\label{Vel-Update}
+\end{equation}
+
+mit den folgenden Parametern:
+\begin{align*}
+	w &: \text{Inertia Weight} \\
+	c_1 &: \text{Cognitive Factor} \\
+	c_2 &: \text{Social Factor}
+\end{align*}
+\index{Inertia weight}
+\index{Cognitive factor}
+\index{Social factor}
+Diese Parameter, auch \textit{Acceleration Coefficients} genannt,
+\index{Acceleration Coefficients}
+beeinflussen das  Verhalten und die Konvergenz des Schwarms. Hohe
+$c_1$ und $c_2$ f"uhren zu abrupteren Bewegungen und h"oheren
+Beschleunigungen. Mit der Gewichtung dieser beiden Faktoren l"asst sich
+weiter einstellen, wie stark sich die Partikel von Schwarm beeinflussen
+lassen. Wie genau diese Parameter eingestellt werden ist von der
+Problemstellung abh"angig. Gem"ass Maurice Clerc \cite{Clerc-Stagnation}
+haben sich folgende Werte f"ur die meisten Probleme als zweckm"assig
+erwiesen:
+\begin{equation}
+	\left\lbrace \begin{array}{lllll}
+		w & = & \frac{1}{2 \ln(2)} & \simeq & 0.721 \\
+		c_1 = c_2 & = & \frac{1}{2} + \ln(2) & \simeq & 1.139 \\
+	\end{array}	\right. 
+\end{equation} \\
+
+
+Die Herleitung der neuen Geschwindigkeit wird in Abbildung
+\ref{Fig-Visualisierung-Geschwindigkeit} visualisiert. Die Punkte $x'_i$
+und $x''_i$ werden zuf"allig aus den zu den Achsen parallelen, gelb
+bzw. gr"un hinterlegten Bereichen generiert.  \\
+\begin{figure}[htbp]
+	\centering
+	\input{partikelschwarm/new-velocity}
+	\caption{Visualisierung der Geschwindigkeit}
+	\label{Fig-Visualisierung-Geschwindigkeit}
+\end{figure}
+
+
+\subsection{Gr"osse des Schwarms}
+Über die ideale Gr"osse des Partikelschwarms lassen sich keine exakten
+Angaben machen. Gem"ass \cite{Clerc-Standards} l"asst sich die Gr"osse
+$S$ des Schwarms in Abh"angigkeit der Dimension $D$ wie folgt ausdr"ucken:
+\begin{equation}
+	S = 10 + \left[ 2 \cdot \sqrt{D} \right]
+\end{equation}
+Die N"aherung f"uhrt jedoch oft zu ungeeigneten Werten, weshalb Maurice
+Clerc vorschl"agt, einen beliebigen Wert um $40$ zu w"ahlen. Die
+theoretischen Grundlagen zur idealen Gr"osse des Schwarms sind nicht
+bekannt.
+
+
+\subsection{Exploration-Exploitation Tradeoff}
+\index{Exploration-Exploitation Tradeoff}
+Der Exploration-Exploitation Tradeoff sagt aus, dass ein Partikelschwarm
+nicht gleichzeitig ein m"oglichst grosses Zielgebiet absuchen kann
+(Exploration) und einen Bereich so genau wie m"oglich durchsuchen kann
+(Exploitation). Dieses Verh"altnis von Exploration zu Exploitation hat
+einen starken Einfluss auf die Konvergenz. Generell kann gesagt werden,
+dass je h"oher die Inertia Weight $w$, desto weniger verlangsamt sich
+die Geschwindigkeit der Partikel, weshalb die Exploration st"arker
+gewichtet wird.
+
+\subsection{Parallelisierung}
+\index{Parallelisierung}
+Aus der Beschreibung des Algorithmus wird schnell ersichtlich, dass
+die Partikelschwarm-Optimierung sehr gut f"ur eine parallelisierte
+Berechnung geeignet ist. Die Aktualisierung der Geschwindigkeit und
+Position kann f"ur alle Partikel gleichzeitig, parallel erfolgen. Bei
+rechenintensiven Problemen ist dies ein enormer Vorteil gegen"uber
+anderen Optimierungsmethoden.
+
+
+
+

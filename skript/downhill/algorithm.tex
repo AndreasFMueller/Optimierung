@@ -31,7 +31,7 @@ Es k"onnen diverse Abbruchbedingungen f"ur den Downhill-Simplex verwendet werden
 Es empfiehlt sich eine Kombination der Abbruchbedingungen, um die Iterationszahl m"oglichst gering zu halten.\\
 Im Allgemeinen ist es ratsam, die $x_i$ und Anzahl Iterationen zu verwenden, da so kein Wissen "uber die Art des Minimums der Zielfunktion ben"otigt wird.\\
 Ist die gew"ahlte Abbruchbedingung erf"ullt, ist der Algorithmus am Ende.\\
-Es ist nat"urlich eher Zufall, wenn man gleich bei der ersten Wahl des Simplex das Minima trifft, meistens hat man es nicht getroffen und es wird nun auf Grund des gew"ahlten Simplex gem"ass \chapref{sec:downhillModi} ein neues Simplex gebildet.
+Es ist nat"urlich eher Zufall, wenn man gleich bei der ersten Wahl des Simplex das Minimum trifft, meistens hat man es nicht getroffen und es wird nun auf Grund des gew"ahlten Simplex gem"ass \chapref{sec:downhillModi} ein neues Simplex gebildet.
 
 \subsection{Neuen Simplex bilden}
 \label{sec:downhillModi}
@@ -150,7 +150,7 @@ x_{i} = (x_i + x_{min}) \cdot \beta
 Das ganze ist nat"urlich stark abh"angig von dem zu Beginn gew"ahlten Simplex.
 
 W"ahlt man das Simplex zu gross, dauert es lange, bis es konvergiert, auch bewegt es sich anfangs eher wild.\\
-Wird es hingegen zu klein gew"ahlt, zieht es sich zu schnell zusammen ohne dass es sich auf ein Minima zubewegt (siehe \chapref{sec:downhillZusammenziehen}).\\
+Wird es hingegen zu klein gew"ahlt, zieht es sich zu schnell zusammen ohne dass es sich auf ein Minimum zubewegt (siehe \chapref{sec:downhillZusammenziehen}).\\
 Auch sollten die Punkte des Simplex m"oglichst orthogonal zueinander stehen, damit in alle Dimensionen gleichm"assig die ''F"uhler`` ausgestreckt werden.
 
 \subsubsection{Parameter}
@@ -171,7 +171,7 @@ Folgende Probleme k"onnen beim Downhill-Simplex auftreten:
 \end{itemize}
 
 \subsubsection{Lokale Minima}
-Der Algorithmus findet - bis auf wenige Ausnahmen - immer ein Minima. Wenn er jedoch st"andig in ein lokales Minima f"allt, muss man sich vielleicht "uberlegen die Startbedingungen zu "andern, 
+Der Algorithmus findet - bis auf wenige Ausnahmen - immer ein Minimum. Wenn er jedoch st"andig in ein lokales Minimum f"allt, muss man sich vielleicht "uberlegen die Startbedingungen zu "andern, 
 zum Beispiel k"onnen neue Startpunkte zuf"allig gew"ahlt werden.
 
 
@@ -184,9 +184,9 @@ zum Beispiel k"onnen neue Startpunkte zuf"allig gew"ahlt werden.
 \end{subfigure} \begin{subfigure}[b]{0.49\textwidth}
 \centering
 \includegraphics[width=\textwidth]{downhill/glob_sinx_x010.png}
-\caption{Abbruch mit globalem Minima}
+\caption{Abbruch mit globalem Minimum}
 \end{subfigure}
-\caption{Globales Minima}
+\caption{Globales Minimum}
 \label{fig:downhillGlobMinima}
 \end{figure}
 
@@ -200,10 +200,10 @@ zum Beispiel k"onnen neue Startpunkte zuf"allig gew"ahlt werden.
 \end{subfigure} \begin{subfigure}[b]{0.49\textwidth}
 \centering
 \includegraphics[width=\textwidth]{downhill/lok_sinx_x010.png}
-\caption{Abbruch mit lokalem Minima}
+\caption{Abbruch mit lokalem Minimum}
 \end{subfigure}
 
-\caption{Lokales Minima}
+\caption{Lokales Minimum}
 \label{fig:downhillLokMinima}
 \end{figure}
 

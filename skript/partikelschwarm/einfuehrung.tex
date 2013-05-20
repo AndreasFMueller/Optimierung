@@ -1,0 +1,128 @@
+\section{Einf"uhrung}
+\index{Partikelschwarm-Optimierung}
+Die Partikelschwarm-Optimierung wurde von James Kennedy und
+\index{Kennedy, James}
+Russel Eberhart
+\index{Eberhart, Russel}
+im Jahre 1995 entwickelt. Es handelt sich um einen nummerischen
+Optimierungsalgorithmus. Er simuliert das Verhalten von nat"urlichen
+Schw"armen um mathematische Problemstellungen zu optimieren.
+
+Es bewegt sich ein Schwarm von Partikeln durch den Suchraum. Jedes
+Partikel hat eine Richtung und Geschwindigkeit sowie eine ``Fitness''. Die
+\index{Fitness}
+Fitness sagt aus, wie gut die momentane Position ist. Partikel mit einer
+guten Fitness ziehen andere Partikel an, solche mit schlechter Fitness
+stossen andere Partikel ab. So beeinflussen sich die Partikel gegenseitig
+und man kann sehr viel parallel berechnen, was vor allem bei Multicore
+Computersystemen von Vorteil ist.
+Diese Art von Optimierung wurde erst durch die Entwicklung von
+leistungsstarken Computersystemen m"oglich. Die st"andig steigende
+Rechenleistung erm"oglicht immer umfassendere Simulationen und damit
+immer umfassendere Optimierungen.
+
+\subsection{Schwarm}
+\index{Schwarm}
+In der Natur gibt es viele verschiedene Strukturen und Formen in denen
+viele einzelne Bestandteile zusammen wirken. Eine davon ist ein Schwarm.
+Wenn man von Schw"armen spricht, denkt man an Fisch- oder an
+Vogelschw"arme, die sich in der freien Wildbahn  bilden um z.B. als
+Zugvogelschwarm nach S"uden oder Norden zu ziehen, als Fischschwarm
+gemeinsam auf Nahrungssuche zu gehen oder sich gegen nat"urlich Feinde zu
+verteidigen. Solche Schw"arme k"onnen das Wissen jedes Einzelnen nutzen
+und so beispielsweise die besten Futterpl"atze finden.
+
+\subsection{Schwarmintelligenz}
+\index{Schwarmintelligenz}
+Ein Schwarm kann als Ganzes eine Eigenschaft haben, die aus den
+einzelnen Mitgliedern des Schwarms nicht voraussagbar ist. So kann
+eine einzelne Nervenzelle keine Informationen speichern. Wenn nun aber
+Milliarden von Nervenzellen richtig zusammen zu einem ``Hirn'' verkn"upft sind, kann das Ganze denken wie auch
+Informationen speichern. Dies sind offenbar emergente Eigenschaften,
+welche nicht durch einzelne Nervenzellen sondern durch eine Vielzahl
+von Nervenzellen zustande kommt
+\cite{partice-swarm-optimization}.
+
+\subsection{Emergenz}
+\index{Emergenz}
+Emergente Eigenschaften sind Eigenschaften, die durch das Zusammenspiel
+vom vielen einzelnen Teilen, zum Beispiel in einem Schwarm,
+entstehen. Diese Eigenschaften lassen sich nicht immer nur aus den
+Bestandteilen des Schwarms vorhersagen.
+Dass ein Zusammenspiel von Bestandteilen ein Verhalten begr"undet, sagt
+noch nicht aus, dass dieses Verhalten automatisch intelligenter ist,
+als das Verhalten der Bestandteile selbst. In der Natur hat sich aber
+gezeigt, dass dieses emergente Verhalten oft wesentlich intelligenter ist,
+als das Verhalten von den einzelnen Bestandteilen.
+
+Die Emergenz ist Grundbestandteil von Algorithmen, welche auf das
+Verhalten von Schw"armen zur"uckgreifen \cite{melchior-bsc}.
+
+\input{partikelschwarm/Schwarmalgorithmus.tex}
+		
+\subsubsection{Algorithmen}
+Es gibt verschiedene Alogrithmen, welche die Schwarmintelligenz nutzen. Im
+Anschluss werden einige kurz vorgestellt. Am weitesten verbreitet
+ist der Partikelschwarm-Algorithmus sowie der Ameisenalgorithmus,
+jedoch gibt es noch weitere Algorithmen, welche ebenfalls erforscht und
+weiterentwickelt werden. Auf diese Algorithmen wird im Weitern nicht
+eingegangen \cite{uulm}.
+
+\begin{description}
+\item[Ant Colony Algorithm:]
+\index{Ant colony Algorithm}
+Auch Ameisen nutzen die Intelligenz des Ganzen wenn sie Futterpl"atze
+suchen. Hat eine Ameise einen Futterplatz gefunden, hinterl"asst sie
+auf dem R"uckweg Pheromone, an denen sich andere Ameisen orientieren
+und so den Futterplatz und auch den R"uckweg finden k"onnen. Findet
+nun eine Ameise einen schnelleren Weg zur"uck, so verfl"uchtigen
+sich diese Pheromone langsamer, da es weniger Zeit braucht f"ur einen
+\index{Pheromone}
+Weg. So werden die andere Ameisen aufmerksam auf diese st"arkere Spur und
+schlussendlich nutzen alle diesen schnelleren Weg. Dieses Prinzip wird im
+Ameisenalgorithmus (ant colony optimization algorithm) ausgen"utzt.Dieser
+Algorithmus wird typischerweise f"ur eine Pfadoptimierung verwendet.
+
+\item [Invasive Weed:]
+\index{Invasive Weed}
+Der Invasive Weed Algorithmus orientiert sich an der Fortpflanzung
+von Pflanzen. Es werden Pflanzen frei "uber das Suchgebiet verteilt
+und dann die Fitness bewertet. Je fitter eine Pflanze ist, desto mehr
+Pflanzensamen verteilt sie. Auch bei diesen Pflanzensamen wird die
+Fitness bewertet. Das Ganze wird solange fortgef"uhrt, bis eine maximale
+Anzahl Pflanzen, die zuvor definiert wurde, erreicht ist. Dann wird
+die Fitness aller Pflanzen bewertet und nur die Besten werden in einen
+neuen Durchgang mitgenommen. Diese Schritte werden solange wiederholt,
+bis das Abbruchkriterium erf"ullt ist.
+		
+
+\item [Bees Algorithm:]
+\index{Bees Algorithm}
+Beim Bienenalgorithmus hat man, wie der Name schon sagt, bei den Bienen
+abgeschaut.
+In einem ersten Schritt werden ``Scouts''
+frei "uber das Suchgebiet verteilt und im Anschluss deren Fitness
+betrachtet. Bei dem ``Scout'' mit der besten
+Fitness werden in der Umgebung erneut ``Bienen''
+verteilt und deren Fitness beurteilt. Dieser Schritt wiederholt sich, bis
+man ein Ergebnis erreicht hat, das das Abbruchkriterium erf"ullt.Dieser
+Algorithmus wird typischerweise f"ur kombinatorische oder funktionale
+Optimierung verwendet.
+
+\item[Firefly Algorithm:]
+\index{Firefly Algorithm}
+Der Firefly Algorithm nutzt das Paarungsverhalten von
+Gl"uhw"urmchen. Gl"uhw"urmchen werden unisexuel implementiert, damit
+\index{Gluwurmchen@Gl\"uhw\"urmchen}
+jedes Tier f"ur das andere als Partner in Frage kommt.
+Zuerst werden Gl"uhw"urmchen frei auf dem Suchgebiet verteilt. Danach
+wird die Fitness beurteilt. Je fitter ein Gl"uhw"urmchen ist, desto
+heller leuchtet es, je heller es leuchtet, desto interessanter ist
+ein Gl"uhw"urmchen f"ur die Artgenossen. Das heisst, jedes einzelne
+Gl"uhw"urmchen bewegt sich auf das Tier zu, das aus seiner Sicht am
+hellsten ist. Je n"aher man sich auf ein Gl"uhw"urmchen zu bewegt, desto
+heller leuchtet es. So werden bald alle Gl"uhw"urmchen Richtung Optimum
+wandern. W"urden nun alle gleich hell leuchten, sprich dieselbe Fitness
+haben, w"urden sich die Tiere zuf"allig im Suchraum bewegen.
+
+\end{description}

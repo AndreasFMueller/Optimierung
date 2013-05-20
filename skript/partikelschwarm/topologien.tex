@@ -1,0 +1,108 @@
+\section{Schwarm-Topologien}
+\index{Schwarm-Topologie}
+Zum Bestimmen der sozialen Komponente des Geschwindigkeitsvektors
+kommen verschiedene Topologien oder Nachbarschaftsbeziehungen zur
+Anwendung. Diese Beziehungen unter den Partikeln haben einen essentiellen
+Einfluss auf den Algorithmus. Generell kann zwischen gbest (global best)
+und lbest (local best) unterschieden werden.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{minipage}{4cm}
+		\centering
+		%\input{partikelschwarm/gbest}
+		GBest
+	\end{minipage}
+	\begin{minipage}{4cm}
+		\centering
+		%\input{partikelschwarm/lbest-ring}
+		LBest - Ring
+	\end{minipage}
+	\begin{minipage}{4cm}
+		\centering
+		%\input{partikelschwarm/lbest-wheel}
+		LBest - Wheel
+	\end{minipage}
+	\begin{minipage}{4cm}
+		\centering
+		%\input{partikelschwarm/lbest-neumann}
+		LBest - Von Neumann
+	\end{minipage}
+	\caption{Schwarm-Topologien}
+	\label{schwarm-topologien}
+\end{figure}
+
+\subsection{GBest}
+\index{GBest}
+Die gbest Topologie geht von einem transparentem Partikelschwarm aus,
+in welchem die jeweils pers"onlich besten Positionen aller Partikel
+bekannt sind. Die soziale Komponente des gesamten Schwarms bildet sich
+also aus dem Abstand zur besten Position des gesamten Schwarms. Ein
+Vorteil dieser Nachbarschaftsbeziehung ist, dass der Schwarm schnell
+konvergiert, weil alle Partikel auf die momentan beste Position zulaufen.
+
+\subsection{LBest}
+\index{LBest}
+Es existieren mehrere verschiedene lbest Architekturen. Die verbreitetsten
+Architekturen sind in Abbildung \ref{schwarm-topologien} dargestellt. Das
+Grundprinzip von lbest ist, dass jedes Partikel nur auf die besten
+Positionen seiner Nachbarn zugreifen kann. Wie die Nachbarpartikel
+bestimmt werden ist von der gew"ahlten Topologie abh"angig. Die lbest
+Methode hat den Vorteil, dass die Wahrscheinlichkeit gegen ein lokales
+Optimum zu konvergieren bedeutend kleiner ist. Daf"ur dauert es im
+Normalfall l"anger, ein Optimum zu finden, als mit der gbest Methode.
+
+In der Natur kommunizieren Schwarmtiere mit ihren n"achsten Nachbarn. Bei
+jeder Iteration die Nachbarn zu bestimmen w"are jedoch ein grosser
+Rechenaufwand, welcher erfahrungsgem"ass nicht n"otig ist. Meist werden
+heute bei der Initialisierung die Nachbarn bestimmt und diese bleiben
+w"ahrend der Laufzeit dieselben.
+
+\subsection{Wahl der Topologie}
+Die Wahl der Topologie h"angt stark von der Problemstellung ab. Es
+lassen sich leider keine generellen Aussagen machen, wann genau welche
+Topologie ideal ist. Wie erw"ahnt konvergieren Partikelschw"arme nach
+gbest Topologie schneller gegen ein Optimum, w"ahrend lbest Schw"arme
+weniger gegen lokale Optima konvergieren.
+
+\subsection{Subpopulationen}
+Um die Vorteile beider Topologien zu vereinen, kann das von genetischen
+Algorithmen (GA) bekannte Prinzip der Subpopulationen verwendet
+werden. Dabei wird der eigentliche Schwarm in mehrere Subpopulationen
+unterteilt, welche unabh"angig von einander die PSO ausf"uhren. Oft werden
+Subpopulationen verwendet, um einzelne Teilgebiete genauer untersuchen
+zu k"onnen.
+
+
+\subsubsection{Hierarchische Subpopulationen}
+Ein Spezialfall der Partikelschwarm-Optimierung ist
+die \textit{hierarchical subpopulation PSO} (HS-PSO)
+\cite{ChuanLin-HSPSO}. Das Prinzip der HS-PSO ist die Unterteilung des
+Schwarms nach einem hierarchischen Prinzip, wie zum Beispiel in einer
+Unternehmung.
+
+\begin{figure}[htbp]
+	\centering
+	%\input{partikelschwarm/hs-pso}
+	\caption{Hierarchical Subpopulation PSO}
+	\label{hs-pso}
+\end{figure}
+
+Die besten Partikel der Subpopulationen \textit{Sub11} - \textit{Sub13}
+bilden zusammen die Population \textit{Sub1}. Die besten Partikel der
+Populationen \textit{Sub1} - \textit{Sub2} bilden den Hauptschwarm
+\textit{Sub}.
+
+Die einzelnen Partikelschw"arme lassen sich unterschiedlich
+konfigurieren. So schl"agt Chuan Lin in \cite{ChuanLin-HSPSO} vor,
+Schw"arme in tiefen Hierarchiestufen auf das Erforschen des Gesamtgebiets
+einzustellen (d.h. geringe Sozialkomponente), w"ahrend die h"oheren
+Hierarchiestufen relativ tr"age sind. Damit l"asst sich ein grosses Gebiet
+erforschen, doch der Schwarm konvergiert kaum gegen lokale Minima.
+
+In Benchmark-Tests haben HS-PSO Varianten bedeutend bessere Resultate als
+herk"ommliche gbest und lbest Topologien hervorgebracht. Das Thema ist
+jedoch erst schwach erforscht. Weitere Arbeiten, vor allem zu adaptiven
+hierarchischen Strukturen und dem Informationsaustausch zwischen den
+Subpopulationen sind jedoch angek"undigt.
+

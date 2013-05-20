@@ -5,17 +5,43 @@
 %
 
 \chapter{Simulated Annealing}
-Roman Gassmann
-\bigskip
-\bigskip
+\rhead{Simulated Annealing}
+\chapterauthor{Roman Gassmann}
 
-	Solange ein Optimierungsproblem gen"ugend einfach und von tiefer Dimension ist, 
-	k"onnen analytische Methoden, welche zu optimalen Parameter f"uhren, angewendet werden.\\
-	Dies ist aber nicht mehr der Fall wenn die Komplexit"at und die Dimension des Problems zu gross werden.
-	Kommt hinzu, dass in mehr-dimensionalen und komplexeren Problemen auch h"aufig mehrere Minima/Maxima existieren. Es muss dann eine Reihe von Tricks angewendet werden um ein einzelnes vern"unftiges/akzeptierbares Minimum/Maximum zu finden.
+Solange ein Optimierungsproblem gen"ugend einfach und von tiefer
+Dimension ist,
+k"onnen analytische Methoden, welche zu optimalen Parameter f"uhren,
+angewendet werden.
+
+Dies ist aber nicht mehr der Fall wenn die Komplexit"at und die Dimension
+des Problems zu gross werden.
+Kommt hinzu, dass in mehr-dimensionalen und komplexeren Problemen auch
+h"aufig mehrere Minima/Maxima existieren. Es muss dann eine Reihe von
+Tricks angewendet werden um ein einzelnes vern"unftiges/akzeptierbares
+Minimum/Maximum zu finden.
 	
-	\section{Local Search Method}
-		Wie bei allen Optimierungsproblemen gilt es die Zielfunktion $f(\vec{x})$ zu minimieren. Dazu wird bei der Lokalen Suchstrategie in der Nachbarschaft $V(\vec{x}_n)$ von der L"osung $\vec{x}_n$ zuf"allig eine neue Parameterkombination $$\vec{x}_{n+1} = V(\vec{x}_n) = \vec{x}_n + \vec{\gamma} \cdot v \qquad \text{mit }  \begin{matrix}\vec{\gamma} = \text{Vektor mit Zufallsvariablen}\\v = \text{Umgebungsdistanz}\end{matrix}$$ gew"ahlt. Von dieser Kombination wird der Funktionswert $f(\vec{x}_{n+1})$ berechnet. Ist dabei $$\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})$$ negativ, so wird die Parameterkombination $\vec{x}_{n+1}$ als neue minimale L"osung akzeptiert (Siehe Abb. \ref{localsearchsingle}). Ansonsten wird erneut eine zuf"allige Kombination in der Nachbarschaft $V(\vec{x}_n)$ gew"ahlt.\\
+\section{Local Search Method}
+Wie bei allen Optimierungsproblemen gilt es die Zielfunktion
+$f(\vec{x})$ zu minimieren. Dazu wird bei der Lokalen Suchstrategie
+in der Nachbarschaft $V(\vec{x}_n)$ von der L"osung $\vec{x}_n$
+zuf"allig eine neue Parameterkombination
+\[
+\vec{x}_{n+1} =
+V(\vec{x}_n) = \vec{x}_n + \vec{\gamma} \cdot v \qquad \text{mit }
+\qquad
+\begin{aligned}\vec{\gamma}&= \text{Vektor mit Zufallsvariablen}\\
+& = \text{Umgebungsdistanz}\end{aligned}
+\]
+gew"ahlt. Von dieser Kombination
+wird der Funktionswert $f(\vec{x}_{n+1})$ berechnet. Ist dabei
+\[
+\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})
+\]
+negativ, so wird
+die Parameterkombination $\vec{x}_{n+1}$ als neue minimale L"osung
+akzeptiert (Siehe Abb. \ref{localsearchsingle}). Ansonsten wird erneut
+eine zuf"allige Kombination in der Nachbarschaft $V(\vec{x}_n)$ gew"ahlt.
+
 \begin{figure}[ht!]
 \usetikzlibrary{decorations.pathreplacing} 
 \usetikzlibrary{calc}
@@ -59,9 +85,16 @@ $V(x_{n})$};
 \end{tikzpicture}
 \caption{Lokale Suchstrategie}
 \label{localsearchsingle}
-\end{figure}\\
-Dieser Vorgang wird nun eine bestimmte Anzahl mal oder solange bis keine "Anderung mehr vorliegt durchgespielt.\\
-Dabei ist klar, dass die Qualit"at der so gefunden L"osung sowohl von der Startkombination $\vec{x}_0$, als auch von der Bestimmung der Nachbarschaft $V(\vec{x})$ abh"angt. Gleichzeitig ist die Gefahr gross, in einem lokalen Minimum der Zielfunktion h"angen zu bleiben (siehe Abb. \ref{localsearch}).
+\end{figure}
+
+Dieser Vorgang wird nun eine bestimmte Anzahl mal oder solange bis keine
+"Anderung mehr vorliegt durchgespielt.
+
+Dabei ist klar, dass die Qualit"at der so gefunden L"osung sowohl
+von der Startkombination $\vec{x}_0$, als auch von der Bestimmung der
+Nachbarschaft $V(\vec{x})$ abh"angt. Gleichzeitig ist die Gefahr gross,
+in einem lokalen Minimum der Zielfunktion h"angen zu bleiben (siehe
+Abb. \ref{localsearch}).
 \begin{figure}[ht!]
 \usetikzlibrary{decorations.pathreplacing} 
 \usetikzlibrary{calc}
@@ -601,12 +634,27 @@ Um die Abk"uhlung zu simulieren wird folglich ein weiterer Parameter der Tempera
 %\end{description}
 
 \section{Erweiterungen}
-	Der Simulated Annealing Algorithmus ist die Grundlage mehrerer Algorithmen. Der bekannteste darunter d"urfte der Toleranzschwellen-Algorithmus sein.\\
-W"ahrend beim Simulated Annealing eine ung"unstige Parameterkombination mit einer gewissen Wahrscheinlichkeit und eine bessere Parameterkombination immer akzeptiert wird, wird beim Toleranzschwellen-Verfahren (Treshholding Accept) jede Konfiguration akzeptiert, bei der die "Anderung unterhalb eines Schwellenwertes liegt. Das heisst eine akzeptierte Kombination muss entweder besser sein als die Alte, oder darf maximal bis zu einem bestimmten Schwellwert "uber der alten Kombination liegen. Dadurch entf"allt die Abfrage ob die neue Kombination besser ist als die alte, da die Differenz $\Delta f$ immer unter der Toleranzschwelle liegen muss.\\
-Es konnte in verschiedenen Versuchsreihen gezeigt werden, dass das Toleranzschwellen-Verfahren meist bessere L"osungen errechnet als das Simulated Annealing und gleichzeitig weniger Zeit ben"otigt.
+Der Simulated Annealing Algorithmus ist die Grundlage
+mehrerer Algorithmen. Der bekannteste darunter d"urfte der
+Toleranzschwellen-Algorithmus sein.
+
+W"ahrend beim Simulated Annealing eine ung"unstige
+Parameterkombination mit einer gewissen Wahrscheinlichkeit und
+eine bessere Parameterkombination immer akzeptiert wird, wird beim
+Toleranzschwellen-Verfahren (Treshholding Accept) jede Konfiguration
+akzeptiert, bei der die "Anderung unterhalb eines Schwellenwertes
+liegt. Das heisst eine akzeptierte Kombination muss entweder besser
+sein als die Alte, oder darf maximal bis zu einem bestimmten Schwellwert
+"uber der alten Kombination liegen. Dadurch entf"allt die Abfrage ob die
+neue Kombination besser ist als die alte, da die Differenz $\Delta f$
+immer unter der Toleranzschwelle liegen muss.
+
+Es konnte in verschiedenen Versuchsreihen gezeigt werden, dass das
+Toleranzschwellen-Verfahren meist bessere L"osungen errechnet als das
+Simulated Annealing und gleichzeitig weniger Zeit ben"otigt.
 
 \section{Sourcefiles}
-	\begin{description}
-		\item [Code:] \url{https://github.com/RGassmann/Simulated-Annealing}
-		\item [Video:] \url{http://www.youtube.com/watch?v=iaq_Fpr4KZc}
-	\end{description}
+\begin{description}
+	\item [Code:] \url{https://github.com/RGassmann/Simulated-Annealing}
+	\item [Video:] \url{http://www.youtube.com/watch?v=iaq_Fpr4KZc}
+\end{description}

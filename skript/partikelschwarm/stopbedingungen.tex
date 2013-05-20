@@ -1,0 +1,75 @@
+\section{Abbruchkriterien}
+
+Da der Algorithmus theoretisch unendlich lange laufen kann, definiert
+man zu Beginn Abbruchkriterien, die den Algorithmus beenden.
+Die Wahl der Abbruchkriterien kann einen bedeutenden Einfluss darauf
+haben, wie lange er l"auft und ob er lokale oder globale Extremastellen
+findet.
+
+\subsection{Art der Abbruchkriterien}
+\index{Abbruchkriterien}
+
+\subsubsection{Maximale Anzahl Iterationen}
+Dies ist die einfachste Art, den Algorithmus zu beenden. Es bietet
+Vorteile, wie z.B. dass man von Anfang an weiss, wie lange der Algorithmus
+ungef"ahr dauern wird und dass es einfach zu implementieren ist, da man
+sich keine Gedanken um den Wert des Ergebnisses machen muss.
+
+Es gibt aber auch einen klaren Nachteil: Man muss wissen wie lange der
+Algorithmus laufen muss, um das gew"unschte Ziel zu erreichen. Es kann
+sonst passieren, dass man den Algorithmus abbricht, wenn er gerade bei
+einer lokalen Extremastelle ist oder sogar noch fr"uher. Man hat bei
+diesem Abbruchkriterium keinen Einfluss auf die Qualit"at des Resultats,
+sondern nur auf die Zeit bis dieses gefunden wird.
+
+\subsubsection{Schwellwert f"ur den global besten Fitnesswert}
+Mit diesem Abbruchkriterium legt man zu Beginn fest, welchen Fitnesswert
+man erreichen m"ochte und l"asst den Algorithmus solange laufen, bis
+dieser erreicht ist.
+
+Das Problem bei dieser Art von Abbruchkriterium ist, dass man keine
+Ahnung hat ob und wann der Algorithmus beendet wird. Es kann sein, das
+man einen Fitnesswert vorgibt, der gar nicht erst erreicht werden kann
+und der Algorithmus unendlich lange nach diesem Wert sucht. Sollte es
+kein Extrema geben l"auft er ebenfalls unendlich lange. Man muss also
+sicher stellen, das der Algorithmus noch ein weiteres Abbruchkriterium
+besitzt, da er sonst unendlich lange laufen kann.
+
+\subsubsection{Schwellwert f"ur die minimale Ver"anderung der Funktionswerte}
+Mit diesem Abbruchkriterium legt man fest, wie sehr sich die
+Funktionswerte bei jedem Durchgang ver"andern m"ussen. "Andern sich die
+Funktionswerte weniger als vorgegeben, wird der Algorithmus beendet. Man
+ist nun in unmittelbarer N"ahe eines Extremas und hat das gew"unschte
+Resultat erreicht. Der Vorteil gegen"uber dem Abbruchkriterium mit
+Schwellwert f"ur den Fitnesswert ist, dass man hier nicht angeben muss,
+wie gut ein Ergebnis sein soll und somit kann auch ein Extrema gefunden
+werden, dass schlechter ist als erwartet. 
+
+Auch hier beseht die Gefahr, dass es sehr lange dauert bis der Algorithmus
+beendet wird. Man kann in der Regel nicht sagen, wie lang er laufen
+wird und sollte es kein globales Extrema geben, beseht die Gefahr,
+das er endlos l"auft.
+
+\subsubsection{Schwellwert f"ur den minimalen Bewegungsbereich}
+In diesem Abbruchkriterium ist der minimale Bewegungsbereich
+vorgegeben. Bewegen sich die Partikel nur noch innerhalb des Bereichs,
+wird der Prozess beendet. Man kann davon ausgehen, das sich innerhalb
+des Bereichs auch das Extrema befindet und man einen gen"ugend guten
+Fitnesswert erreicht hat. Mit diesem Kriterium kann analog zu oben
+ebenfalls ein Extrema gefunden werden, welches schlechter ist als
+erwartet.
+
+Bei diesem Abbruchkriterium ist ebenfalls zu beachten, dass er nur
+abbricht, wenn ein Extrema vorhanden ist. Sollte es keines geben, l"auft
+er endlos.
+
+\subsection{Wahl der Abbruchkriterien}
+Die Wahl der Abbruchkriterien ist sehr wichtig, wenn man mit der
+Partikelschwarm-Optimierung etwas Sinnvolles erreichen will. Man muss
+festlegen, ob die Zeit der Berechnung oder die Qualit"at des Resultats
+wichtiger sind. Ist die Zeit das Ausschlaggebende gibt man die maximale
+Anzahl Iterationen vor. Hat man gen"ugend Zeit zum berechnen, gibt
+man nebst einer maximalen Anzahl Iterationen noch eines der anderen
+Kriterien vor und kann so mit der Anzahl Iterationen die maximale Zeit
+steuern und mit dem anderen Kriterium die Qualit"at.
+

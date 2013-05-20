@@ -1,0 +1,33 @@
+\resizebox{1\textwidth}{!}{
+\providecommand{\highlight}{white}
+\begin{tikzpicture}[node distance = 1.7cm,every node/.style={rectangle,fill=white},
+  block/.style={draw,align=center},
+  highlight/.style={draw,fill=\highlight},
+  line/.style = {draw,-latex'}
+]
+
+\node (start) [block] {N+1 Startpunkte $x_i$ w"ahlen (Simplex bilden)};
+
+\node (a1) [block, below of=start] { $y_i = f(x_i)$ berechnen};
+
+\node (a2) [block, below of=a1] { Bestes ($y_{min}$) und schlechtestes ($y_{max}$) $y_i$ bestimmen};
+
+\node (a3) [block, below of=a2,text width=5cm]{Abbruchbedingung erf"ullt?};
+
+\node (ende) [block, below of=a3] {Ende};
+
+\node (a4) [highlight, left of=a3, node distance=6cm] {Neuer Simplex bilden};
+
+
+
+\path[line] (start) -- (a1);
+\path[line] (a1) -> (a2);
+\path[line] (a2) -> (a3);
+
+\path[line] (a3) -> node{ja} (ende);
+\path[line] (a3) -> node{nein} (a4);
+
+\path[line] (a4)  |-  (a1.west);
+
+\end{tikzpicture}
+}

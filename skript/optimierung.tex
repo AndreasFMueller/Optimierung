@@ -23,9 +23,12 @@
 \usepackage{array}
 \usepackage{hyperref}
 \usepackage{tikz}
-\usetikzlibrary{arrows,shapes,snakes}
+\usetikzlibrary{arrows,decorations.pathmorphing,positioning,fit,petri}
+\usetikzlibrary{calc,intersections,through,backgrounds,graphs}
+\usetikzlibrary{patterns,decorations.pathreplacing}
+\usetikzlibrary{shapes,snakes,trees}
 \usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
 \usepackage{listings}
 \lstdefinestyle{Matlab}{
   numbers=left,
@@ -44,6 +47,13 @@
 }
 \usepackage{caption}
 \usepackage{subcaption}
+%\usepackage{cite}
+\usepackage{standalone}
+\usepackage[sorting=none,backend=bibtex]{biblatex}
+\addbibresource{partikelschwarm/literature.bib}
+\addbibresource{downhill/bib.bib}
+\addbibresource{innerepunkte/bib.bib}
+\addbibresource{gps/bib.bib}
 \makeindex
 \begin{document}
 \pagestyle{fancy}
@@ -61,12 +71,24 @@ Optimierung}
 \HRule
 \begin{flushright}
 \vspace{30pt}
-\LARGE
-Andreas M"uller
+\Large
+Dorian Amiet,
+Hannes Badertscher,
+Gregor Dengler,
+Roman Gassmann,
+Lukas Loser,
+Selina Malacarne,
+Tabea M\'endez,
+Andreas M"uller,
+Raphael Nestler,
+Christian Schmid,
+Dario Wikart
 \end{flushright}
+
+
 \vspace*{\stretch{2}}
 \begin{center}
-Hochschule f"ur Technik, Rapperswil, 2012
+Hochschule f"ur Technik, Rapperswil, 2013
 \end{center}
 \end{titlepage}
 \hypersetup{
@@ -111,18 +133,25 @@ Hochschule f"ur Technik, Rapperswil, 2012
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{annahme}{Annahme}[chapter]
 \mainmatter
-\part{Grundlegende Optimierungsverfahren}
+\input vorwort.tex
+\part{Grundlegende klassische Optimierungsverfahren}
 \input linsys.tex
 \input uebersicht.tex
 \input lp.tex
 \input nlp.tex
 \input variation.tex
 \part{Weiterf"uhrende Themen zur Optimierung}
+\lhead{Weiterf"uhrende Themen}
+\def\chapterauthor#1{{\large #1}\bigskip\bigskip}
 \input add/simpleximpl.tex
 \input innerepunkte/innerepunkte.tex
 \input innerepunkte.tex
 \input gps/gps.tex
+\input partikelschwarm/partikelschwarm.tex
 \input sa/sa.tex
 \input downhill/downhill.tex
+%\input descent
+%\input light
+%\input genetic
 \input optimierung.ind
 \end{document}
