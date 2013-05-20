@@ -22,6 +22,10 @@
 \usepackage{makeidx}
 \usepackage{array}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
 \makeindex
 \begin{document}
 \pagestyle{fancy}
@@ -89,12 +93,17 @@ Hochschule f"ur Technik, Rapperswil, 2012
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{annahme}{Annahme}[chapter]
 \mainmatter
+\part{Grundlegende Optimierungsverfahren}
 \input linsys.tex
 \input uebersicht.tex
 \input lp.tex
 \input nlp.tex
 \input variation.tex
-\appendix
+\part{Weiterf"uhrende Themen zur Optimierung}
 \input add/simpleximpl.tex
+\input innerepunkte/innerepunkte.tex
+\input innerepunkte.tex
+\input gps/gps.tex
+\input sa/sa.tex
 \input optimierung.ind
 \end{document}
