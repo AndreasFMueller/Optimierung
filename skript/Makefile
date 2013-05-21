@@ -34,7 +34,7 @@ TEXFILES = lp.tex uebersicht.tex nlp.tex variation.tex \
 
 optimierung.pdf:	optimierung.tex $(TEXFILES) optimierung.ind \
 	optimierung1-blx.bbl optimierung2-blx.bbl optimierung3-blx.bbl \
-	optimierung4-blx.bbl
+	optimierung4-blx.bbl optimierung5-blx.bbl
 	pdflatex optimierung.tex
 
 optimierung1-blx.bbl: optimierung1-blx.aux
@@ -48,6 +48,9 @@ optimierung3-blx.bbl: optimierung3-blx.aux
 
 optimierung4-blx.bbl: optimierung4-blx.aux
 	bibtex optimierung4-blx
+
+optimierung5-blx.bbl: optimierung5-blx.aux
+	bibtex optimierung5-blx
 
 optimierung.ind:	optimierung.tex $(TEXFILES)
 	touch optimierung.ind
