@@ -1,0 +1,68 @@
+
+Satellitendaten:
+                 x-Position:    y-Position:    z-Position:          Zeit:
+Satellit  1:      140.437805     119.069055     107.117230     132.943536
+Satellit  2:     -137.272863     150.894450      70.498816      89.496683
+Satellit  3:       70.676459     194.743343      58.751243     117.431595
+Satellit  4:      118.105842       1.154701     180.045514     129.680875
+Satellit  5:      -48.549106    -107.770892     177.200559     102.646597
+Satellit  6:       95.654603     189.593081     -23.865221     102.826361
+Satellit  7:      -45.293769     190.794314      89.518567     108.923496
+
+Modellabmessungen: 
+Erdradius:       50
+Satelitenradius: 215
+
+Unsere exakte Position: 
+x: 21.213203
+y: 21.213203
+z: 40.000000
+t: 300.000000
+
+Startpunkt 1:
+delta: 2676.877282
+delta: 713225.408101
+delta: 45675.084574
+delta: 22042.547817
+delta: 11719.821535
+delta: 7082.785437
+delta: 2616.056252
+delta: 31.221242
+delta: 0.000112
+
+delta: 3.997329
+delta: 0.000006
+
+delta: 3.997329
+delta: 0.000006
+
+delta: 4.007597
+delta: 0.000010
+
+delta: 4.007597
+delta: 0.000010
+
+Startpunkt 2:
+delta: 9007.782022
+delta: 20050.329736
+delta: 2143.852579
+delta: 1238.574059
+delta: 43.903435
+delta: 0.778240
+delta: 0.000208
+
+Erfolgreicher Startpunkt: 2
+x: 28.867513
+y: 28.867513
+z: 28.867513
+t: 400.000000
+
+Berechnete Position: 
+x: 23.015293
+y: 18.086555
+z: 41.134807
+t: 300.479554
+
+Radius:  50.486627
+Zielfunktion: 712696.508612
+Abweichung vom exakten Punkt: 3.783020

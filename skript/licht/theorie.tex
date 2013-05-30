@@ -1,0 +1,89 @@
+\newtheorem{postulat}{Postulat}
+
+\section{Einleitung}
+Wie in den vorangegangenen Kapitel oft gesehen, stehen f"ur
+Optimierungsprobleme verschiedene Programme wie z.B. der Symplex
+Algorithmus zur Verf"ugung. Dabei wird ein Maxima oder Minima gesucht. Bei
+der Variationsrechnung wird wie in \chapref{chapter-variationsrechnung}
+beschrieben, eine Funktion gesucht, welche das Optimierungsproblem
+l"ost. F"ur die Variationsrechnung steht anstelle eines mathematischen
+Programms die Euler-Lagrange-Gleichung zur Verf"ugung. Wie n"utzlich und
+m"achtig sie ist, soll anhand von Beispielen in folgenden Seiten etwas
+aufgezeigt werden.
+\section{Einleitende Theorie, Fermatsches Prinzip}
+\index{Fermatsches Prinzip}
+\index{Fermat, Pierre de}
+Im Jahre 1660 fand Pierre de Fermat, ein Franz"osischer Mathematiker,
+dass  nach ihm benannte Fermatsche Prinzip heraus. 
+Dieses lautet wie folgt:
+\begin{postulat}
+	Der Weg, den das Licht nimmt, 
+	um von einem Punkt zu einem anderen zu gelangen, 
+	ist stets so, dass die ben"otigte Zeit minimal ist.
+	\cite{DefinitionFermat}
+	\index{Fermatsches Prinzip 1}
+\end{postulat}
+\index{Brechungsindex}
+Die \eqref{fermat} zeigt das Fermatsche Prinzip bei einem Brechungsindex
+$n$, 
+der Lichtgeschwindigkeit $c$, dem Weg $s$ und dem Ort $r$. Die Zeit muss
+\index{Lichtgeschwindigkeit}
+minimal sein.
+\begin{align}
+	t= \int\limits_{s_1}^{s_2} \frac{n(r)}{c} ds = \frac{1}{c} \int\limits_{s_1}^{s_2} n(r) ds
+	\label{fermat}
+\end{align}
+Wenn die Zeit minimal ist, wird bei kleinen Abweichungen vom Weg die
+Zeit nicht viel gr"osser. 
+Deshalb kann die oben stehende Definition auch wie folgt geschrieben werden:
+\begin{postulat}
+Der Weg, den das Licht nimmt,  um von einem Punkt zu einem anderen zu
+gelangen, 
+ist stets so, dass die Zeit, die das Licht ben"otigt, invariant gegen
+kleine "Anderungen des Weges ist.  \cite{DefinitionFermat}
+\index{optischer Weg}
+\index{Fermatsches Prinzip 2}
+\end{postulat}
+Genau diese Invarianz gegen kleine "Anderungen des Weges
+wurde in \chapref{chapter-variationsrechnung} benutzt um die
+Euler-Lagrange-Gleichung abzuleiten. Die Herleitung erfolge indem der
+Weg etwas ''verwackelt'' wurde und danach die Behauptet gemacht wurde,
+dass sich das Integral nicht "andert.
+\subsection{Formulierung mit dem optischen Weg}
+Der optische Weg $L$  eines Pfades $s$ kann in einem homogenen Material 
+mit dem Brechungsindex $n$ als Produkt von $n$ und $s$ berechnet werden.
+Bei einem inhomogenen Material ergibt sich f"ur den optischen Pfad die
+allgemeine \eqref{optischweg}.
+\begin{align}
+	L(s) = \int\limits_{s_1}^{s_2} n(r) \,d\vec s 
+	\label{optischweg}
+\end{align}
+Da der zur"uckgelegte Weg des Lichtstrahles direkt proportional zur Zeit
+ist, $s = c t$,
+und das Licht sich in optisch dichteren Materialien langsamer bewegt,
+kann das Fermatsche Gesetz umformuliert werden \cite{DefinitionFermat}. 
+\begin{postulat}
+Der Weg, den das Licht nimmt, um von einem Punkt zu einem anderen zu
+gelangen, ist stets so, dass der optische Weg minimal ist.
+\index{Fermatsches Prinzip 2}
+\end{postulat}
+\subsection{Erkl"arung}
+Viele Leute haben ein Problem mit dem Fermatschen Prinzip. 
+Der Grund ist ganz einfach. 
+\index{Strahlenoptik}
+Bei der ``klassischen'' Strahlenoptik geht das Licht einen bestimmten Weg, 
+sieht einen Spiegel oder eine Oberfl"ache, bricht sich dort nach einem 
+physikalischen Gesetz und geht dann weiter.
+Der philosophische Ansatz vom Fermatschen Prinzip ist anders. 
+Es wird davon ausgegangen, dass das Licht bevor es einen Weg einschl"agt, 
+weiss wohin es muss. Es weiss, wo ein Spiegel oder eine Oberfl"ache kommt und 
+nimmt dem entsprechend von Anfang an den Weg mit der k"urzesten Zeit.
+Aber woher weiss das Licht, dass sein eingeschlagener Weg der korrekte ist?
+Kann man davon ausgehen, dass es die n"ahere Umgebung anschaut und diese vergleicht?
+Ja, genau davon kann man ausgehen.
+Eine m"ogliche Erkl"arung mit Hilfe von Elektromagnetischen Wellen ist,
+dass sich das Licht in alle Richtungen ausbreitet. 
+Jedoch interferieren die meisten dieser Wellen destruktiv, 
+ausser die Welle, welche den Weg mit der k"urzester Zeit genommen hat
+wird nicht ausgel"oscht.
+\index{Interferenz}

@@ -23,18 +23,22 @@ PARTIKELSCHWARMFILES = \
 	partikelschwarm/stopbedingungen.tex partikelschwarm/topologien.tex \
 	partikelschwarm/literature.bib
 
+LICHTFILES = \
+	licht/beispiel.tex licht/fatamorgana.tex licht/theorie.tex
+
 TEXFILES = lp.tex uebersicht.tex nlp.tex variation.tex \
 	add/simpleximpl.tex \
 	innerepunkte/innerepunkte.tex innerepunkte/bib.bib \
 	innerepunkte.tex \
 	sa/sa.tex \
 	gps/gps.tex gps/bib.bib \
+	licht/licht.tex licht/licht.bib $(LICHTFILES) \
 	$(PARTIKELSCHWARMFILES) \
 	$(DOWNHILLFILES)
 
 optimierung.pdf:	optimierung.tex $(TEXFILES) optimierung.ind \
 	optimierung1-blx.bbl optimierung2-blx.bbl optimierung3-blx.bbl \
-	optimierung4-blx.bbl optimierung5-blx.bbl
+	optimierung4-blx.bbl optimierung5-blx.bbl optimierung6-blx.bbl
 	pdflatex optimierung.tex
 
 optimierung1-blx.bbl: optimierung1-blx.aux
@@ -51,6 +55,9 @@ optimierung4-blx.bbl: optimierung4-blx.aux
 
 optimierung5-blx.bbl: optimierung5-blx.aux
 	bibtex optimierung5-blx
+
+optimierung6-blx.bbl: optimierung6-blx.aux
+	bibtex optimierung6-blx
 
 optimierung.ind:	optimierung.tex $(TEXFILES)
 	touch optimierung.ind

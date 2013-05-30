@@ -279,19 +279,36 @@ Die L"osung dieses Variationsproblems f"uhrt auf die sogenannte
 Spline-Interpolation, die zum Beispiel in der Computer-Graphik oder
 in der Wegplanung f"ur Roboter beliebt sind.
 
-\section{Euler-Gleichungen}
-\rhead{Euler-Gleichungen}
-Es gibt kaum Verfahren, ein allgemeines Variationsproblem zu l"osen.
+\section{Euler-Lagrange-Gleichungen}
+\rhead{Euler-Lagrange-Gleichungen}
+Es gibt kaum Verfahren, ein allgemeines Variationsproblem direkt zu l"osen.
 Aber es gibt ein allgemeines Vorgehen, wie man ein Variationsproblem
 in eine Differentialgleichung umwandeln kann. F"ur Differentialgleichungen
 steht ja eine grosses Arsenal von L"osungstechniken.
-\subsection{Variation}
-Das Maximum einer Funktion findet man, indem man diejenigen
-Punkte sucht, in deren unmittelbarer Umgebung die Funktion kleinere
-Werte annimmt. Erkennen kann ma solche Punkte daran, dass die Ableitung
-der Funktion dort verschwindet.
 
-"Ubertragen auf das Variationsproblem muss man also Funktionen 
+Zun"achst sei daran erinnert, dass man Kandidaten f"ur die Extrema einer
+Funktion $f(x)$ als Nullstellen der Ableitung $f'(x)$ finden kann.
+Das Extremum befindet sich an denjenigen Stellen, bei denen 
+eine kleine "Anderung von $x$ sich kaum auf den Funktionswert
+$f(x)$ auswirkt.
+Bei Funktionen mehrerer Variablen "ubernahm der Gradient die gleiche
+Funktion: Kandidaten f"ur die Extrema waren bei den Nullstellen
+von $\operatorname{grad}f(x)$ zu suchen, also dort, wo eine kleine
+"Anderung von $x$ sich nicht auf den Funktionswert $f(x)$ auswirkt.
+
+In einem Variationsproblem wird jetzt aber eine Funktion $x(t)$ gesucht,
+welche das Variationsintegral m"oglichst klein macht. Wir suchen
+nach einer Funktion, so dass kleine "Anderungen der Funktion sich
+nicht auf den Wert des Integrals auswirken. Dabei kann die
+Funktion f"ur jeden Wert der unabh"angigen Variablen separat
+modifiziert werden, es stehen als ungleich viel mehr 
+M"oglichkeiten zur Verf"ugung. Wir suchen sozusagen einen 
+verallgemeinerten ``Gradienten'' in einem unendlichdimensionalen
+Funktionenraum.
+
+
+\subsection{Variation}
+Man muss also Funktionen 
 suchen, die der L"osungsfunktion $x(t)$ benachbart sind.
 Eine benachbarte Funktion kann zum Beispiel von der Form
 $x(t)+s\delta(t)$ sein, wobei wir uns die Funktion $\delta(t)$
@@ -328,7 +345,7 @@ Auf den ersten Blick sieht das noch nicht nach einer Vereinfachung aus,
 doch jetzt k"onnen wir die freie Wahlm"oglichkeit von $\delta$ ins
 Spiel bringen.
 
-\subsection{Eulergleichung zu einem Variationsproblem}
+\subsection{Euler-Lagrange-Gleichung zu einem Variationsproblem}
 F"ur ein Variationsproblem der Form (\ref{variations-funktional})
 l"asst sich die Variation relativ einfach durchf"uhren.
 \begin{align}
@@ -384,8 +401,16 @@ Also muss die L"osungsfunktion die Differentialgleichung
 0
 \label{variation:euler-gleichung}
 \end{equation}
-erf"ullen. Diese Differentialgleichung heisst die {\it Euler-Gleichung}
+erf"ullen. Diese Differentialgleichung heisst die {\it Euler-Lagrange-Gleichung}
 des Variationsproblems.
+
+Der Ausdruck
+\begin{equation}
+\frac{d}{dt}\frac{\partial F}{\partial v}-\frac{\partial F}{\partial x}
+\label{variation:gradient}
+\end{equation}
+"ubernimmt die Funktion, die der Gradient bei der Bestimmung von
+Extrema von Funktionen mehrere Variablen hatte.
 
 \subsection{Variationsproblem mit Nebenbedingungen\label{variation:section-variationsproblem-nebenbedingungen}}
 Das isoperimetrische Problem verlangt ein Funktional zu maximieren,
@@ -409,6 +434,15 @@ der beiden Funktionale proportional sind. Es muss also eine Zahl
 $\lambda$ geben mit
 \[
 \delta I_F(x)=\lambda \delta I_G(x)
+\]
+Oder, unter Verwendung der Idee, dass der Ausdruck
+(\ref{variation:gradient}) die Bedeutung des Gradienten hat:
+\[
+\frac{d}{dt}\frac{\partial F}{\partial v}-\frac{\partial F}{\partial x}
+=
+\lambda\biggl(
+\frac{d}{dt}\frac{\partial G}{\partial v}-\frac{\partial G}{\partial x}
+\biggr)
 \]
 Die gleiche Rechnung, die zu 
 (\ref{nlp:nebenbedingungen:mehrereariable})
@@ -446,7 +480,7 @@ erf"ullt.
 F"ur die k"urzeste Verbindung haben wir das Variationsprinzip
 (\ref{kuerzeste-verbindung-variationsprinzip}) gefunden.
 Die Funktion $F(t,x,v)=\sqrt{1+v^2}$ enth"alt die Variable
-$x$ gar nicht, so dass die Eulergleichung nur einen Term
+$x$ gar nicht, so dass die Euler-Lagrange-Gleichung nur einen Term
 enthalten:
 \begin{align}
 \frac{d}{dt}\frac{\partial L}{\partial v}
@@ -470,7 +504,7 @@ Nebenbedingungen.
 Nach Abschnitt 
 \ref{variation:section-variationsproblem-nebenbedingungen}
 muss es zu einer L"osung des Problems eine Zahl $\lambda$
-geben, so dass die Kurve $x(t)$ die Eulergleichung f"ur die Funktion
+geben, so dass die Kurve $x(t)$ die Euler-Lagrange-Gleichung f"ur die Funktion
 \[
 F(t,x,v)-\lambda G(t,x,v)
 \]
@@ -479,14 +513,14 @@ erf"ullt. Aus
 F(t,x,v) &= x&
 G(t,x,v) &= \sqrt{1+v^2}
 \end{align*}
-kann man die Eulergleichung f"ur die Funktion $H=F+\lambda G$
+kann man die Euler-Lagrange-Gleichung f"ur die Funktion $H=F+\lambda G$
 ableiten; zun"achst die partiellen Ableitungen von $H$
 \begin{align*}
 \frac{\partial H}{\partial x}&=1
 &
 \frac{\partial H}{\partial v}&=-\frac{\lambda v}{\sqrt{1+v^2}}
 \end{align*}
-und dann die Euler-Gleichungen
+und dann die Euler-Lagrange-Gleichungen
 \begin{align*}
 \frac{d}{dx} \frac{\lambda f'(x)}{\sqrt{1+f'(x)^2}}-1&=0
 \\
@@ -528,7 +562,7 @@ ist der Radius des Kreises.
 
 
 \subsubsection{Lagrange-Mechanik}
-Die Eulergleichungen zur Variation der Lagrange-Funktion
+Die Euler-Lagrange-Gleichungen zur Variation der Lagrange-Funktion
 (\ref{lagrange-funktion}) sind:
 \begin{align}
 \frac{d}{dt}\frac{\partial L}{\partial v}&=\frac{d}{dt}mv
@@ -558,8 +592,8 @@ I(g)=
 \label{variation:spline-funktional}
 \end{equation}
 welches nicht von der Art (\ref{variations-funktional}) ist.
-Es ist daher auch nicht m"oglich, die Euler-Gleichung anzuwenden.
-Aber die Methode der Variation, mit der die Euler-Gleichung gefunden
+Es ist daher auch nicht m"oglich, die Euler-Lagrange-Gleichung anzuwenden.
+Aber die Methode der Variation, mit der die Euler-Lagrange-Gleichung gefunden
 wurde, ist auch in diesem Beispiel anwendbar, wir m"ussen die gleiche
 Ableitung nochmals durchf"uhren.
 Wir berechnen also die Variation
@@ -602,7 +636,7 @@ g^{(4)}(x)=0
 \end{equation}
 sein muss.
 Die Gleichung 
-(\ref{variation:spline-euler}) ist die Euler-Gleichung f"ur das Funktional
+(\ref{variation:spline-euler}) ist die Euler-Lagrange-Gleichung f"ur das Funktional
 (\ref{variation:spline-funktional}).
 Eine Funktion, deren vierte Ableitung verschwindet, ist notwendigerweise in
 kubisches Polynom.
