@@ -3,10 +3,19 @@ Das Gradientenverfahren ist ein Verfahren, welches Minimierungsprobleme
 auf einfache Weise l"ost. Dieses Verfahren funktioniert bis in den
 $n$-dimensionalen Bereich. Einzige Bedingung ist, dass die Zielfunktion
 "uberall differenzierbar ist.
+
+Das Verfahren berechnet eine Folge $x_a$ von Ann"aherungen
+an des Minium, wobei gilt 
 \begin{equation}
-f(x_{a+1})=f(x_a) - s \cdot \operatorname{grad}(f(x_a))
+x_{a+1}=x_a - s \cdot \operatorname{grad}(f(x_a))
 \end{equation}
-Von einem beliebigen Punkt im Zielgebiet schreitet man so lange in die
+Von einem beliebigen Punkt im Zielgebiet schreitet man so lange
+entgegen\footnote{Der Gradient zeigt in Richtung zunehmender Werte von
+$f$, da wir ein Minimum suchen, m"ussen wir $x$ in entgegengesetzter
+Richtung ver"andern.}
+der 
 Richtungen der jeweiligen Gradienten bis man keine numerische Verbesserung
 mehr erzielt \cite{descent:wiki}, \cite{descent:geigerkanzow}.
+Der Schritt ist um so gr"osser, je gr"osser der Gradient von $f$ 
+ist, und je gr"osser die {\it Schrittweite} $s$ ist.
 

@@ -9,9 +9,8 @@
 \chapterauthor{Roman Gassmann}
 
 Solange ein Optimierungsproblem gen"ugend einfach und von tiefer
-Dimension ist,
-k"onnen analytische Methoden, welche zu optimalen Parameter f"uhren,
-angewendet werden.
+Dimension ist, k"onnen optimalen Parameter mit
+analytische Methoden gefunden werden.
 
 Dies ist aber nicht mehr der Fall wenn die Komplexit"at und die Dimension
 des Problems zu gross werden.
@@ -22,15 +21,17 @@ Minimum/Maximum zu finden.
 	
 \section{Local Search Method}
 Wie bei allen Optimierungsproblemen gilt es die Zielfunktion
-$f(\vec{x})$ zu minimieren. Dazu wird bei der Lokalen Suchstrategie
+$f(\vec{x})$ zu minimieren. Dazu wird bei der lokalen Suchstrategie
 in der Nachbarschaft $V(\vec{x}_n)$ von der L"osung $\vec{x}_n$
 zuf"allig eine neue Parameterkombination
 \[
 \vec{x}_{n+1} =
 V(\vec{x}_n) = \vec{x}_n + \vec{\gamma} \cdot v \qquad \text{mit }
 \qquad
-\begin{aligned}\vec{\gamma}&= \text{Vektor mit Zufallsvariablen}\\
-& = \text{Umgebungsdistanz}\end{aligned}
+\begin{aligned}
+\vec{\gamma}&= \text{Vektor mit Zufallsvariablen}\\
+v& = \text{Umgebungsdistanz}
+\end{aligned}
 \]
 gew"ahlt. Von dieser Kombination
 wird der Funktionswert $f(\vec{x}_{n+1})$ berechnet. Ist dabei
@@ -80,7 +81,7 @@ eine zuf"allige Kombination in der Nachbarschaft $V(\vec{x}_n)$ gew"ahlt.
 $V(x_{n})$};
 
  \draw[-latex,thick](1,-0.5)node[below]
-        {$\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})< 0 \Rightarrow \vec{x}_{n+1} \text{ Akzeptiert}$} to[out=90,in=180] (\n-2*\v/3,1.1);
+        {$\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})< 0 \Rightarrow \vec{x}_{n+1} \text{ akzeptiert}$} to[out=90,in=180] (\n-2*\v/3,1.1);
 
 \end{tikzpicture}
 \caption{Lokale Suchstrategie}
@@ -190,7 +191,7 @@ $V(x_{n+2})$};
 \end{scope}
 
 \end{tikzpicture}
-\caption{Ablauf der Lokalen Suchstrategie}
+\caption{Ablauf der lokalen Suchstrategie}
 \label{localsearch}
 \end{figure}
 Es w"are also sinnvoll, tempor"ar auch schlechtere Parameterkombinationen zu zulassen, damit lokale Minima wieder verlassen werden k"onnen.
@@ -202,7 +203,7 @@ Nicholas Metropolis publizierte 1953 den Metropolisalgorithmus, welcher
 sich genau diesem Problem annimmt. Er simuliert das Erreichen des
 thermodynamischen Gleichgewichts eines Systems mit der Temperatur $T$.
 
-Dabei wird wiederum wie bei der Lokalen Suchstrategie
+Dabei wird wiederum wie bei der lokalen Suchstrategie
 vorgegangen. Ausgehend von einem Punkt (Parameterkombination)
 $\vec{x}_{n}$ wird in dessen Umgebung ein zuf"alliger Punkt
 $\vec{x}_{n+1}$ gew"ahlt und
@@ -210,9 +211,16 @@ $\vec{x}_{n+1}$ gew"ahlt und
 \Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})
 \]
 berechnet.
-Ist $\Delta f < 0$ wird mit $\vec{x}_{n+1}$ fortgefahren, ist hingegen $\Delta f \geq 0$, wird $\vec{x}_{n+1}$ mit der Wahrscheinlichkeit $$ p(\Delta f) = {\rm e}^{-\frac{\Delta f}{k_{\rm B} T}}\quad \text{mit } \begin{matrix}k_{\rm B} = \text{Bolzmann-Konstante}\\
-T = \text{Temperatur des Systems}
-\end{matrix}$$ trotzdem als neue L"osung akzeptiert.\\
+Ist $\Delta f < 0$ wird mit $\vec{x}_{n+1}$ fortgefahren,
+ist hingegen $\Delta f \geq 0$, wird $\vec{x}_{n+1}$
+mit der Wahrscheinlichkeit
+\[
+p(\Delta f) = {\rm e}^{-\frac{\Delta f}{k_{\rm B} T}}\quad \text{mit }
+\begin{aligned}k_{\rm B}&= \text{Bolzmann-Konstante}\\
+T&= \text{Temperatur des Systems}
+\end{aligned}
+\]
+trotzdem als neue L"osung akzeptiert.\\
 \begin{figure}[ht!]
 \centering
 \usetikzlibrary{decorations.pathreplacing} 
@@ -252,7 +260,7 @@ $V(x_{n})$};
         {$\Delta f = f(\vec{x}_{n+1}) - f(\vec{x}_{n})< 0 \Rightarrow \vec{x}_{n+1} \text{ Akzeptiert}$} to[out=180,in=180] (\n-2*\v/3,1.1);
 
  \draw[-latex,thick](6,3.5)node[left]
-        {$p(\Delta f ) = {\rm e}^{-\frac{\Delta f}{k_{\rm B} T}} \Rightarrow \vec{x}_{n+1} \text{ Akzeptiert}$} to[out=0,in=0] (\n,1.75);
+        {$p(\Delta f ) = {\rm e}^{-\frac{\Delta f}{k_{\rm B} T}} \Rightarrow \vec{x}_{n+1} \text{ akzeptiert}$} to[out=0,in=0] (\n,1.75);
 
 \end{tikzpicture}
 \caption{Grafische Darstellung des Metropoliskriteriums}
@@ -533,15 +541,21 @@ Um die Abk"uhlung zu simulieren wird folglich ein weiterer Parameter der Tempera
 \subsection{Wahl der einzelnen Parameter}
 \begin{description}
 \item [Temperatur $T$] $ $\\
-	Grunds"atzlich kann f"ur ein beliebiges Optimierungsproblem als Initial-Temperatur der Durchschnitt einer Anzahl von zuf"alligen Funktionswerten der Zielfunktion verwendet werden.
+Grunds"atzlich kann f"ur ein beliebiges Optimierungsproblem als
+Initial-Tem\-pe\-ratur der Durchschnitt einer Anzahl von zuf"alligen
+Funktionswerten der Zielfunktion verwendet werden.
 \item [Temperatur Koeffizient $c$] $ $\\
-	Um die Temperatur beeinflussen zu k"onnen wird der Temperaturkoeffizient eingef"uhrt. Dieser ist typischerweise zwischen 0.6 und 0.9.
+Um die Temperatur beeinflussen zu k"onnen wird der Temperaturkoeffizient
+eingef"uhrt. Dieser ist typischerweise zwischen 0.6 und 0.9.
 
 \item [Iterationsschritte bei konstanter Temperatur]$ $\\
-	Definiert die Anzahl Itterationen bevor die Temperatur verringert wird. Typischer Wert im Bereich 50-100.
+Definiert die Anzahl Itterationen bevor die Temperatur verringert wird.
+Typischer Wert im Bereich 50-100.
 
 \item [Umgebungsdistanz $v$]$ $\\
-	Die Umgebungsdistanz $v$ definiert das Gebiet um $\vec{x}_{n}$, in dem das n"achste Parameterset $\vec{x}_{n+1}$ gew"ahlt wird. Dieser Parameter ist stark von der Zielfunktion abh"angig.
+Die Umgebungsdistanz $v$ definiert das Gebiet um $\vec{x}_{n}$,
+in dem das n"achste Parameterset $\vec{x}_{n+1}$ gew"ahlt wird.
+Dieser Parameter ist stark von der Zielfunktion abh"angig.
 \end{description}
 		
 \clearpage
@@ -676,7 +690,7 @@ neue Kombination besser ist als die alte, da die Differenz $\Delta f$
 immer unter der Toleranzschwelle liegen muss.
 
 Es konnte in verschiedenen Versuchsreihen gezeigt werden, dass das
-Toleranzschwellen-Verfahren meist bessere L"osungen errechnet als das
+Toleranz\-schwellen-Verfahren meist bessere L"osungen errechnet als das
 Simulated Annealing und gleichzeitig weniger Zeit ben"otigt.
 
 \section{Sourcefiles}
