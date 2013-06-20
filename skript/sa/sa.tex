@@ -412,7 +412,13 @@ $V(x_{n+3})$};
 Es ist daher zwingend notwendig den Temperaturparameter zu kontrollieren.
 
 \section{Simulated Annealing}
-	Wird beim Metropolisalgorithmus mit einer hohen Temperatur begonnen (damit m"oglichst das gesammte System abgesucht wird) und anschliessend die Temperatur langsam abgesenkt, wird es immer wahrscheinlicher, dass man sich dem Minimum ann"ahert (Siehe Abb. \ref{siman}). Ist dabei die Temperatur von der Simulationszeit abh"angig, wird dieser Algorithmus als simulierte Abk"uhlung (Simulated Annealing) bezeichnet. %(Anzahl Durchl"aufe bei konstanter Temperatur)
+Wird beim Metropolisalgorithmus mit einer hohen Temperatur begonnen
+(damit m"oglichst das gesammte System abgesucht wird) und anschliessend
+die Temperatur langsam abgesenkt, wird es immer wahrscheinlicher, dass
+man sich dem Minimum ann"ahert (Siehe Abb. \ref{siman}). Ist dabei die
+Temperatur von der Simulationszeit abh"angig, wird dieser Algorithmus
+als simulierte Abk"uhlung (Simulated Annealing) bezeichnet.
+%(Anzahl Durchl"aufe bei konstanter Temperatur)
 \begin{figure}[ht!]
 \centering
 \usetikzlibrary{decorations.pathreplacing} 
@@ -549,7 +555,7 @@ Um die Temperatur beeinflussen zu k"onnen wird der Temperaturkoeffizient
 eingef"uhrt. Dieser ist typischerweise zwischen 0.6 und 0.9.
 
 \item [Iterationsschritte bei konstanter Temperatur]$ $\\
-Definiert die Anzahl Itterationen bevor die Temperatur verringert wird.
+Definiert die Anzahl Iterationen bevor die Temperatur verringert wird.
 Typischer Wert im Bereich 50-100.
 
 \item [Umgebungsdistanz $v$]$ $\\
