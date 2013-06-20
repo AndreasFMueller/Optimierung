@@ -4,7 +4,7 @@
 # (c) 2012 Prof Dr Andreas Mueller, Hochschule Rapperswil
 # $Id$
 #
-all:	lp nlp
+all:	lp nlp innerepunkte
 
 lp:	lp.mp
 	TEX=latex mpost lp.mp
@@ -20,3 +20,9 @@ nlp:	nlp.mp
 		mptopdf $${f}; \
 	done
 
+innerepunkte:	innerepunkte.mp
+	TEX=latex mpost innerepunkte.mp
+	for f in innerepunkte.[0-9]*; \
+	do \
+		mptopdf $${f}; \
+	done
