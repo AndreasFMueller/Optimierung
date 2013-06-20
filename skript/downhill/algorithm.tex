@@ -1,23 +1,49 @@
 \section{Der Algorithmus}
 
-Wie in der Einleitung schon erw"ahnt worden ist, arbeitet der Simplex-Downhill Algorithmus ohne Ableitungen.\\
-Warum das funktioniert wird klar, wenn man sich vorstellt, dass das Simplex selber auf der Zielfunktion liegt und sozusagen die Ableitung approximiert. Sucht der Algorithmus ein Minimum, so bewegt er sich nat"urlich abw"arts (downhill), was auch seine Namensgebung erkl"art.
-Der Algorithmus ist ebenfalls in der Lage nach Maxima zu suchen, indem die Zielfunktion einfach invertiert wird.
+Wie in der Einleitung schon erw"ahnt worden ist, arbeitet der Simplex-Downhill
+Algorithmus ohne Ableitungen.
+
+Warum das funktioniert wird klar, wenn man sich vorstellt, dass das
+Simplex selber auf der Zielfunktion liegt und sozusagen die Ableitung
+approximiert. Sucht der Algorithmus ein Minimum, so bewegt er sich
+nat"urlich abw"arts (downhill), was auch seine Namensgebung erkl"art.
+Der Algorithmus ist ebenfalls in der Lage nach Maxima zu suchen, indem
+die Zielfunktion einfach invertiert wird.
 Im Folgenden wird immer davon ausgegangen, dass ein Minimum gesucht wird.
 
 \subsection{Hauptablauf}
-Der Algorithmus besteht aus einer Initialisierung, einer Iterationsschlaufe und einer Abbruchbedingung (siehe \figref{fig:downhillalgo1})
+Der Algorithmus besteht aus einer Initialisierung, einer
+Iterationsschlaufe und einer Abbruchbedingung (siehe
+\figref{fig:downhillalgo1})
 
 \begin{figure}[h]
 \input{downhill/algorithmus1.pgf}
 \caption{"Ubersicht des Algorithmus}
 \label{fig:downhillalgo1}
 \end{figure}
-Zu Beginn wird ein Simplex mit den Ecken $x_i$ gebildet.\\
-Zu den gew"ahlten $x_i$ werden nun die dazu geh"origen $y_i$ der Zielfunktion ausgerechnet.
-Aus den erhaltenen Funktionswerten wird der beste $y_{min}$, der schlechteste $y_{max}$ sowie der Mittelwert ohne $x_{max}$ extrahiert.\\
-Diese werden f"ur die Abbruchbedingung \chapref{sec:downhillAbbruch} und zur Bildung des neuen Simplex ben"otigt, siehe \chapref{sec:downhillModi}.\\
-Hat man das Simplex auf der Zielfunktion platziert, werden die berechneten Testpunkte gepr"uft, wobei der schlechteste dieser Punkte mittels gewisser ''Taktiken`` ersetzt wird. Dies wird solange fortgef"uhrt, bis das gew"unschte Ergebnis erreicht worden ist bzw. eine Abbruchbedingung erfüllt ist.
+
+\begin{itemize}
+\item
+Zu Beginn wird ein Simplex mit den Ecken $x_i$ gebildet.
+\item
+Zu den gew"ahlten $x_i$ werden nun die dazu geh"origen $y_i$ der
+Zielfunktion ausgerechnet.
+\item
+Aus den erhaltenen Funktionswerten wird der beste $y_{min}$, der
+schlechteste $y_{max}$ sowie der Mittelwert ohne $x_{max}$ extrahiert.
+Diese werden f"ur die Abbruchbedingung \chapref{sec:downhillAbbruch}
+und zur Bildung des neuen Simplex ben"otigt, siehe
+\chapref{sec:downhillModi}.
+\item
+Hat man das Simplex auf der Zielfunktion platziert, werden die
+berechneten
+Testpunkte gepr"uft, wobei der schlechteste dieser Punkte mittels
+gewisser ''Taktiken`` ersetzt wird.
+\item
+Dies wird solange fortgef"uhrt, bis
+das gew"unschte Ergebnis erreicht worden ist bzw. eine Abbruchbedingung
+erf"ullt ist.
+\end{itemize}
 
 \subsection{Abbruchbedingungen}
 \label{sec:downhillAbbruch}
@@ -28,15 +54,24 @@ Es k"onnen diverse Abbruchbedingungen f"ur den Downhill-Simplex verwendet werden
 \item Maximale Iterationszahl: Als Notfall wenn nicht konvergiert wird.
 \end{itemize}
 
-Es empfiehlt sich eine Kombination der Abbruchbedingungen, um die Iterationszahl m"oglichst gering zu halten.\\
-Im Allgemeinen ist es ratsam, die $x_i$ und Anzahl Iterationen zu verwenden, da so kein Wissen "uber die Art des Minimums der Zielfunktion ben"otigt wird.\\
-Ist die gew"ahlte Abbruchbedingung erf"ullt, ist der Algorithmus am Ende.\\
-Es ist nat"urlich eher Zufall, wenn man gleich bei der ersten Wahl des Simplex das Minimum trifft, meistens hat man es nicht getroffen und es wird nun auf Grund des gew"ahlten Simplex gem"ass \chapref{sec:downhillModi} ein neues Simplex gebildet.
+Es empfiehlt sich eine Kombination der Abbruchbedingungen, um die
+Iterationszahl m"oglichst gering zu halten.
+
+Im Allgemeinen ist es ratsam, die $x_i$ und Anzahl Iterationen zu
+verwenden, da so kein Wissen "uber die Art des Minimums der Zielfunktion
+ben"otigt wird.
+Ist die gew"ahlte Abbruchbedingung erf"ullt, ist der Algorithmus am Ende.
+Es ist nat"urlich eher Zufall, wenn man gleich bei der ersten
+Wahl des Simplex das Minimum trifft, meistens hat man es nicht
+getroffen und es wird nun auf Grund des gew"ahlten Simplex gem"ass
+\chapref{sec:downhillModi} ein neues Simplex gebildet.
 
 \subsection{Neuen Simplex bilden}
 \label{sec:downhillModi}
 
-Das Auswahlverfahren des neuen Simplex unterliegt einer Reihe von Faktoren. Die Entscheidungen werden vor allem aufgrund der gegebenen Eckpunkte sowie deren Funktionswerte getroffen.
+Das Auswahlverfahren des neuen Simplex unterliegt einer Reihe von
+Faktoren. Die Entscheidungen werden vor allem aufgrund der gegebenen
+Eckpunkte sowie deren Funktionswerte getroffen.
 In \figref{fig:downhillalg2} ist dieser Entscheidungsbaum ersichtlich.
 
 \begin{figure}[h]
@@ -50,16 +85,18 @@ Punkt findet, sind begrenzt.
 
 Die Darstellungen beziehen sich hierbei auf einen Simplex der zweiten
 Dimension (Dreieck), nat"urlich gelten diese Modifikationen auch f"ur
-einen n-dimensionalen Simplex.
+einen $n$-dimensionalen Simplex.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/start.tex}%
   	\caption{Simplex im zweidimensionalen Raum}%
 	\label{fig:downhillStart}
 \end{figure}
 
-Der Algorithmus w"ahlt auf Grund der Werte der Startsimplex (siehe \figref{fig:downhillStart}) beziehungsweise deren Zielfunktionswerte die Modifikationsart aus.
+Der Algorithmus w"ahlt auf Grund der Werte der Startsimplex (siehe
+\figref{fig:downhillStart}) beziehungsweise deren Zielfunktionswerte
+die Modifikationsart aus.
 
 \subsubsection{Reflexion}
 
@@ -84,7 +121,7 @@ abgestiegen, um einen besseren Punkt zu finden. Die Reflexion wird
 immer durchgef"uhrt, da die folgenden Modifikationen den Punkt $x_{\text{ref}}$
 ben"otigen.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/reflexion.tex}%
   	\caption{Reflexion}%
@@ -98,7 +135,7 @@ Dazu wird bei der Expansion der Schwerpunkt $x_m$ mit dem Faktor $\gamma$ in Ric
 \begin{equation}
 x_{\text{streck}} = x_{\text{ref}} + \gamma \cdot (x_{\text{ref}}-x_{m})
 \end{equation}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/streckung.tex}%
   	\caption{Expansion}%
@@ -117,7 +154,7 @@ Dazu wird der schlechteste Punkt um den Faktor $\beta$ n"aher an den Schwerpunkt
 x_{\text{kon}} = x_{m} + \beta \cdot (x_{\text{max}}-x_{m})
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/kon1.tex}%
   	\caption{Kontraktion 1}%
@@ -132,7 +169,7 @@ Hat die Reflexion eine minimale Verbesserung gebracht wird der reflektierte Punk
 x_{\text{kon2}} = x_{m} + \beta \cdot (x_{\text{ref}}-x_{m})
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/kon2.tex}%
   	\caption{Kontraktion 2}%
@@ -145,10 +182,10 @@ Es wird davon ausgegangen, dass das Zielgebiet zu gross ist und deshalb die Ann"
 Um das Zielgebiet zu verkleinern werden nun alle Ecken $x_i$ des Simplex zum besten Punkt $x_{min}$ hingezogen. Auch hier kann man diese Zusammenziehung mit dem Faktor $\beta$ steuern.  
 
 \begin{equation}
-x_{i} = (x_i + x_{\text{min}}) \cdot \beta
+x_{i} = x_{\text{min}} + \beta \cdot (x_i - x_{\text{min}}) 
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\input{downhill/komp.tex}%
   	\caption{Komprimierung}%
@@ -159,13 +196,23 @@ x_{i} = (x_i + x_{\text{min}}) \cdot \beta
 \subsubsection{Startwerte}
 Das ganze ist nat"urlich stark abh"angig von dem zu Beginn gew"ahlten Simplex.
 
-W"ahlt man das Simplex zu gross, dauert es lange, bis es konvergiert, auch bewegt es sich anfangs eher wild.\\
-Wird es hingegen zu klein gew"ahlt, zieht es sich zu schnell zusammen ohne dass es sich auf ein Minimum zubewegt (siehe \chapref{sec:downhillZusammenziehen}).\\
-Auch sollten die Punkte des Simplex m"oglichst orthogonal zueinander stehen, damit in alle Dimensionen gleichm"assig die ''F"uhler`` ausgestreckt werden.
+W"ahlt man das Simplex zu gross, dauert es lange, bis es konvergiert,
+auch bewegt es sich anfangs eher wild.
+
+Wird es hingegen zu klein gew"ahlt, zieht es sich zu schnell
+zusammen ohne dass es sich auf ein Minimum zubewegt (siehe
+\chapref{sec:downhillZusammenziehen}).
+
+Auch sollten die Punkte des Simplex m"oglichst orthogonal zueinander
+stehen, damit in alle Dimensionen gleichm"assig die ''F"uhler``
+ausgestreckt werden.
 
 \subsubsection{Parameter}
-Die Parameter $\alpha$ und $\gamma$ beeinflussen die Geschwindigkeit mit der das Simplex ''wandern`` kann.\\
-$\beta$ hingegen manipuliert das Zusammenziehen des Simplex.\\
+Die Parameter $\alpha$ und $\gamma$ beeinflussen die Geschwindigkeit
+mit der das Simplex ''wandern`` kann.
+
+$\beta$ hingegen manipuliert das Zusammenziehen des Simplex.
+
 Als Richtwert wird empfohlen mit folgenden Werten zu beginnen:
 \begin{align*}
 \alpha &= 1 \\
@@ -181,7 +228,9 @@ Folgende Probleme k"onnen beim Downhill-Simplex auftreten:
 \end{itemize}
 
 \subsubsection{Lokale Minima}
-Der Algorithmus findet - bis auf wenige Ausnahmen - immer ein Minimum. Wenn er jedoch st"andig in ein lokales Minimum f"allt, muss man sich vielleicht "uberlegen die Startbedingungen zu "andern, 
+Der Algorithmus findet - bis auf wenige Ausnahmen - immer ein
+Minimum. Wenn er jedoch st"andig in ein lokales Minimum f"allt, muss
+man sich vielleicht "uberlegen die Startbedingungen zu "andern,
 zum Beispiel k"onnen neue Startpunkte zuf"allig gew"ahlt werden.
 
 
