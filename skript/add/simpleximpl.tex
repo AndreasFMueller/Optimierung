@@ -13,22 +13,22 @@ Bibliotheken profitieren kann.
 
 \section{Eine genauere Analyse der Operationen}
 Das Standard-Optimierungs-Problem mit nicht negativen Variablen $x_i\ge 0$
-dem Nullpunkt als zul"assigem Punkt braucht zur L"osung nur zwei Schritte,
+und dem Nullpunkt als zul"assigem Punkt braucht zur L"osung nur zwei Schritte,
 die iteriert werden m"ussen:
 \begin{enumerate}
 \item Auswahl des Pivot-Elementes.
 \item Austauschoperation.
 \end{enumerate}
 Die Auswahl des Pivot-Elementes verwendet eine Strategie, f"ur welche es
-bei der L"osung linearer Gleichungssystemen nichts vergleichbares gibt.
+bei der L"osung linearer Gleichungssystemen nichts Vergleichbares gibt.
 Sowohl bei der Wahl der Spalten wie auch der Zeilen muss man Elemente 
-w"ahlen, welche welche eine Extremalbedingung erf"ullen. Ausserdem
+w"ahlen, welche eine Extremalbedingung erf"ullen. Ausserdem
 darf nur eine Pivot-Spalte gew"ahlt werden, welche aktuell als
 frei w"ahlbar markiert ist. Diese Operation muss also vollst"andig neu
 implementiert werden.
 
 Die Austausch-Operation ist eigentlich eine Zeilen-Operation mit der
-Pivot-Zeile durch die alle Elemente der Pivot-Spalte bis auf die Eins
+Pivot-Zeile, durch die alle Elemente der Pivot-Spalte bis auf die Eins
 in der Pivot-Zeile eliminiert werden. Diese Operation wird auch
 bei der L"osung lienarer Gleichungssysteme immer wieder durchgef"uhrt,
 sowohl beim Vorw"artsreduzieren als auch beim R"uckw"artseinsetzen.
@@ -46,7 +46,8 @@ Pivot-Division abgeschlossen ist, bevor ein Element der Pivot-Zeile
 f"ur Schritt 2 verwendet wird.
 
 \section{Implementationsm"oglichkeiten f"ur die Austausch-Operation}
-Im Verzeichnis {\tt code/simplex} findet man eine Implementation
+Im Verzeichnis {\tt code/simplex} des Github-Repository
+dieses Kurses findet man eine Implementation
 des Simplex-Algorithmus mit drei verschiedenen Techniken.
 Im File {\tt backend.c} wird gezeigt, wie man die Wahl des berechnenden
 Backends weitgehend transparent machen kann, so dass es einfacher wird,
@@ -62,7 +63,7 @@ Berechnungen. Sie ist so gestaltet, dass OpenCL Code sowohl auf
 modernen Multicore CPUs als auch auf Graphikkarten ausgef"uhrt
 werden kann. Letztere bieten bei leicht geringerer
 Rechenleistung f"ur den Einzelthread weit h"ohere Parallelit"at an,
-so dass insgesamt wesentlich gr"ossere Rechenleistung resultieren kann.
+so dass insgesamt eine wesentlich gr"ossere Rechenleistung resultieren kann.
 
 Die Verarbeitungseinheit in OpenCL ist der sogenannte Kernel.
 Die Input-Daten f"ur den Kernel werden also OpenCL-Memory-Objekte
@@ -78,7 +79,7 @@ globalen ids sind, also
 \verb+get_global_id(0)+ und
 \verb+get_global_id(1)+.
 
-Mit Vorteil wird die Operation $a=a+bc$ mit der prmitiven Multiply-Accumulate
+Mit Vorteil wird die Operation $a=a+bc$ mit der prmitiven Multiply-Accu\-mulate
 Operation {\tt fma} von OpenCL implementiert, die schneller ist und
 keine Rundungsfehler der Multiplikation einf"uhrt.
 
@@ -89,7 +90,7 @@ Eine bessere L"osung, jeweils die ganze Zeilenoperation durchzuf"uhren.
 Damit f"ahlt der Overhead des Aufrufs nicht mehr so stark ins Gewicht.
 
 Ein OpenCL Device hat eine m"assig grosse Zahl von Compute Units (entspricht
-etwa den Cores einer CPU), typischerweise etwa 32 Pro Graphikkarte. Jede
+etwa den Cores einer CPU), typischerweise etwa 32 pro Graphikkarte. Jede
 Compute Unit hat eine gr"ossere Zahl von Processing Elements. Eine Compute
 Unit kontrolliert mehrere Processing Elements, wenn man also die
 Operationen so formulieren kann, dass die gleiche Operation mit vielen
@@ -109,7 +110,7 @@ Die Beispielimplementation enth"alt dahier im File \verb+eliminate.cl+
 zwei Kernel, {\tt dividerow} und {\tt eliminate}.
 
 \subsection{BLAS}
-Schreibt man die Pivot Zeile also Spaltenvektor $y$ und
+Schreibt man die Pivotzeile also Spaltenvektor $y$ und
 die Pivotspalte als $x$, dann ist die Redukationsoperation
 f"ur das Simplextableau $A$ die Operation
 $ A-xy^t $, wenigstens f"ur alle Zeilen ausser der Pivot-Zeile.
@@ -165,13 +166,18 @@ und Additionen durchgef"uhrt, der Aufwand ist also $O(nm)$.
 Der Aufwand f"ur die Pivot-Auswahl ist dagegen nur von der Ordnung
 $O(n+m)$.
 
-Im die Performance genauer messen zu k"onnen wurde wie folgt zuf"allig
-ein Optimierungsproblem generiert. Zun"achste wurden $n$ im 
+Um die Performance genauer messen zu k"onnen, wurde wie folgt zuf"allig
+ein Optimierungsproblem generiert.
+Zun"achste wurden $n$ im 
 ersten Oktanten gleichverteilte Einheitsvektoren $v_i$ erzeugt.
 Als Ungleichungen wurden dann die Ungleichungen $v_i^t x\le 1$ 
-verwendet. Als Zielfunktion diente $x+y+z$. So erh"alt man
+verwendet. Die Vektoren der Einheitskugel um den Nullpunkt erf"ullen
+alle diese Ungleichungen.
+Als Zielfunktion diente $x+y+z$. So erh"alt man
 ein Optimierungsproblem mit $n$ Ungleichungen und $3$ Variablen.
-Wegen der Gleichverteilung sind alle Simplex-Schritte ungef"ahr gleich
+
+Wegen der Gleichverteilung der Vektoren $v_i$
+sind alle Simplex-Schritte ungef"ahr gleich
 gross, es ist nicht mit starken Variationen von Laufzeit und
 Anzahl Schritten bis zum Optimum zu rechnen. Damit eignet sich
 dieses Modellproblem, um die Abh"angigkeit der Laufzeit oder
@@ -180,7 +186,11 @@ der Schrittzahl von $n$ abzusch"atzen.
 \section{Resultate}
 Die numerischen Experimente haben gezeigt, dass OpenCL in dieser Anwendung
 keinen Vorteil bietet. Im Gegenteil: die Rechnung mit OpenCL ist
-etwa dreimal langsamer als die CPU-L"osung
+etwa dreimal langsamer als die CPU-L"osung. Grund daf"ur d"urfte
+wie bereits angesprochen der relative grosse Overhead sein, weil f"ur
+jeden Austauschschritt die Matrix in die Graphikkarte kopiert
+und nach der Operation wieder zur"uckkopiert werden muss. Ausserdem
+ist die geleistete Arbeit pro Thread minimal.
 
 Am schnellsten ist die auf BLAS basierende L"osung, sie ist etwa dreimal
 schneller als die naive C-Implementation.
@@ -218,7 +228,7 @@ $O(\sqrt{n})$ treffen m"usste. In Wahrheit ist der Simplex-Algorithmus
 sogar noch etwas effizienter.
 
 \section{Wahl des Weges}
-Die Wahl des Weges, den der Simplex-Algorithmus w"ahlt, wurde mit
+Die Wahl des Weges, den der Simplex-Algorithmus w"ahlt, wurde
 mit Hilfe von graphischen Darstellungen ebenfalls untersucht.
 Zun"achst f"allt in der Abbildung \ref{simplex:kanten} auf,
 dass der Algorithmus nicht den direktesten Weg nimmt. Im ersten
