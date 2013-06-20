@@ -426,75 +426,111 @@ wird sein Gewichtungsfaktor klein und dadurch wird er bei der Berechnung
 der Position weniger gewichtet.
 
 \subsection{Zielfunktion und deren Ableitungen}
+Die Ableitungen der Zielfunktion sind etwas m"uhsam auszurechnen, da
+sie aber eine sehr regelm"assige Struktur haben, l"asst sich
+deren Berechnung leicht programmieren.
+
+In den Formeln muss vor allem zwischen Ableitungen nach der Zeit $t$ 
+und nach einer der Raumvariablen unterschieden werden.
+Im Sinne einer kompakteren Schreibweise stehen die Variablen $u$ und
+$v$ in den folgenden Formeln immer f"ur eine der drei Ortsvariablen.
+Zum Beispiel ist $f_{uu}$ die zweite partielle Ableitung nach der 
+Variablen, f"ur die $u$ gerade steht, und
+der Ausdruck $(u_i-u)^2$ ist $(x_i-x)^2$, falls $u$ gerade f"ur $x$ steht.
+
 \subsubsection{Ohne Gewichtung der Satelliten}
-\begin{tabular}{l}
-	\textbf{Zielfunktion:}\\
-	$f(x,y,z,t) = \text{\large$\sum\limits_{i=1}^{n}$}\;{\left[(x_i-x)^2 + (y_i-y)^2 + (z_i-z)^2\;\, - c^2 (t-t_i)^2\;\right]^2}$\\[0.4cm]
-	\hline
-	\\[-0.3cm]
-	\textbf{Erste partielle Ableitungen in $x$, $y$, $z$ und $t$:}\\
-	$f_x(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(x_i-x)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\
-	$f_y(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(y_i-y)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\
-	$f_z(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(z_i-z)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\
-	$f_t(x,y,z,t) = -4 \,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(t-t_i)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\[0.4cm]
-	\hline
-	\\[-0.3cm]
-	\textbf{Zweite partielle Ableitungen in $x$, $y$, $z$ und $t$:}\\
-	$f_{xx}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\left[3\cdot(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\
-	$f_{xy}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(x_i-x)(y_i-y)}$\\
-	$f_{xz}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(x_i-x)(z_i-z)}$\\
-	$f_{xt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(x_i-x)(t-t_i)}$\\[0.4cm]
-%				\arrayrulecolor{gray}
-	\hline
-	\\[-0.3cm]
-	$f_{yy}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\left[(x_i - x)^2 + 3\cdot(y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\
-	$f_{yz}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(y_i-y)(z_i-z)}$\\
-	$f_{yt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(y_i-y)(t-t_i)}$\\[0.4cm]
-	\hline
-	\\[-0.3cm]
-	$f_{zz}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\left[(x_i - x)^2 + (y_i - y)^2 + 3 \cdot (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\
-	$f_{zt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;(z_i-z)(t-t_i)}$\\[0.5cm]
-	\hline
-	\\[-0.3cm]
-	$f_{tt}(x,y,z,t) = -4\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - 3\,c^2\cdot(t - t_i)^2\right]}$\\[0.4cm]
-%				\arrayrulecolor{black}
-	\hline
-\end{tabular}
+{
+\parindent0pt
+\begin{align*}
+\noalign{Zielfunktion:}
+f(x,y,z,t)&=
+\sum_{i=1}^{n}
+\left[(x_i-x)^2 + (y_i-y)^2 + (z_i-z)^2\;\, - c^2 (t-t_i)^2\;\right]^2
+\\
+\noalign{Erste partielle Ableitungen nach $x$, $y$, $z$ und $t$:}
+f_u(x,y,z,t)
+&=
+-4\sum_{i=1}^{n}(u_i-u)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]
+\\
+f_t(x,y,z,t)
+&=
+-4 \,c^2\sum_{i=1}^{n}(t-t_i)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]
+\\
+\noalign{Zweite partielle Ableitungen nach $x$, $y$, $z$ und $t$:}
+f_{uu}(x,y,z,t)
+&=
+4\sum_{i=1}^{n} \left[ 2\cdot (u_i-u)^2+ (x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]
+\\
+f_{uv}(x,y,z,t)
+&=
+8\sum_{i=1}^{n}(u_i-u)(v_i-v)
+\\
+f_{ut}(x,y,z,t)
+&=
+8\,c^2\sum\limits_{i=1}^{n}(u_i-u)(t-t_i)
+\\
+f_{tt}(x,y,z,t)
+&=
+-4\,c^2\sum_{i=1}^{n}\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - 3\,c^2\cdot(t - t_i)^2\right]
+\end{align*}
+}
+Man liest daraus f"ur $u=y$ und $v=z$ zum Beispiel ab:
+\allowdisplaybreaks
+\begin{align*}
+f_y(x,y,z,t)
+&=
+-4\sum_{i=1}^{n}(y_i-y)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]
+\\
+f_{yy}(x,y,z,t)
+&=
+4\sum_{i=1}^{n} \left[ (x_i - x)^2 + 3(y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]
+\\
+f_{yz}(x,y,z,t)
+&=
+8\sum_{i=1}^{n}(y_i-y)(z_i-z)
+\\
+f_{yt}(x,y,z,t)
+&=
+8\,c^2\sum\limits_{i=1}^{n}(y_i-y)(t-t_i)
+\end{align*}
+
 
 \subsubsection{Mit Gewichtung der Satelliten}
-\begin{tabular}{l}
-\textbf{Zielfunktion:}\\
-$f(x,y,z,t) = \text{\large$\sum\limits_{i=1}^{n}$}\;{\left[\dfrac{1}{\sigma_i}\cdot \left((x_i-x)^2 + (y_i-y)^2 + (z_i-z)^2\;\, - c^2 (t-t_i)^2\;\right)\right]^2}$\\[0.4cm]
-\hline
-\\[-0.3cm]
-\textbf{Erste partielle Ableitungen in $x$, $y$, $z$ und $t$:}\\[0.1cm]
-$f_x(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(x_i-x)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\[0.4cm]
-$f_y(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(y_i-y)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\[0.4cm]
-$f_z(x,y,z,t) = -4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(z_i-z)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]}$\\[0.4cm]
-$f_t(x,y,z,t) = -4 \,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(t-t_i)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\[0.4cm]
-\hline
-\\[-0.3cm]
-\textbf{Zweite partielle Ableitungen in $x$, $y$, $z$ und $t$:}\\[0.1cm]
-$f_{xx}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,\left[3\cdot(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\[0.4cm]
-$f_{xy}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(x_i-x)(y_i-y)}$\\[0.4cm]
-$f_{xz}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(x_i-x)(z_i-z)}$\\[0.4cm]
-$f_{xt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(x_i-x)(t-t_i)}$\\[0.4cm]
-%				\arrayrulecolor{gray}
-\hline
-\\[-0.3cm]
-$f_{yy}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,\left[(x_i - x)^2 + 3\cdot(y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\[0.4cm]
-$f_{yz}(x,y,z,t) = 8\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(y_i-y)(z_i-z)}$\\[0.4cm]
-$f_{yt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(y_i-y)(t-t_i)}$\\[0.4cm]
-\hline
-\\[-0.3cm]
-$f_{zz}(x,y,z,t) = 4\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,\left[(x_i - x)^2 + (y_i - y)^2 + 3 \cdot (z_i - z)^2 - c^2(t - t_i)^2\right]}$\\[0.4cm]
-$f_{zt}(x,y,z,t) = 8\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,(z_i-z)(t-t_i)}$\\[0.5cm]
-\hline
-\\[-0.3cm]
-$f_{tt}(x,y,z,t) = -4\,c^2\;\text{\large$\sum\limits_{i=1}^{n}$}\;{\;\dfrac{1}{{\sigma_i}^2}\,\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - 3\,c^2\cdot(t - t_i)^2\right]}$\\[0.4cm]
-%				\arrayrulecolor{black}
-\hline
-\end{tabular}
+{
+\parindent0pt
+\begin{align*}
+\noalign{Zielfunktion:}
+f(x,y,z,t)
+&=
+\sum_{i=1}^{n}\left[\frac{1}{\sigma_i}\cdot \left((x_i-x)^2 + (y_i-y)^2 + (z_i-z)^2\;\, - c^2 (t-t_i)^2\;\right)\right]^2
+\\
+\noalign{Erste partielle Ableitungen nach $x$, $y$, $z$ und $t$:}
+f_u(x,y,z,t)
+&=
+-4\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}(u_i-u)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2 \right]
+\\
+f_t(x,y,z,t)
+&=
+-4c^2\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}(t-t_i)\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]
+\\
+\noalign{Zweite partielle Ableitungen nach $x$, $y$, $z$ und $t$:}
+f_{uu}(x,y,z,t)
+&=
+4\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}\left[2\cdot(u_i-u)^2 + (x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - c^2(t - t_i)^2\right]
+\\
+f_{uv}(x,y,z,t)
+&=
+8\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}(u_i-u)(v_i-v)
+\\
+f_{ut}(x,y,z,t)
+&=
+8c^2\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}(u_i-u)(t-t_i)
+\\
+f_{tt}(x,y,z,t)
+&=
+-4c^2\sum_{i=1}^{n}\frac{1}{{\sigma_i}^2}\,\left[(x_i - x)^2 + (y_i - y)^2 + (z_i - z)^2 - 3c^2\cdot(t - t_i)^2\right]
+\end{align*}
+}
 
 \printbibliography[heading=subbibliography]
 \end{refsection}
