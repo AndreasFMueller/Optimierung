@@ -2,8 +2,8 @@
 
 \section{Einleitung}
 Wie in den vorangegangenen Kapitel oft gesehen, stehen f"ur
-Optimierungsprobleme verschiedene Programme wie z.B. der Symplex
-Algorithmus zur Verf"ugung. Dabei wird ein Maxima oder Minima gesucht. Bei
+Optimierungsprobleme verschiedene Programme wie z.B. der Simplex
+Algorithmus zur Verf"ugung. Dabei wird ein Maximum oder Minimum gesucht. Bei
 der Variationsrechnung wird wie in \chapref{chapter-variationsrechnung}
 beschrieben, eine Funktion gesucht, welche das Optimierungsproblem
 l"ost. F"ur die Variationsrechnung steht anstelle eines mathematischen
@@ -30,7 +30,8 @@ der Lichtgeschwindigkeit $c$, dem Weg $s$ und dem Ort $r$. Die Zeit muss
 \index{Lichtgeschwindigkeit}
 minimal sein.
 \begin{align}
-	t= \int\limits_{s_1}^{s_2} \frac{n(r)}{c} ds = \frac{1}{c} \int\limits_{s_1}^{s_2} n(r) ds
+	t= \int_{s_1}^{s_2} \frac{n(r)}{c}\, ds
+= \frac{1}{c} \int_{s_1}^{s_2} n(r)\, ds
 	\label{fermat}
 \end{align}
 Wenn die Zeit minimal ist, wird bei kleinen Abweichungen vom Weg die
@@ -47,15 +48,16 @@ kleine "Anderungen des Weges ist.  \cite{DefinitionFermat}
 Genau diese Invarianz gegen kleine "Anderungen des Weges
 wurde in \chapref{chapter-variationsrechnung} benutzt um die
 Euler-Lagrange-Gleichung abzuleiten. Die Herleitung erfolge indem der
-Weg etwas ''verwackelt'' wurde und danach die Behauptet gemacht wurde,
+Weg etwas ''verwackelt'' wurde und danach die Bedingung ausgenutzt wurde,
 dass sich das Integral nicht "andert.
+
 \subsection{Formulierung mit dem optischen Weg}
 Der optische Weg $L$  eines Pfades $s$ kann in einem homogenen Material 
 mit dem Brechungsindex $n$ als Produkt von $n$ und $s$ berechnet werden.
 Bei einem inhomogenen Material ergibt sich f"ur den optischen Pfad die
 allgemeine \eqref{optischweg}.
 \begin{align}
-	L(s) = \int\limits_{s_1}^{s_2} n(r) \,d\vec s 
+	L(s) = \int_{s_1}^{s_2} n(r) \,ds 
 	\label{optischweg}
 \end{align}
 Da der zur"uckgelegte Weg des Lichtstrahles direkt proportional zur Zeit
@@ -67,7 +69,7 @@ Der Weg, den das Licht nimmt, um von einem Punkt zu einem anderen zu
 gelangen, ist stets so, dass der optische Weg minimal ist.
 \index{Fermatsches Prinzip 2}
 \end{postulat}
-\subsection{Erkl"arung}
+\subsection{Ein philosophisches Problem}
 Viele Leute haben ein Problem mit dem Fermatschen Prinzip. 
 Der Grund ist ganz einfach. 
 \index{Strahlenoptik}
@@ -81,7 +83,7 @@ nimmt dem entsprechend von Anfang an den Weg mit der k"urzesten Zeit.
 Aber woher weiss das Licht, dass sein eingeschlagener Weg der korrekte ist?
 Kann man davon ausgehen, dass es die n"ahere Umgebung anschaut und diese vergleicht?
 Ja, genau davon kann man ausgehen.
-Eine m"ogliche Erkl"arung mit Hilfe von Elektromagnetischen Wellen ist,
+Eine m"ogliche Erkl"arung mit Hilfe von elektromagnetischen Wellen ist,
 dass sich das Licht in alle Richtungen ausbreitet. 
 Jedoch interferieren die meisten dieser Wellen destruktiv, 
 ausser die Welle, welche den Weg mit der k"urzester Zeit genommen hat
