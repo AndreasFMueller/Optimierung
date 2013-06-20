@@ -11,7 +11,7 @@ jedem Partikel notwendig:
 \end{align*} 
 
 \subsubsection{Initialisierung}
-Üblich ist die Initialisierung gem"ass folgenden Formeln:
+"Ublich ist die Initialisierung gem"ass folgenden Formeln:
 \begin{align}
 	x_i(0) &= U(min,max) \\
 	v_i(0) &= \frac{U(min,max) - x_i(0)}{2} \label{Vi-old} \\ 
@@ -42,8 +42,7 @@ Die Position wird nach der Geschwindigkeit gem"ass Gleichung
 	x_{i}(t+1) = x_i(t) + v_i(t+1) \label{Pos-Update}
 \end{equation}
 \index{Positions-Update}
-
-"uber die korrekte Wahl der Linearkombination $\mathcal{C}$ wurden bereits
+"Uber die korrekte Wahl der Linearkombination $\mathcal{C}$ wurden bereits
 ganze Arbeiten geschrieben. Weit verbreitet, wenn auch nicht ganz ideal
 ist die Berechnung gem"ass Gleichung \ref{Vel-Update}. \\
 \begin{equation}
@@ -90,7 +89,7 @@ bzw. gr"un hinterlegten Bereichen generiert.  \\
 
 
 \subsection{Gr"osse des Schwarms}
-Über die ideale Gr"osse des Partikelschwarms lassen sich keine exakten
+"Uber die ideale Gr"osse des Partikelschwarms lassen sich keine exakten
 Angaben machen. Gem"ass \cite{Clerc-Standards} l"asst sich die Gr"osse
 $S$ des Schwarms in Abh"angigkeit der Dimension $D$ wie folgt ausdr"ucken:
 \begin{equation}
@@ -116,7 +115,7 @@ gewichtet wird.
 \subsection{Parallelisierung}
 \index{Parallelisierung}
 Aus der Beschreibung des Algorithmus wird schnell ersichtlich, dass
-die Partikelschwarm-Optimierung sehr gut f"ur eine parallelisierte
+die Partikel\-schwarm-Optimierung sehr gut f"ur eine parallelisierte
 Berechnung geeignet ist. Die Aktualisierung der Geschwindigkeit und
 Position kann f"ur alle Partikel gleichzeitig, parallel erfolgen. Bei
 rechenintensiven Problemen ist dies ein enormer Vorteil gegen"uber
