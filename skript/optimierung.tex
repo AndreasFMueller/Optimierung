@@ -59,6 +59,7 @@
 \addbibresource{gps/bib.bib}
 \addbibresource{descent/bib.bib}
 \addbibresource{licht/licht.bib}
+\AtEndDocument{\clearpage\ifodd\value{page}\else\null\clearpage\fi}
 \makeindex
 \begin{document}
 \pagestyle{fancy}
@@ -97,8 +98,6 @@ Christian Schmid,
 Armin Stocklin,
 Dario Wikart
 \end{flushright}
-
-
 \vspace*{\stretch{2}}
 \begin{center}
 Hochschule f"ur Technik, Rapperswil, 2013
@@ -165,6 +164,9 @@ Hochschule f"ur Technik, Rapperswil, 2013
 \input descent/descent.tex
 \input downhill/downhill.tex
 \input licht/licht.tex
+\lhead{Index}
+\rhead{}
 %\input genetic/genetic.tex
 \input optimierung.ind
+
 \end{document}
