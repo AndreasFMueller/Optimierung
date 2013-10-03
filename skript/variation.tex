@@ -3,7 +3,7 @@
 
 \section{Was ist Variationsrechnung?}
 \rhead{}
-Alle bisher betrachteten Optimierungsproblem gingen davon aus, dass
+Alle bisher betrachteten Optimierungsprobleme gingen davon aus, dass
 ein Vektor $x$, also endlich viele reelle Variablen, gefunden werden muss,
 der eine Funktion $f(x)$ maximieren soll, aber in einem vorgegebenen
 Gebiet von zul"assigen Vektoren liegen muss. 
@@ -22,7 +22,7 @@ Gesucht ist jetzt eine Funktion, nicht nur ein Vektor.
 \subsection{Eine historische Herausforderung: Brachistochrone}
 Im Juni 1696 ver"offentlichte Johann Bernoulli (1667-1748), der
 zu dieser Zeit Professor f"ur Mathematik und Medizin in Groningen
-war, den folgende Aufgabe in der Zeitschrift {\it Acta Eruditorum}:
+war, die folgende Aufgabe in der Zeitschrift {\it Acta Eruditorum}:
 
 \begin{quote}
 Wenn in einer verticalen Ebene zwei Punkte $A$ und $B$ gegeben sind,
@@ -51,7 +51,7 @@ das Datum 16. Juni 1696. Leibniz wies auch darauf hin, dass angesichts
 der damals noch nicht so schnellen Postdienste die Antwortfrist noch
 etwas verl"angert werden sollte.
 Bernoulli publiziert daher im Januar 1697 nochmals einen nicht
-minder schw"ulstigen Aufruf
+minder schw"ulstigen Aufruf:
 \begin{quote}
 Die scharfsinnigsten Mathematiker des ganzen Erdkreises gr"usst
 Johann Bernoulli, "offentlicher Professor der Mathematik.
@@ -89,8 +89,8 @@ Zu dieser Zeit galt Leibniz als der Erfinder der Infinitesimalrechnung,
 mit der er sich seit 1670 besch"aftigt hatte.
 
 Das Brachistochronen-Problem ist offenbar ein Variationsproblem.
-Gesucht ist eine Kurve so, die von $A$ nach $B$ f"uhrt so, dass
-die zum durchlaufen der Kurve n"otige Zeit m"oglichst kurz ist.
+Gesucht ist eine Kurve, die von $A$ nach $B$ f"uhrt und so, dass
+die zum Durchlaufen der Kurve n"otige Zeit m"oglichst kurz ist.
 
 \subsection{Problemstellung}
 Ein Variationsproblem ist also eine spezielle Art eines nichtlinearen
@@ -171,7 +171,7 @@ einer Ochsenhaut umz"aunen k"onne. Nach Iarbas' Zustimmung schnitt
 Dido eine Ochsenhaut in einen langen Riemen und umz"aunte damit einen ganzen
 H"ugel.
 
-Etwas mathematischer, gesucht ist offenbar eine eine Funktion
+Etwas mathematischer: gesucht ist offenbar eine Funktion
 $\gamma\colon [0,1]\to\mathbb R^2:t\mapsto \gamma(t)$. Die
 L"ange muss einen ganz bestimmten Wert haben:
 \[
@@ -216,9 +216,9 @@ verstanden werden kann. Doch welche Zielfunktion wird hier optimiert?
 Wir m"ochten zum Beispiel die Bewegung eines Massepunktes in einem
 Potential $V(x)$ verstehen, zum Beispiel die Bewegung eines Planeten
 im Schwerefeld der Sonne.
-Wir suchen also die Bahn $x(t)$ des Massepunktes finden. 
-Wir erwarten, dass Position und Bewegungszustand des Massepunktes,
-also $x(t)$ und $\dot x(t)$ wesentlich sein werden.
+Wir suchen also die Bahn $x(t)$ des Massepunktes.
+Wir erwarten, dass Position $x(t)$ und Bewegungszustand $\dot x(t)$
+des Massepunktes wesentlich sein werden.
 Wir vermuten also, dass es eine Funktion $L(t,x,v)$ gibt,
 so dass das Integral
 \begin{equation}
@@ -277,14 +277,14 @@ differenzierbar sein.
 
 Die L"osung dieses Variationsproblems f"uhrt auf die sogenannte
 Spline-Interpolation, die zum Beispiel in der Computer-Graphik oder
-in der Wegplanung f"ur Roboter beliebt sind.
+in der Wegplanung f"ur Roboter beliebt ist.
 
 \section{Euler-Lagrange-Gleichungen}
 \rhead{Euler-Lagrange-Gleichungen}
 Es gibt kaum Verfahren, ein allgemeines Variationsproblem direkt zu l"osen.
 Aber es gibt ein allgemeines Vorgehen, wie man ein Variationsproblem
 in eine Differentialgleichung umwandeln kann. F"ur Differentialgleichungen
-steht ja eine grosses Arsenal von L"osungstechniken.
+steht ja eine grosses Arsenal von L"osungstechniken bereit.
 
 Zun"achst sei daran erinnert, dass man Kandidaten f"ur die Extrema einer
 Funktion $f(x)$ als Nullstellen der Ableitung $f'(x)$ finden kann.

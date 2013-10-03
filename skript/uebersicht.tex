@@ -57,7 +57,7 @@ Maximum erreicht.
 Etwas interessanter wird das Problem, wenn nicht die maximale momentane
 Leistung interessiert, sondern die "uber den Tag gewonnene Gesamtenergie.
 Die Leistung schwankt wegen des sich "andernden Sonnenstandes, es w"are
-daher interessant zu wissen, bei welcher Elevation sich im insgesamt
+daher interessant zu wissen, bei welcher Elevation sich insgesamt
 die beste Energieausbeute ergeben w"urde.
 
 Unter der Annahme, dass die Strahlung "uber den ganzen Tag gleich bleibt,
@@ -126,11 +126,10 @@ gel"ost werden.
 
 Noch etwas spannender wird das Problem allerdings, wenn nicht nur
 die Energieausbeute eines einzelnen Tages, sondern die Ausbeute
-"uber ein ganzes Jahr optimiert werden soll, w"ahrend das Problem allerdings, wenn nicht nur
-die Energieausbeute eines einzelnen Tages, sondern die Ausbeute
-"uber ein ganzes Jahr optimiert werden soll. Die Deklination $\delta$
+"uber ein ganzes Jahr optimiert werden soll.
+Die Deklination $\delta$
 der Sonnen schwankg im Laufe des Jahres um "uber $46^\circ$, und die
-Sonnenaufgangs- und Untergangszeiten $t_A$ und $t_U$ sind auch nicht mehr 
+Sonnenauf- und Untergangszeiten $t_A$ und $t_U$ sind auch nicht mehr 
 so einfach zu bestimmen. Dieses erweiterte Problem ist nur noch
 numerische zu l"osen. Noch komplizierter wird es, wenn nicht der Energieertrag,
 sondern der finanzielle Ertrag "uber das ganze Jahr optimiert werden soll,
@@ -172,7 +171,7 @@ x+y&\le c,\\
 x&\le m.
 \end{align*}
 Der Gewinn wie auch die Einschr"ankungen sind lineare Gleichungen
-bzw.~Ungleichungen.
+bzw.~Ungleichungen. Hier liegt ein lineares Optimierungsproblem vor.
 
 \subsection{Tankwanne\label{uebersicht:wanne}}
 Es soll eine quaderf"ormige Wanne aus Stahlblech zusammengeschweisst
@@ -181,7 +180,7 @@ auslaufendes "Ol eines ebenfalls quaderf"ormigen Tankes auffangen k"onnen,
 dessen Grundfl"ache L"ange $l$ und Breite $b$ hat, und der in die
 Wanne gestellt werden soll.
 Das Blech hat die Fl"achendichte $\varrho$. Der Preis der Wann setzt sich
-zusammen aus den Masseabh"angigen Materialkosten $c_m$ und den allein
+zusammen aus den masseabh"angigen Materialkosten $c_m$ und den allein
 von der L"ange der Schweissnaht abh"angigen Kosten f"ur den Schweisser
 $c_s$. Wie muss die Wanne konstruiert werden, damit sie m"oglichst 
 billig wird?
@@ -194,7 +193,7 @@ Die Masse der Wanne setzt sich zusammen aus der Masse von Boden
 und Seitenfl"achen, also
 $\varrho(xy+2xz+2yz)$. Der Schweisser muss vier vertikale N"ahte
 der L"ange $z$ und je zwei horizontale N"ahte der L"ange $x$ und $y$
-schweissen. Die Gesamtkosten f"ur die Wanne sind also
+schweissen. Die Gesamtkosten f"ur die Wanne sind damit
 \[
 f(x,y,z)=c_m\varrho(xy+2z(x+y))+c_s(4z+2x+2y).
 \]
@@ -208,7 +207,8 @@ xyz&\ge V.
 
 \subsection{Pyramidenbau\label{uebersicht:pyramidenbau}}
 Variatos, Vorarbeiter auf der Baustelle der Pyramide des Pharaos
-Mathesis\footnote{Name von der Redaktion ge"andert}~V.,hat den Auftrag, mit
+Mathesis\footnote{Name von der Redaktion ge"andert}~V.,
+hat den Auftrag, mit
 einer Equipe von Arbeitern einen Sandstein-Block von $A$ nach $B$
 zu bringen. Die Equipe steht ihm ab dem Zeitpunkt $a$ zur Verf"ugung,
 und ab Zeitpunkt $b$ soll sie an einer anderen Stelle auf der Baustelle
@@ -232,7 +232,8 @@ zu bewegen. Die zu minimierende Gr"osse ist also
 \int_a^bF(x(t), \dot x(t))\,dt.
 \]
 Dieses Integral betrachten wir als eine Gr"osse, die von der Wahl
-der Funktion $x(t)$ abh"angt.
+der Funktion $x(t)$ abh"angt. Man nennt diese Art von Optimierungsproblem 
+ein Variationsproblem.
 
 \section{Begriffe\label{section-begriffe}}
 \rhead{Begriffe}
@@ -266,11 +267,11 @@ vorliegen.
 $g(x)$ und $h(x)$ k"onnen auch vektorwertig sein,
 das heisst ist eine Menge von Nebenbedingungen
 \begin{align*}
-g_i(x)&=0&x&\in\mathbb R, 1\le i\le m
+g_i(x)&=0&x&\in\mathbb R^n, 1\le i\le m
 \end{align*}
 oder von Einschr"ankungen durch Ungleichungen
 \begin{align*}
-h_j(x)&\le 0&x&\in\mathbb R, 1\le j\le l
+h_j(x)&\le 0&x&\in\mathbb R^n, 1\le j\le l
 \end{align*}
 gegeben.
 
@@ -344,7 +345,7 @@ wenn $x$ aus einer Umgebung von $x^*$ in $G$ stammt.
 Das Beispiel \ref{uebersicht:pyramidenbau} passt nicht in das bisher
 entworfene allgemeine Schema: f"ur jeden
 Parameterwert $t$ ist die aktuelle Position des Blocks zu bestimmen,
-es sind also unendlich viele Positionen $x(t)$ zu bestimmen, so 
+es sind also unendlich viele Positionen $x(t)$, $a\le t\le b$, zu bestimmen, so 
 dass die Gesamtenergie, also das Integral der Leistung
 \begin{equation}
 F(x)=
@@ -395,7 +396,7 @@ ist ja nichts anderes als eine Funktion
 \[
 x\colon \{1,\dots n\}\to \mathbb R: k\mapsto x_k,
 \]
-die ganzzahligen Werten zwischen 1 und $n$ einen Zahlenwert
+die ganzzahligen Werten $k$ zwischen 1 und $n$ einen Zahlenwert $x_k$
 zuordnen.
 Die Funktion $k\mapsto x_k$ ist eine ``diskrete Variante'' einer
 Kurve $t\mapsto x(t)$, das Funktional f"ur eine ``diskrete Kurve''
@@ -404,7 +405,7 @@ ist einfach nur die Summe (\ref{uebersicht:funktional:diskret}).
 
 
 \section{Klassifizierung \label{section-klassifizierung}}
-Wir gehen in diesem wieder von dem Problem aus, dass die Funktion
+Wir gehen in diesem Abschnitt wieder von dem Problem aus, dass die Funktion
 $f\colon\mathbb R^n\to\mathbb R$ maximiert werden soll.
 Wir setzen im allgemeinen nicht voraus, dass die Funktion differenzierbar
 sein muss, doch viele L"osungsverfahren verwenden Ableitungen und 
@@ -454,6 +455,7 @@ von Z"ahnen haben, oder Widerstandswerte sind nur in bestimmten Werten
 verf"ugbar, deren Logarithmus ein ganzzahliges Vielfaches einer
 Grundeinheit ist. Sind nur ganzzahlige L"osungen f"ur ein Optimierungsproblem
 erlaubt, spricht man von einem {\em ganzzahligen Optimierungsproblem}.
+\index{Optimierungungsproblem!ganzzahlig}
 
 H"aufig kommen auch Kombination vor: einige Designvariablen m"ussen
 ganzzahlig sein, die anderen k"onnen beliebige reelle Werte annehmen.
@@ -461,10 +463,13 @@ Solche Probleme heissen {\em gemischte Optimierungsprobleme}.
 
 Problem, in denen nicht nur endlich viele diskrete Werte so zu bestimmen
 sind, dass eine Zielgr"osse optimal wird, sondern eine ganz Funktion,
-wie im Pyramidenbau-Beispiel \ref{uebersicht:pyramidenbau} heissen
+wie im Pyramidenbau-Beispiel \ref{uebersicht:pyramidenbau}, heissen
+\index{Variationsproblem}
 {\em Variationsprobleme}. Der folgende Speziallfall ist besonders wichtig.
 Ein System kann mit Hilfe einer "ausseren Kraft $x(t)$ gesteuert werden.
 Das System soll jetzt von Zustand $A$ in Zustand $B$ gebracht werden,
 wobei der Energieverbrauch (oder eine andere Gr"osse, zum Beispiel die
 daf"ur ben"otigte Zeit) minimiert werden soll. Ein solches Problem heisst
-ein {\em Kontroll-Problem}.
+ein {\em Kontroll-Problem}\index{Kontroll-Problem}.
+Kontroll-Probleme werden in diesem Buch nicht
+behandelt.

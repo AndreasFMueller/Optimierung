@@ -37,7 +37,7 @@ Extremum notwendigerweise ein innerer Punkt des Definitionsbereiches.
 
 Beschr"ankungen des Definitionsgebietes f"uhren
 zu zus"atzlichen Komplikationen, es muss jetzt unterschieden
-werden, ob Extrema auf dem Rand oder doch im inneren des Definitionsgebietes
+werden, ob Extrema auf dem Rand oder doch im Inneren des Definitionsgebietes
 liegen.
 Methoden, die auf Ableitungen basieren, die mit Grenzwerten
 arbeiten, zum Beispiel Ableitungen, d"urfen nur noch einseitige
@@ -128,14 +128,14 @@ alle partiellen Ableitungen von $f$ im Punkt $x_*$ verschwinden
 \subsubsection{Zweite Ableitungen}
 Ob in einem Punkt $x_*$ mit $\operatorname{grad}f(x_*)=0$ ein
 Minimum oder Maximum vorliegt, l"asst sich aus der Taylor-Entwicklung
-ableiten. In einer gen"ugend kleinen Umgebung von $x_*$ gilt
+entscheiden. In einer gen"ugend kleinen Umgebung von $x_*$ gilt
 \begin{align*}
 f(x)&=f(x_*)+\operatorname{grad}f(x_*)\cdot (x-x_*)+
 \sum_{i,k=1}^n\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k}(x_i-x_{i*})(x_k-x_{k*})+o((x-x_*)^2)
 \\
 &=f(x_*)+
 \sum_{i,k=1}^n\frac{\partial^2 f(x_*)}{\partial x_i\,\partial x_k}(x_i-x_{i*})(x_k-x_{k*})
-+o((x-x_*)^2)
++o((x-x_*)^2).
 \end{align*}
 Ein lokales Minimum liegt vor, wenn die Summe in einer Umgebung
 von $x_*$ nur positive Werte annimmt, ein lokales Maximum liegt vor,
@@ -255,7 +255,7 @@ Es reicht, Determinante und Spur zu bestimmen
 \[
 \det A = \lambda_1\lambda_2,\qquad \operatorname{tr} A=\lambda_1+\lambda_2.
 \]
-Ist $\det A >$ ist bereits klar, dass $A$ definit ist. Ist das Vorzeichen
+Ist $\det A >0$ ist bereits klar, dass $A$ definit ist. Ist das Vorzeichen
 der Spur positiv, ist $A$ positiv definit.
 
 F"ur stetig differenzierbare Funktion ist die Hessesche Matrix
@@ -822,15 +822,15 @@ einzigen inneren lokalen Minima.
 Ist $\mu_1\ne 0$, muss zus"atzlich aus der zweiten
 Gleichung $x=-2$ gelten, also
 \begin{align*}
--2&=-\sqrt{1+\frac{\mu_2}3}\\
-4&=1+\frac{\mu_2}3\\
-\mu_2&=9
+-2&=-\sqrt{1+\frac{\mu_2}3},\\
+4&=1+\frac{\mu_2}3,\\
+\mu_2&=9.
 \end{align*}
 F"ur $\mu_2=0$  folgt analog $x=2$ und
 \begin{align*}
-2&=\sqrt{1-\frac{\mu_1}3}\\
-4&=1-\frac{\mu_1}3\\
-\mu_1&=-9
+2&=\sqrt{1-\frac{\mu_1}3},\\
+4&=1-\frac{\mu_1}3,\\
+\mu_1&=-9.
 \end{align*}
 Da aber $\mu_1\le 0$ sein muss, ist $x=2$ kein lokales Minimum.
 Es bleibt also nur noch, die beiden Kandidaten $x=-2$
@@ -888,7 +888,7 @@ werden. Es muss also Zahlen $\mu_j\ge 0$ geben so, dass
 \[
 \operatorname{grad}f(x_*)=\sum_{j=0}^l\mu_j\operatorname{grad}h_j(x_*).
 \]
-Die Zahl $\mu_j$ wird $0$, wenn $x_*$ im inneren des durch die Ungleichung
+Die Zahl $\mu_j$ wird $0$, wenn $x_*$ im Inneren des durch die Ungleichung
 $h_j(x)\le 0$ definierten Gebietes liegt, wenn also die Normale
 $\operatorname{grad}h_j(x_*)$ gar nicht ``gebraucht'' wird.
 Die Zahl $\mu_j$ heisst {\em Lagrange-Multiplikator} der
@@ -940,7 +940,7 @@ g(x,y,z)&=xyz-1=0
 h(x,y,z)&=x^2+y^2+z^2-9 \le 0
 \end{align*}
 Die Ungleichung $h(x,y,z)\le 0$ verlangt, dass das Maximum
-im inneren einer Kugel mit Radius $3$ gefunden wird.
+im Inneren einer Kugel mit Radius $3$ gefunden wird.
 
 \medskip
 F"ur die Karush-Kuhn-Tucker Bedingung brauchen wir die
@@ -973,7 +973,7 @@ xyz-1&=0\\
 \mu&\ge 0
 \end{align*}
 
-Wir untersuchen zun"achst, ob es ein Maximum im inneren des Gebietes
+Wir untersuchen zun"achst, ob es ein Maximum im Inneren des Gebietes
 geben k"onnte. Dass w"are dann der Fall, wenn $\mu=0$ w"are. Dann
 werden die Gleichungen zu
 \begin{align*}
@@ -999,7 +999,7 @@ linke Seite:
 \end{aligned}
 \label{nlp:kkt-beispiel:gleichungen}
 \end{equation}
-Die rechte Seite kann man vereinfachen, indem man $g(x,y,z)=0$ verwenet:
+Die rechte Seite kann man vereinfachen, indem man $g(x,y,z)=0$ verwendet:
 \[
 g(x,y,z)=xyz-1=0\qquad\Rightarrow\qquad
 xy=\frac1z,\quad
@@ -1027,7 +1027,8 @@ Setzt man dies in $h$ ein, bekommt man
 \biggr)^{-1}
 \label{nlp:kkt-beispiel:h}
 \end{equation}
-Setzt man es in die Gleichung $x^2y^2z^2=1$ ein, bekommt man
+Setzt man (\ref{nlp:kkt-beispiel:x2}) in die Gleichung $x^2y^2z^2=1$ ein,
+bekommt man
 \begin{equation}
 \lambda^3=-8(2-\mu)(1-\mu)\mu.
 \label{nlp:kkt-beispiel:g}
@@ -1114,7 +1115,7 @@ f_n(x_1,\dots,x_n)&=0
 Wir d"urfen annehmen, dass die Anzahl der Gleichungen gleich
 gross ist wie die Anzahl der Unbekannten, weil andernfalls ohnehin
 nicht mit einer eindeutigen L"osung zu rechnen ist.
-Die Gleichungen k"onnen auch als Vektorwertige Funktion
+Die Gleichungen k"onnen auch als vektorwertige Funktion
 geschrieben werden:
 \[
 f(x_1,\dots,x_n)=\begin{pmatrix}
@@ -1143,7 +1144,7 @@ Als erste ungef"ahre Nullstelle verwenden wir $x_0=1$.
 Die Iterationsformel (\ref{nlp:newton-iteration}) wird zu
 \[
 x_{k+1}=x_k-\frac{x_k^2-2}{2x_k}=\frac{2x_k^2-x_k^2+2}{2x_k}=
-\frac12\biggl(x_k+\frac{2}{x_k}\biggr)
+\frac12\biggl(x_k+\frac{2}{x_k}\biggr).
 \]
 Numerische Rechnung ergibt:
 \begin{center}
@@ -1233,9 +1234,9 @@ $x_{k+1}$ weit weg von $x_*$ zu liegen kommt, so dass die
 Veraussetzung, dass $x_{k+1}$ bereits eine eingermassen gute 
 Approximation sein muss, nicht mehr erf"ullt ist.
 Diese Einschr"ankung ist allerdings nicht weiter schlimm, denn
-es interessieren ja ohnehin vor allem die Maxima ($f'(x_*)<0$)
-und die Minima ($f'(x)>0$), in beiden F"allen ist also
-$f'(x_*)\ne 0$.
+es interessieren ja ohnehin vor allem die Maxima ($f''(x_*)<0$)
+und die Minima ($f''(x)>0$), in beiden F"allen ist also
+$f''(x_*)\ne 0$.
 
 Da das Newton-Verfahren immer nur eine lokale Suche nach einer
 Nullstelle von $f'(x)$ unternimmt, ist es grunds"atzlich nicht

@@ -38,7 +38,8 @@ in h"oheren Dimensionen ein konvexes Polyeder.
 
 \begin{definition}
 \index{Programm!lineares}
-Ein {\em lineares Programm} ist die Vorgabe einer linearen Zielfunktion
+Ein {\em lineares Programm}\,
+ist die Vorgabe einer linearen Zielfunktion
 $c^tx$ und einer Menge von Ungleichungen $Ax\le b$.
 Wir schreiben
 \[
@@ -139,10 +140,11 @@ $\vec n_3$ sein.
 \end{figure}
 
 Die Halbebenen, deren Rand eine Ecke nicht trifft, wird nicht verwendet,
-in einer Linearkombination von normalen gehen diese also mit dem
+in einer Linearkombination von Normalen gehen diese also mit dem
 Koeffizienten $0$ ein.
 
-Die Normale der Zielfunktion ist der Vektor aus den Koeffizienten, also $c$,
+Die Normale der Zielfunktion $\vec n_Z$ ist der Vektor aus den Koeffizienten,
+also $c$,
 die Normale der Halbr"aume sind die einzelnen Zeilen von $A$.
 Gesucht sind also Zahlen $\mu_1,\dots,\mu_m\ge 0$ so, dass
 \begin{center}
@@ -203,6 +205,7 @@ $m$ (einfachen) Ungleichungen, und $m$ Unbekannten.
 Aus einem Problem mit vielen Variablen und wenigen Ungleichungen wird
 ein Problem mit wenigen Variablen und Ungleichungen und vielen Gleichungen.
 Da wir f"ur Gleichungen im Gauss-Algorithmus einen effizienten Helfer haben,
+dessen Laufzeit sehr stark von der Zahl der Unbekannten abh"angt,
 kann das eine bedeutende Vereinfachung sein.
 
 Das duale Problem liefert den gleichen Extremwert.
@@ -215,7 +218,7 @@ auch die Information, welche Gleichungen exakt erf"ullt sind.
 Es sind ja genau diejenigen $\mu_i$ von $0$ verschieden, deren
 zugeh"orige Ungleichungen exakt erf"ullt sind. Wenn man also
 das duale Problem gel"ost hat, findet man die L"osung des urspr"unglichen
-Problems durch l"osen der Gleichungen, die zu den von $0$ verschiedenen
+Problems durch L"osen der Gleichungen, die zu den von $0$ verschiedenen
 $\mu_i$ geh"oren.
 
 Etwas genauer gilt folgender Satz:
@@ -286,7 +289,7 @@ Die L"osung des Gleichungssystems im zweiten Schritt l"asst sich mit
 dem Gauss-Algorithmus sehr effizient finden. Das Hauptproblem ist also
 der erste Schritt.
 
-DIe Hauptschwierigkeit ist dabei, dass wir mit Ungleichungen zu tun
+Die Hauptschwierigkeit ist dabei, dass wir mit Ungleichungen zu tun
 haben.
 F"ur die Bestimmung von L"osungsmengen von Ungleichungen gibt
 es kaum gut bekannte Verfahren.
@@ -307,7 +310,7 @@ Einf"uhrung zus"atzlicher Variablen $s_1,\dots,s_3$ in die Gleichungen
 \label{lp-ungleichungen-schlupf}
 \end{equation}
 umgewandelt werden.
-Die Variablen $s_i$ heissen {\em Schlupfvariablen}
+Die Variablen $s_i$ heissen {\em Schlupfvariablen}.
 \index{Schlupfvariablen}
 Die Variable $s_i$ gibt wieder, wie weit entfernt von der Gleichheit
 die Ungleichung Nummer $i$ ist.
@@ -328,7 +331,7 @@ F"ur die Bestimmung des Optimums m"ussen die Ecken des Gebietes
 untersucht werden. Die Variablen $s_i$ geben an, ob ein Punkt auf
 der Randgeraden der durch die zugeh"orige Ungleichung definierten
 Halbebene liegt.
-Ist $s_i=0$, dann liegt der Punkt auf der zugeh"origen Randgeraden.
+Ist $s_i=0$, dann liegt der Punkt auf der Randgeraden zur $i$-ten Ungleichung.
 Analog geben die Variablen $x$ und $y$ an, ob der Punkt auf der
 $x$- oder $y$-Achsen liegt. Die Ecken des zul"assigen Gebietes
 werden also durch die Variablen charakterisiert, die verschwinden,
@@ -366,7 +369,7 @@ $\mu_i\ge 0$.
 
 Die L"osung des Optimierungsproblems ist auf dem Rand des
 zul"assigen Gebietes zu finden.
-Die Ecken des Gebietes sind Schnittpunkt zweier Gleichungen.
+Die Ecken des Gebietes sind Schnittpunkte zweier Gleichungen.
 Sie werden also dadurch bestimmt, dass zwei Variablen 
 Null gesetzt werden, die verbleibenden drei Variablen
 lassen sich dann mit Hilfe des Gauss-Algorithmus bestimmen.
